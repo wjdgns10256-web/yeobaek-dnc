@@ -126,6 +126,12 @@
   .contact dd{ font-size:15px; margin-top:3px; }
   .contact dd a{ color:var(--ink); text-decoration:none; border-bottom:1px solid var(--hair); }
 
+  /* 시그니처 인장 */
+  .seal{ display:flex; flex-direction:column; align-items:center; gap:14px; padding:58px 0 6px; text-align:center; }
+  .seal-mark{ width:54px; height:54px; transform:rotate(-4deg); filter:drop-shadow(0 8px 16px rgba(176,74,47,.28)); }
+  .seal-kr{ font-size:13px; font-weight:700; letter-spacing:-0.01em; }
+  .seal-en{ font-size:10px; letter-spacing:0.26em; color:var(--mute); margin-top:5px; }
+
   footer{ padding:40px 0 34px; border-top:1px solid var(--hair); }
   footer .sl{ font-size:11.5px; color:var(--mute); letter-spacing:0.16em; }
   footer .cp{ font-size:11.5px; color:var(--mute); margin-top:10px; line-height:1.8; }
@@ -357,6 +363,17 @@
     <a class="cta ghost" href="mailto:yeobaekcnd@naver.com">이메일로 문의</a>
   </section>
 
+  <div class="seal">
+    <svg class="seal-mark" viewBox="0 0 100 100" aria-label="여백 D&amp;C 인장">
+      <rect width="100" height="100" fill="#B04A2F"/>
+      <rect x="56" y="56" width="44" height="44" fill="#F7F6F3"/>
+    </svg>
+    <div>
+      <div class="seal-kr">일이 끝나면, 여백을 남깁니다</div>
+      <div class="seal-en">SIGNED · YEOBAEK D&amp;C</div>
+    </div>
+  </div>
+
   <footer>
     <div class="sl">비워야 시작됩니다</div>
     <div class="cp">
@@ -371,7 +388,7 @@
 
 <script>
 (function(){
-  var targets = document.querySelectorAll('.hero, section');
+  var targets = document.querySelectorAll('.hero, section, .seal');
   targets.forEach(function(el){ el.classList.add('reveal'); });
   if(!('IntersectionObserver' in window)){
     targets.forEach(function(el){ el.classList.add('in'); });
