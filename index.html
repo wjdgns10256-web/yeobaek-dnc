@@ -37,7 +37,13 @@
     "addressCountry": "KR"
   },
   "areaServed": "인천광역시",
-  "founder": { "@type": "Person", "name": "김정훈" }
+  "founder": { "@type": "Person", "name": "김정훈" },
+  "employee": [
+    { "@type": "Person", "name": "이재성", "jobTitle": "부대표" },
+    { "@type": "Person", "name": "문인재", "jobTitle": "본부장" },
+    { "@type": "Person", "name": "박상재", "jobTitle": "부장" },
+    { "@type": "Person", "name": "강창균", "jobTitle": "부장" }
+  ]
 }
 </script>
 <style>
@@ -149,6 +155,15 @@
   .faq summary::after{ content:"+"; margin-left:auto; color:var(--mute); font-weight:400; font-size:17px; line-height:1.3; flex:none; }
   .faq details[open] summary::after{ content:"−"; }
   .faq .a{ font-size:13.5px; color:#3a3a3a; padding:0 0 18px; line-height:1.75; }
+
+  /* 팀 */
+  .team .member{ padding:18px 0; border-bottom:1px solid var(--hair); }
+  .team .member:first-child{ border-top:1px solid var(--ink); }
+  .team .row{ display:flex; align-items:baseline; gap:10px; }
+  .team .pos{ font-size:11px; letter-spacing:0.14em; color:var(--mute); flex:none; }
+  .team .nm{ font-size:16px; font-weight:700; }
+  .team .role{ font-size:13px; color:#3a3a3a; margin-top:6px; }
+  .team .tel{ display:inline-block; margin-top:8px; font-size:13.5px; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--hair); }
 
   /* 연락처 */
   .contact dt{ font-size:11.5px; color:var(--mute); letter-spacing:0.1em; margin-top:18px; }
@@ -371,6 +386,35 @@
         <summary>어느 지역까지 가나요?</summary>
         <div class="a"><span class="fill">인천 · 서울 · 경기 (실제 범위로 수정)</span></div>
       </details>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh">
+      <svg class="notch" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#111"/><rect x="55" y="55" width="45" height="45" fill="#F7F6F3"/></svg>
+      <h2>함께 하는 사람들</h2><span class="tag">TEAM</span>
+    </div>
+    <div class="team">
+      <div class="member">
+        <div class="row"><span class="pos">부대표</span><span class="nm">이재성</span></div>
+        <div class="role">운영지원 · 영업 · 견적 — 전반 업무 지원</div>
+        <a class="tel" href="tel:01034856907">010-3485-6907</a>
+      </div>
+      <div class="member">
+        <div class="row"><span class="pos">본부장</span><span class="nm">문인재</span></div>
+        <div class="role">실무 담당</div>
+        <a class="tel" href="tel:01079302106">010-7930-2106</a>
+      </div>
+      <div class="member">
+        <div class="row"><span class="pos">부장</span><span class="nm">박상재</span></div>
+        <div class="role">실무 담당 · 견적</div>
+        <a class="tel" href="tel:01040827752">010-4082-7752</a>
+      </div>
+      <div class="member">
+        <div class="row"><span class="pos">부장</span><span class="nm">강창균</span></div>
+        <div class="role">장비 부서 담당</div>
+        <a class="tel" href="tel:01086167262">010-8616-7262</a>
+      </div>
     </div>
   </section>
 
