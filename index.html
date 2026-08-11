@@ -37,10 +37,17 @@
     "addressCountry": "KR"
   },
   "areaServed": "인천광역시",
-  "founder": { "@type": "Person", "name": "김정훈" },
+  "founder": {
+    "@type": "Person",
+    "name": "김정훈",
+    "hasCredential": { "@type": "EducationalOccupationalCredential", "credentialCategory": "건설기술인협회 건축 초급" }
+  },
   "employee": [
-    { "@type": "Person", "name": "이재성", "jobTitle": "부대표" },
-    { "@type": "Person", "name": "문인재", "jobTitle": "본부장" },
+    {
+      "@type": "Person", "name": "이재성", "jobTitle": "부대표",
+      "hasCredential": { "@type": "EducationalOccupationalCredential", "credentialCategory": "건설기술인협회 건축 고급" }
+    },
+    { "@type": "Person", "name": "문인재", "jobTitle": "현장 운영 총괄" },
     { "@type": "Person", "name": "박상재", "jobTitle": "부장" },
     { "@type": "Person", "name": "강창균", "jobTitle": "부장" }
   ]
@@ -157,13 +164,20 @@
   .faq .a{ font-size:13.5px; color:#3a3a3a; padding:0 0 18px; line-height:1.75; }
 
   /* 팀 */
-  .team .member{ padding:18px 0; border-bottom:1px solid var(--hair); }
-  .team .member:first-child{ border-top:1px solid var(--ink); }
-  .team .row{ display:flex; align-items:baseline; gap:10px; }
-  .team .pos{ font-size:11px; letter-spacing:0.14em; color:var(--mute); flex:none; }
-  .team .nm{ font-size:16px; font-weight:700; }
-  .team .role{ font-size:13px; color:#3a3a3a; margin-top:6px; }
-  .team .tel{ display:inline-block; margin-top:8px; font-size:13.5px; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--hair); }
+  .org{ margin-top:2px; }
+  .org .onode{ padding:14px 0; position:relative; }
+  .org .onode.root{ padding-top:0; padding-bottom:18px; border-bottom:1px solid var(--ink); margin-bottom:6px; }
+  .org .opos{ font-size:10.5px; letter-spacing:0.16em; color:var(--mute); }
+  .org .onode.root .opos{ font-size:11px; }
+  .org .onm{ font-size:15.5px; font-weight:700; margin-top:2px; }
+  .org .onode.root .onm{ font-size:21px; font-weight:800; }
+  .org .orole{ font-size:12.5px; color:#3a3a3a; margin-top:5px; }
+  .org .ocred{ font-size:11.5px; color:var(--flag); margin-top:4px; font-weight:600; letter-spacing:-0.01em; }
+  .org .otel{ display:inline-block; margin-top:7px; font-size:13px; color:var(--ink); text-decoration:none; border-bottom:1px solid var(--hair); }
+  .org .obranch{ margin-left:10px; padding-left:18px; border-left:1.5px solid var(--hair); }
+  .org .obranch > .onode::before{
+    content:""; position:absolute; left:-18px; top:23px; width:18px; height:1.5px; background:var(--hair);
+  }
 
   /* 연락처 */
   .contact dt{ font-size:11.5px; color:var(--mute); letter-spacing:0.1em; margin-top:18px; }
@@ -394,26 +408,43 @@
       <svg class="notch" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#111"/><rect x="55" y="55" width="45" height="45" fill="#F7F6F3"/></svg>
       <h2>함께 하는 사람들</h2><span class="tag">TEAM</span>
     </div>
-    <div class="team">
-      <div class="member">
-        <div class="row"><span class="pos">부대표</span><span class="nm">이재성</span></div>
-        <div class="role">운영지원 · 영업 · 견적 — 전반 업무 지원</div>
-        <a class="tel" href="tel:01034856907">010-3485-6907</a>
+    <div class="org">
+      <div class="onode root">
+        <div class="opos">대표</div>
+        <div class="onm">김정훈</div>
+        <div class="orole">현장 경력 6년</div>
+        <div class="ocred">건설기술인협회 건축 초급</div>
       </div>
-      <div class="member">
-        <div class="row"><span class="pos">본부장</span><span class="nm">문인재</span></div>
-        <div class="role">실무 담당</div>
-        <a class="tel" href="tel:01079302106">010-7930-2106</a>
-      </div>
-      <div class="member">
-        <div class="row"><span class="pos">부장</span><span class="nm">박상재</span></div>
-        <div class="role">실무 담당 · 견적</div>
-        <a class="tel" href="tel:01040827752">010-4082-7752</a>
-      </div>
-      <div class="member">
-        <div class="row"><span class="pos">부장</span><span class="nm">강창균</span></div>
-        <div class="role">장비 부서 담당</div>
-        <a class="tel" href="tel:01086167262">010-8616-7262</a>
+      <div class="obranch">
+        <div class="onode">
+          <div class="opos">부대표</div>
+          <div class="onm">이재성</div>
+          <div class="orole">운영지원 · 영업 · 견적 — 전반 업무 지원</div>
+          <div class="ocred">건설기술인협회 건축 고급</div>
+          <a class="otel" href="tel:01034856907">010-3485-6907</a>
+        </div>
+        <div class="obranch">
+          <div class="onode">
+            <div class="opos">본부장</div>
+            <div class="onm">문인재</div>
+            <div class="orole">현장 운영 총괄</div>
+            <a class="otel" href="tel:01079302106">010-7930-2106</a>
+          </div>
+          <div class="obranch">
+            <div class="onode">
+              <div class="opos">부장</div>
+              <div class="onm">박상재</div>
+              <div class="orole">실무 담당 · 견적</div>
+              <a class="otel" href="tel:01040827752">010-4082-7752</a>
+            </div>
+            <div class="onode">
+              <div class="opos">부장</div>
+              <div class="onm">강창균</div>
+              <div class="orole">장비 부서 담당</div>
+              <a class="otel" href="tel:01055214487">010-5521-4487</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
