@@ -179,6 +179,23 @@
     content:""; position:absolute; left:-18px; top:23px; width:18px; height:1.5px; background:var(--hair);
   }
 
+  /* 시공 참여 이력 */
+  .tstat{ display:flex; gap:32px; padding:0 0 20px; border-bottom:1px solid var(--ink); margin-bottom:4px; }
+  .tstat b{ display:block; font-size:23px; font-weight:800; letter-spacing:-0.02em; }
+  .tstat span{ display:block; font-size:11px; color:var(--mute); letter-spacing:0.1em; margin-top:3px; }
+  .track .titem{ padding:15px 0; border-bottom:1px solid var(--hair); }
+  .track .tproj{ font-size:14px; font-weight:700; line-height:1.5; }
+  .track .tmeta{ display:flex; gap:10px; margin-top:5px; font-size:12px; color:var(--mute); flex-wrap:wrap; }
+  .track .tmeta .tclient{ color:#3a3a3a; }
+  .tmore{ margin-top:2px; }
+  .tmore summary{
+    list-style:none; cursor:pointer; padding:16px 0 6px;
+    font-size:13px; font-weight:600; color:var(--mute); display:flex; align-items:center; gap:8px;
+  }
+  .tmore summary::-webkit-details-marker{ display:none; }
+  .tmore summary::after{ content:"+"; margin-left:auto; font-weight:400; font-size:16px; }
+  .tmore[open] summary::after{ content:"−"; }
+
   /* 연락처 */
   .contact dt{ font-size:11.5px; color:var(--mute); letter-spacing:0.1em; margin-top:18px; }
   .contact dd{ font-size:15px; margin-top:3px; }
@@ -444,6 +461,185 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sh">
+      <svg class="notch" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#111"/><rect x="55" y="55" width="45" height="45" fill="#F7F6F3"/></svg>
+      <h2>시공 참여 이력</h2><span class="tag">TRACK RECORD</span>
+    </div>
+
+    <div class="tstat">
+      <div><b>38건</b><span>참여 현장</span></div>
+      <div><b>2,148일</b><span>철거 · 해체 누적</span></div>
+      <div><b>1998~</b><span>참여 기간</span></div>
+    </div>
+
+    <div class="track">
+      <div class="titem">
+        <div class="tproj">광명구름산지구 도시개발사업 부지조성</div>
+        <div class="tmeta"><span class="tclient">대우소선해양건설(주)</span><span>2024.10 ~ 2025.11</span></div>
+      </div>
+      <div class="titem">
+        <div class="tproj">국립암센터 본관동 리모델링공사</div>
+        <div class="tmeta"><span class="tclient">(주)하이테크엔파</span><span>2024.06 ~ 2024.09</span></div>
+      </div>
+      <div class="titem">
+        <div class="tproj">LG 여의도 트윈타워 서관 공용부 리모델링공사</div>
+        <div class="tmeta"><span class="tclient">(주)국보디자인</span><span>2024.01 ~ 2024.06</span></div>
+      </div>
+      <div class="titem">
+        <div class="tproj">D&amp;O 남산 교육연구시설 신축공사</div>
+        <div class="tmeta"><span class="tclient">(주)성수프론티어</span><span>2023.04 ~ 2023.10</span></div>
+      </div>
+      <div class="titem">
+        <div class="tproj">안암병원 최첨단융복합의학센터 구조물해체 · 철거공사</div>
+        <div class="tmeta"><span class="tclient">현대건설(주)</span><span>2020.10 ~ 근무중</span></div>
+      </div>
+      <div class="titem">
+        <div class="tproj">대구이곡동 주상복합건물 신축공사 중 금속 · 창호공사</div>
+        <div class="tmeta"><span class="tclient">다인건설</span><span>2017.11</span></div>
+      </div>
+      <div class="titem">
+        <div class="tproj">병원 이전사업 시설공사 (구조물해체)</div>
+        <div class="tmeta"><span class="tclient">국방시설본부 · 대우건설</span><span>2010.06 ~ 2010.09</span></div>
+      </div>
+      <div class="titem">
+        <div class="tproj">화성동탄(2)택지개발사업 지장물철거공사(2공구)</div>
+        <div class="tmeta"><span class="tclient">한국토지주택공사</span><span>2009.10 ~ 2010.03</span></div>
+      </div>
+    </div>
+
+    <details class="tmore">
+      <summary>이전 참여 이력 더 보기 (30건 · 1998~2009)</summary>
+      <div class="track">
+        <div class="titem">
+          <div class="tproj">000지역확장공사 (비계 · 구조물해체)</div>
+          <div class="tmeta"><span class="tclient">국방시설본부</span><span>2009.04 ~ 2009.09</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">대한통운공장건물철거공사</div>
+          <div class="tmeta"><span class="tclient">대한통운</span><span>2009.02 ~ 2009.04</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">밀양용두교철거공사</div>
+          <div class="tmeta"><span class="tclient">밀양시</span><span>2008.05 ~ 2009.01</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">영월소수력댐철거공사</div>
+          <div class="tmeta"><span class="tclient">영월군청</span><span>2008.03 ~ 2008.05</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">국토38호선 천기3교 개축공사 중 기존교량철거공사</div>
+          <div class="tmeta"><span class="tclient">한신공영(주)</span><span>2008.01 ~ 2008.03</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">태릉선수촌 선수숙소 팔승관철거공사</div>
+          <div class="tmeta"><span class="tclient">대한체육회</span><span>2007.11 ~ 2007.12</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">옥천복개구조물개축공사 (마이크로파일공사)</div>
+          <div class="tmeta"><span class="tclient">서울시건설안전본부</span><span>2007.11</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">영등포정수장재건축고도처리시설공사</div>
+          <div class="tmeta"><span class="tclient">서울시상수도관리사업소</span><span>2007.09 ~ 2007.10</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">당현2교보수공사</div>
+          <div class="tmeta"><span class="tclient">북부도로관리사업소</span><span>2007.03 ~ 2007.09</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">옥천복개구조물개축공사 (마이크로파일공사)</div>
+          <div class="tmeta"><span class="tclient">서울시건설안전본부</span><span>2007.03</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">세아베스틸 구본관동철거공사</div>
+          <div class="tmeta"><span class="tclient">(주)세아베스틸</span><span>2007.01 ~ 2007.03</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">호남고속도로 정읍천교 기존교량철거공사</div>
+          <div class="tmeta"><span class="tclient">(주)고속도로관리공단</span><span>2006.11 ~ 2007.01</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">애경백화점 G.S구로자이 연결통로공사</div>
+          <div class="tmeta"><span class="tclient">애경E.N.C건설</span><span>2006.09 ~ 2006.11</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">길음뉴타운 내순환도로철거공사 (2, 3차)</div>
+          <div class="tmeta"><span class="tclient">성북구청</span><span>2005.11 ~ 2006.08</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">대전 00시설공사 / 철거공사</div>
+          <div class="tmeta"><span class="tclient">(주)대우건설</span><span>2005.04 ~ 2005.10</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">서울북성초등학교 기존건물철거공사</div>
+          <div class="tmeta"><span class="tclient">구성건설(주)</span><span>2005.03</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">광주운암APT 재건축 주민이주용역 및 철거공사</div>
+          <div class="tmeta"><span class="tclient">(주)벽산건설</span><span>2004.12 ~ 2005.02</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">OSAN AB창고 GATE교체공사</div>
+          <div class="tmeta"><span class="tclient">USACCK</span><span>2002.05 ~ 2002.11</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">서초동 충신교회 교육관증축공사</div>
+          <div class="tmeta"><span class="tclient">충신교회</span><span>2002.04 ~ 2002.05</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">가로정비 수거물품보관창고 신축공사</div>
+          <div class="tmeta"><span class="tclient">서울특별시 영등포구청</span><span>2002.03 ~ 2002.04</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">국제신공항 계측기보호대공사</div>
+          <div class="tmeta"><span class="tclient">(주)센구조연구소</span><span>2002.01 ~ 2002.02</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">도림동 영덕철강공장신축공사</div>
+          <div class="tmeta"><span class="tclient">영덕철강</span><span>2001.08 ~ 2001.12</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">영등포전화국 통신브스보수공사</div>
+          <div class="tmeta"><span class="tclient">전화국</span><span>2001.06 ~ 2001.07</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">교내건축물 시설물보수공사</div>
+          <div class="tmeta"><span class="tclient">시립대학교</span><span>2001.05 ~ 2001.06</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">양평전화국신축공사</div>
+          <div class="tmeta"><span class="tclient">(주)국토건설</span><span>1999.02</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">뉴코아KMS CLUB 아탑점바닥공사</div>
+          <div class="tmeta"><span class="tclient">(주)시대종합건설</span><span>1999.01 ~ 1999.02</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">남부지청신청사</div>
+          <div class="tmeta"><span class="tclient">(주)신동아종합건설</span><span>1998.11 ~ 1999.01</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">서울대학교병원 영안실 · 암센터 신축</div>
+          <div class="tmeta"><span class="tclient">(주)덕준건설</span><span>1998.08 ~ 1998.11</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">충무초등학교철거공사</div>
+          <div class="tmeta"><span class="tclient">(주)효명종합건설</span><span>1998.07 ~ 1998.08</span></div>
+        </div>
+        <div class="titem">
+          <div class="tproj">춘천산지천옹벽철거</div>
+          <div class="tmeta"><span class="tclient">(주)고려산업개발</span><span>1998.04 ~ 1998.06</span></div>
+        </div>
+      </div>
+    </details>
+
+    <div class="note">
+      건설기술인협회 경력증명서·사업자등록증 등 공식 서류를 근거로 정리했습니다.
+      회사가 아닌 참여 기술인 개인 명의의 경력이며, 세부 항목은 확인 서류를 통해 안내해 드립니다.
     </div>
   </section>
 
