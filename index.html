@@ -196,33 +196,6 @@
   .tmore summary::after{ content:"+"; margin-left:auto; font-weight:400; font-size:16px; }
   .tmore[open] summary::after{ content:"−"; }
 
-  /* 브랜드 적용 */
-  .brandmock{ display:flex; flex-direction:column; gap:22px; }
-  .mockcap{ font-size:11px; letter-spacing:0.14em; color:var(--mute); margin-bottom:9px; }
-
-  .bcard{
-    aspect-ratio:1.75; background:#fff; border:1px solid var(--ink);
-    display:flex; align-items:center; gap:11px; padding:0 20px;
-    box-shadow:var(--shadow);
-  }
-  .bcard .mk{ width:26px; height:26px; flex:none; }
-  .bcard .wm{ font-size:17px; font-weight:700; letter-spacing:-0.03em; line-height:1.1; }
-  .bcard .sub{ font-size:8.5px; color:var(--mute); letter-spacing:0.24em; margin-top:3px; }
-
-  .helmetwrap{ background:var(--fill); padding:26px 0; display:flex; justify-content:center; }
-  .helmet-mock{ width:180px; height:auto; }
-
-  .signwrap{ background:var(--fill); padding:30px 22px; position:relative; }
-  .sign-arm{ position:absolute; left:0; top:50%; width:22px; height:3px; background:var(--ink); }
-  .sign-arm::before{ content:""; position:absolute; left:0; top:-14px; width:3px; height:31px; background:var(--ink); }
-  .sign-board{
-    margin-left:22px; background:#fff; border:1px solid var(--ink);
-    padding:20px 16px; text-align:center; box-shadow:var(--shadow); max-width:190px;
-  }
-  .sign-board .mk{ width:28px; height:28px; margin:0 auto 8px; }
-  .sign-board .wm{ font-size:16px; font-weight:700; letter-spacing:-0.03em; }
-  .sign-board .sub{ font-size:8px; color:var(--mute); letter-spacing:0.22em; margin-top:4px; }
-
   /* 연락처 */
   .contact dt{ font-size:11.5px; color:var(--mute); letter-spacing:0.1em; margin-top:18px; }
   .contact dd{ font-size:15px; margin-top:3px; }
@@ -666,66 +639,6 @@
     <div class="note">
       건설기술인협회 경력증명서·사업자등록증 등 공식 서류를 근거로 정리했습니다.
       회사가 아닌 참여 기술인 개인 명의의 경력이며, 세부 항목은 확인 서류를 통해 안내해 드립니다.
-    </div>
-  </section>
-
-  <section>
-    <div class="sh">
-      <svg class="notch" viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" fill="#111"/><rect x="55" y="55" width="45" height="45" fill="#F7F6F3"/></svg>
-      <h2>브랜드 적용</h2><span class="tag">BRAND</span>
-    </div>
-
-    <div class="brandmock">
-      <div>
-        <div class="mockcap">명함</div>
-        <div class="bcard">
-          <svg class="mk" viewBox="0 0 100 100" aria-hidden="true">
-            <rect x="0" y="0" width="11" height="100" fill="#111"/>
-            <rect x="0" y="0" width="78" height="11" fill="#111"/>
-            <rect x="64" y="32" width="11" height="68" fill="#111"/>
-          </svg>
-          <div>
-            <div class="wm">여백 D&amp;C</div>
-            <div class="sub">여 백 디 앤 씨</div>
-          </div>
-        </div>
-      </div>
-
-      <div>
-        <div class="mockcap">안전모</div>
-        <div class="helmetwrap">
-          <svg class="helmet-mock" viewBox="0 0 200 140" aria-hidden="true">
-            <path d="M14,112 A86,88 0 0 1 186,112 Z" fill="#fff" stroke="#111" stroke-width="2.5"/>
-            <ellipse cx="100" cy="112" rx="94" ry="13" fill="#fff" stroke="#111" stroke-width="2.5"/>
-            <rect x="96" y="30" width="8" height="82" fill="#D9D6D0"/>
-            <g transform="translate(78,50) scale(0.44)">
-              <rect x="0" y="0" width="11" height="100" fill="#111"/>
-              <rect x="0" y="0" width="78" height="11" fill="#111"/>
-              <rect x="64" y="32" width="11" height="68" fill="#111"/>
-            </g>
-          </svg>
-        </div>
-      </div>
-
-      <div>
-        <div class="mockcap">사인물</div>
-        <div class="signwrap">
-          <div class="sign-arm"></div>
-          <div class="sign-board">
-            <svg class="mk" viewBox="0 0 100 100" aria-hidden="true">
-              <rect x="0" y="0" width="11" height="100" fill="#111"/>
-              <rect x="0" y="0" width="78" height="11" fill="#111"/>
-              <rect x="64" y="32" width="11" height="68" fill="#111"/>
-            </svg>
-            <div class="wm">여백 D&amp;C</div>
-            <div class="sub">여백디앤씨</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="note">
-      실제 제작물이 아닌 브랜드 적용 컨셉 이미지입니다.
     </div>
   </section>
 
