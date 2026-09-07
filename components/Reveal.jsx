@@ -34,8 +34,10 @@ export default function Reveal({ children, className = "", delay = 0, as: Tag = 
       className={className}
       style={{
         opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(28px)",
-        transition: "opacity 800ms cubic-bezier(0.16,1,0.3,1), transform 800ms cubic-bezier(0.16,1,0.3,1)",
+        transform: visible ? "translateY(0) scale(1)" : "translateY(28px) scale(0.97)",
+        filter: visible ? "blur(0px)" : "blur(6px)",
+        transition:
+          "opacity 800ms cubic-bezier(0.16,1,0.3,1), transform 800ms cubic-bezier(0.16,1,0.3,1), filter 800ms cubic-bezier(0.16,1,0.3,1)",
         transitionDelay: `${delay}ms`,
       }}
     >

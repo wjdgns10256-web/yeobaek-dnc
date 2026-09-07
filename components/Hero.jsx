@@ -58,14 +58,18 @@ export default function Hero() {
         <img
           src="/images/hero/hero-main.svg"
           alt="여백디앤씨 해체·철거 현장"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full scale-110 object-cover"
+          style={{ transform: `scale(1.1) translateY(${progress * 40}px)` }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80" />
 
         <div id="top" className="section-pad relative z-10 mx-auto max-w-content text-center">
-          <p className="mb-5 text-sm font-medium tracking-[0.3em] text-accent-200 sm:text-base">
-            YEOBAEK D&amp;C · 건축물 해체 · 철거 전문
-          </p>
+          <img
+            src="/logo/mark-white.png"
+            alt={siteConfig.companyName}
+            className="mx-auto mb-8 h-10 w-auto opacity-90 sm:h-12"
+            style={{ opacity: 0.9 * (0.3 + 0.7 * wordProgress(0)) }}
+          />
 
           <h1 className="flex flex-wrap justify-center gap-x-3 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
             {words.map((word, i) => {
@@ -86,10 +90,10 @@ export default function Hero() {
           </h1>
 
           <p
-            className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg"
+            className="mx-auto mt-5 text-sm tracking-[0.15em] text-white/60 sm:text-base"
             style={{ opacity: subProgress, transform: `translateY(${(1 - subProgress) * 16}px)` }}
           >
-            {siteConfig.subSlogan}
+            {siteConfig.heroTagline}
           </p>
 
           <div
@@ -100,13 +104,13 @@ export default function Hero() {
               href={siteConfig.phoneHref}
               className="w-full rounded-full bg-accent-700 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-accent-900/30 transition-transform hover:scale-[1.02] hover:bg-accent-600 sm:w-auto"
             >
-              전화로 상담하기 · {siteConfig.phone}
+              전화 상담
             </a>
             <a
               href="#contact"
               className="w-full rounded-full border border-white/40 px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-white/10 sm:w-auto"
             >
-              온라인 견적 문의
+              문의하기
             </a>
           </div>
         </div>
