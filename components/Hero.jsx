@@ -54,9 +54,9 @@ export default function Hero() {
   return (
     <section ref={sectionRef} className="relative bg-ink-950" style={{ height: reduced ? "100vh" : "160vh" }}>
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
-        {/* 히어로 배경 이미지 — public/images/hero/hero-main.svg 를 실제 현장 사진으로 교체하세요 */}
+        {/* 히어로 배경 이미지 — public/images/hero/hero-main.jpg 를 교체하면 반영됩니다 */}
         <img
-          src="/images/hero/hero-main.svg"
+          src="/images/hero/hero-main.jpg"
           alt="여백디앤씨 해체·철거 현장"
           className="absolute inset-0 h-full w-full scale-110 object-cover"
           style={{ transform: `scale(1.1) translateY(${progress * 40}px)` }}

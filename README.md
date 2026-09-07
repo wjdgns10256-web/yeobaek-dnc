@@ -20,7 +20,7 @@ npm run dev
 
 | 위치 | 용도 |
 | --- | --- |
-| `public/images/hero/hero-main.svg` | 히어로 섹션 풀스크린 배경 (1920×1080 권장) |
+| `public/images/hero/hero-main.jpg` | 히어로 섹션 풀스크린 배경 (1920×1080 권장) |
 | `public/images/services/*.svg` | 사업분야 카드 3장 |
 | `public/images/projects/housing/01~04.svg` | 시공사례 – 주택 |
 | `public/images/projects/commercial/01~04.svg` | 시공사례 – 상가 |
