@@ -6,9 +6,6 @@ import Reveal from "./Reveal";
 import SplitReveal from "./SplitReveal";
 import FullScreenDetail from "./FullScreenDetail";
 
-const PLACEHOLDER_NOTE =
-  "시공 사진이 준비되는 대로 현장 위치, 규모, 작업 기간 등 상세 정보가 이 영역에 채워집니다.";
-
 export default function Projects() {
   const [active, setActive] = useState("all");
   const [selected, setSelected] = useState(null);
@@ -100,7 +97,7 @@ export default function Projects() {
           selected && {
             ...selected,
             badge: selected.categoryLabel,
-            description: PLACEHOLDER_NOTE,
+            description: `발주처 ${selected.client} · 참여기간 ${selected.period} · 시공사진은 준비되는 대로 업데이트됩니다.`,
           }
         }
         onClose={() => setSelected(null)}
