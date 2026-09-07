@@ -16,3 +16,54 @@ body {
     @apply px-6 sm:px-10 lg:px-16;
   }
 }
+
+/* 국보디자인 참고 — 커스텀 커서 (포인터가 있는 데스크톱에서만 표시) */
+body.has-custom-cursor {
+  cursor: none;
+}
+body.has-custom-cursor a,
+body.has-custom-cursor button {
+  cursor: none;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  pointer-events: none;
+  border-radius: 9999px;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: #ffffff;
+}
+
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  transition: opacity 200ms ease, width 200ms ease, height 200ms ease, margin 200ms ease,
+    border-color 200ms ease, background-color 200ms ease;
+}
+
+.cursor-ring--hover {
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  background: rgba(138, 129, 114, 0.15);
+  border-color: rgba(211, 205, 195, 0.8);
+}
+
+.cursor-ring--active {
+  width: 24px;
+  height: 24px;
+  margin: -12px 0 0 -12px;
+}

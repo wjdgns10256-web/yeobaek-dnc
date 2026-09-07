@@ -1,5 +1,7 @@
 import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
+import SmoothScroll from "@/components/SmoothScroll";
+import CustomCursor from "@/components/CustomCursor";
 
 export const metadata = {
   title: `${siteConfig.companyName} | ${siteConfig.slogan}`,
@@ -60,7 +62,11 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        <SmoothScroll />
+        <CustomCursor />
+        {children}
+      </body>
     </html>
   );
 }

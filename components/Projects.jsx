@@ -4,7 +4,10 @@ import { useMemo, useState } from "react";
 import { projects, projectCategories } from "@/lib/projects-data";
 import Reveal from "./Reveal";
 import SplitReveal from "./SplitReveal";
-import DetailModal from "./DetailModal";
+import FullScreenDetail from "./FullScreenDetail";
+
+const PLACEHOLDER_NOTE =
+  "시공 사진이 준비되는 대로 현장 위치, 규모, 작업 기간 등 상세 정보가 이 영역에 채워집니다.";
 
 export default function Projects() {
   const [active, setActive] = useState("all");
@@ -20,6 +23,13 @@ export default function Projects() {
     () => (active === "all" ? projects : projects.filter((p) => p.category === active)),
     [active]
   );
+
+  const categorySiblings = useMemo(() => {
+    if (!selected) return [];
+    return projects
+      .filter((p) => p.category === selected.category)
+      .map((p) => ({ key: p.id, label: p.title }));
+  }, [selected]);
 
   return (
     <section id="projects" className="bg-ink-950 py-20 sm:py-28">
@@ -85,13 +95,18 @@ export default function Projects() {
         </div>
       </div>
 
-      <DetailModal
-        open={Boolean(selected)}
+      <FullScreenDetail
+        item={
+          selected && {
+            ...selected,
+            badge: selected.categoryLabel,
+            description: PLACEHOLDER_NOTE,
+          }
+        }
         onClose={() => setSelected(null)}
-        badge={selected?.categoryLabel}
-        title={selected?.title}
-        description="시공 사진이 준비되는 대로 현장 위치, 규모, 작업 기간 등 상세 정보가 이 영역에 채워집니다."
-        image={selected?.image}
+        siblings={categorySiblings}
+        activeKey={selected?.id}
+        onSelectSibling={(sib) => setSelected(projects.find((p) => p.id === sib.key))}
       />
     </section>
   );

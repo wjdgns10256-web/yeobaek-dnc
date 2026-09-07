@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { siteConfig } from "@/lib/site-config";
+import { projectCategories } from "@/lib/projects-data";
 
 const navItems = [
   { href: "#about", label: "회사소개" },
@@ -20,6 +21,13 @@ export default function Header() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
 
   return (
     <header
@@ -59,8 +67,8 @@ export default function Header() {
 
         <button
           type="button"
-          aria-label="메뉴 열기"
-          className="flex h-10 w-10 flex-none items-center justify-center rounded-full text-white md:hidden"
+          aria-label={menuOpen ? "메뉴 닫기" : "메뉴 열기"}
+          className="relative z-[70] flex h-10 w-10 flex-none items-center justify-center rounded-full text-white md:hidden"
           onClick={() => setMenuOpen((v) => !v)}
         >
           {menuOpen ? (
@@ -75,28 +83,52 @@ export default function Header() {
         </button>
       </div>
 
-      {menuOpen && (
-        <nav className="border-t border-white/10 bg-ink-950 md:hidden">
-          <div className="section-pad mx-auto flex max-w-content flex-col py-2">
+      {/* 국보디자인 참고 — 전체화면 오버레이 + 배경 블러 모바일 메뉴 */}
+      <div
+        className={`fixed inset-0 z-[60] bg-ink-950/95 backdrop-blur-xl transition-opacity duration-300 md:hidden ${
+          menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
+        }`}
+      >
+        <div className="section-pad flex h-full flex-col overflow-y-auto pb-10 pt-24">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/35">Menu</p>
+          <nav className="mt-4 flex flex-col">
             {navItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
-                className="border-b border-white/10 py-3 text-sm font-medium text-white/85 last:border-none"
+                className="border-b border-white/10 py-4 text-xl font-bold text-white transition-colors hover:text-accent-200"
                 onClick={() => setMenuOpen(false)}
               >
                 {item.label}
               </a>
             ))}
-            <a
-              href={siteConfig.phoneHref}
-              className="mt-3 mb-2 rounded-full bg-accent-700 px-4 py-3 text-center text-sm font-semibold text-white"
-            >
-              전화 문의 {siteConfig.phone}
-            </a>
-          </div>
-        </nav>
-      )}
+          </nav>
+
+          <p className="mt-10 text-xs font-semibold uppercase tracking-[0.2em] text-white/35">
+            시공사례 카테고리
+          </p>
+          <nav className="mt-4 flex flex-col">
+            {projectCategories.map((cat) => (
+              <a
+                key={cat.key}
+                href="#projects"
+                className="border-b border-white/10 py-3 text-sm font-medium text-white/70 transition-colors hover:text-accent-200"
+                onClick={() => setMenuOpen(false)}
+              >
+                {cat.label}
+              </a>
+            ))}
+          </nav>
+
+          <a
+            href={siteConfig.phoneHref}
+            className="mt-10 rounded-full bg-accent-700 px-4 py-3.5 text-center text-sm font-semibold text-white"
+            onClick={() => setMenuOpen(false)}
+          >
+            전화 문의 {siteConfig.phone}
+          </a>
+        </div>
+      </div>
     </header>
   );
 }
