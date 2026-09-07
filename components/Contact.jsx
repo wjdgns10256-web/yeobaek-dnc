@@ -23,7 +23,7 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="bg-ink-950 py-20 text-white sm:py-28">
+    <section id="contact" className="border-t border-white/5 bg-ink-900 py-20 text-white sm:py-28">
       <div className="section-pad mx-auto max-w-content">
         <div className="max-w-2xl">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent-300">Contact</p>
@@ -135,7 +135,7 @@ export default function Contact() {
 
             <button
               type="submit"
-              className="w-full rounded-lg bg-accent px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-accent-600 sm:w-auto sm:px-10"
+              className="w-full rounded-lg bg-accent-700 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-accent-600 sm:w-auto sm:px-10"
             >
               문의 보내기
             </button>

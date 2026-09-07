@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1000" height="750" viewBox="0 0 1000 750">
   <defs>
     <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#dedad3" />
-      <stop offset="100%" stop-color="#b8b3a9" />
+      <stop offset="0%" stop-color="#303030" />
+      <stop offset="100%" stop-color="#151515" />
     </linearGradient>
     <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M40 0H0V40" fill="none" stroke="#000000" stroke-opacity="0.045" stroke-width="1"/>
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.045" stroke-width="1"/>
     </pattern>
   </defs>
   <rect width="1000" height="750" fill="url(#g)" />
   <rect width="1000" height="750" fill="url(#grid)" />
   
-    <g opacity="0.5" fill="#ffffff">
+    <g opacity="0.08" fill="#ffffff">
       <rect x="6%" y="55%" width="10%" height="30%" />
       <rect x="18%" y="40%" width="10%" height="45%" />
       <rect x="30%" y="60%" width="10%" height="25%" />
@@ -20,7 +20,7 @@
       <rect x="76%" y="35%" width="1.2%" height="22%" />
     </g>
   <g font-family="'Pretendard Variable', 'Apple SD Gothic Neo', sans-serif" text-anchor="middle">
-    <text x="50%" y="50%" font-size="45" font-weight="700" fill="#3A3A3A">주택 시공사례 4</text>
-    <text x="50%" y="410" font-size="22" fill="#6D6D6D">projects/housing/04.svg 교체</text>
+    <text x="50%" y="50%" font-size="45" font-weight="700" fill="#F5F3EF">주택 시공사례 4</text>
+    <text x="50%" y="410" font-size="22" fill="#D7D2C8">projects/housing/04.svg 교체</text>
   </g>
 </svg>

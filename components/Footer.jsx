@@ -10,12 +10,16 @@ export default function Footer() {
   const activeSns = snsLinks.filter((sns) => siteConfig.sns[sns.key]);
 
   return (
-    <footer className="bg-ink-900 py-12 text-white/60">
+    <footer className="bg-ink-950 py-12 text-white/60">
       <div className="section-pad mx-auto max-w-content">
         <div className="flex flex-col gap-8 border-b border-white/10 pb-8 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <p className="text-lg font-bold text-white">{siteConfig.companyName}</p>
-            <p className="mt-1 text-xs tracking-[0.2em] text-white/40">{siteConfig.companyNameEn}</p>
+          <div className="flex items-center gap-2.5">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo/mark-white.png" alt="" aria-hidden="true" className="h-6 w-auto opacity-90" />
+            <div>
+              <p className="text-lg font-bold text-white">{siteConfig.companyName}</p>
+              <p className="mt-1 text-xs tracking-[0.2em] text-white/40">{siteConfig.companyNameEn}</p>
+            </div>
           </div>
 
           {activeSns.length > 0 && (

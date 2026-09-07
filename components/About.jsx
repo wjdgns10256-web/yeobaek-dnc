@@ -27,14 +27,14 @@ const values = [
 
 export default function About() {
   return (
-    <section id="about" className="bg-white py-20 sm:py-28">
+    <section id="about" className="bg-ink-950 py-20 sm:py-28">
       <div className="section-pad mx-auto max-w-content">
         <div className="max-w-2xl">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">About Us</p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+          <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
             여백디앤씨를 소개합니다
           </h2>
-          <p className="mt-5 leading-loose text-ink-600">
+          <p className="mt-5 leading-loose text-white/65">
             여백디앤씨(餘白)는 {siteConfig.founded} 인천 미추홀구에서 출발한 건축물 해체·철거
             전문회사입니다. 대표 {siteConfig.ceo}을 비롯한 핵심 인력은{" "}
             {siteConfig.trackRecord.since}부터 다양한 현장에서 해체·철거 경험을 쌓아왔으며,
@@ -42,36 +42,36 @@ export default function About() {
             철거는 끝이 아니라 다음을 위한 여백을 만드는 과정이라 믿습니다.
           </p>
 
-          <div className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-ink-100 pt-6">
+          <div className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-white/10 pt-6">
             <div>
-              <p className="text-2xl font-extrabold tracking-tight text-ink">
+              <p className="text-2xl font-extrabold tracking-tight text-white">
                 {siteConfig.trackRecord.projects}
               </p>
-              <p className="mt-1 text-xs tracking-wide text-ink-500">참여 현장</p>
+              <p className="mt-1 text-xs tracking-wide text-white/45">참여 현장</p>
             </div>
             <div>
-              <p className="text-2xl font-extrabold tracking-tight text-ink">
+              <p className="text-2xl font-extrabold tracking-tight text-white">
                 {siteConfig.trackRecord.since}
               </p>
-              <p className="mt-1 text-xs tracking-wide text-ink-500">현장 경력 시작</p>
+              <p className="mt-1 text-xs tracking-wide text-white/45">현장 경력 시작</p>
             </div>
             <div>
-              <p className="text-2xl font-extrabold tracking-tight text-ink">{siteConfig.founded}</p>
-              <p className="mt-1 text-xs tracking-wide text-ink-500">법인 설립</p>
+              <p className="text-2xl font-extrabold tracking-tight text-white">{siteConfig.founded}</p>
+              <p className="mt-1 text-xs tracking-wide text-white/45">법인 설립</p>
             </div>
           </div>
-          <p className="mt-2 text-xs text-ink-400">* {siteConfig.trackRecord.note}</p>
+          <p className="mt-2 text-xs text-white/35">* {siteConfig.trackRecord.note}</p>
         </div>
 
         <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {values.map((value) => (
             <div
               key={value.title}
-              className="group rounded-2xl border border-ink-100 bg-white p-7 shadow-sm transition-all hover:-translate-y-1 hover:border-accent-200 hover:shadow-lg"
+              className="group rounded-2xl border border-white/10 bg-white/[0.03] p-7 transition-all hover:-translate-y-1 hover:border-accent/40 hover:bg-white/[0.05]"
             >
               <value.icon className="h-10 w-10 text-accent" />
-              <h3 className="mt-5 text-lg font-bold text-ink">{value.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-ink-600">{value.description}</p>
+              <h3 className="mt-5 text-lg font-bold text-white">{value.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-white/60">{value.description}</p>
             </div>
           ))}
         </div>
