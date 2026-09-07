@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { siteConfig } from "@/lib/site-config";
 import { IconPhone, IconMail, IconPin } from "./icons";
+import Reveal from "./Reveal";
 
 const inquiryTypes = ["건축물 해체공사", "부분철거", "개구부 확장", "견적 문의", "기타"];
 
@@ -25,17 +26,17 @@ export default function Contact() {
   return (
     <section id="contact" className="border-t border-white/5 bg-ink-900 py-20 text-white sm:py-28">
       <div className="section-pad mx-auto max-w-content">
-        <div className="max-w-2xl">
+        <Reveal className="max-w-2xl">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent-300">Contact</p>
           <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">문의하기</h2>
           <p className="mt-5 leading-loose text-white/70">
             해체·철거가 필요한 현장이 있으신가요? 전화, 이메일 또는 아래 양식으로 문의해 주시면
             빠르게 안내해 드립니다.
           </p>
-        </div>
+        </Reveal>
 
         <div className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-5">
-          <div className="space-y-6 lg:col-span-2">
+          <Reveal className="space-y-6 lg:col-span-2" delay={100}>
             <a
               href={siteConfig.phoneHref}
               className="flex items-start gap-4 rounded-2xl border border-white/10 p-5 transition-colors hover:border-accent"
@@ -63,9 +64,10 @@ export default function Contact() {
                 <p className="mt-1 text-lg font-semibold">{siteConfig.addressDetail}</p>
               </div>
             </div>
-          </div>
+          </Reveal>
 
-          <form onSubmit={handleSubmit} className="space-y-4 lg:col-span-3">
+          <Reveal delay={200} className="lg:col-span-3">
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <label htmlFor="name" className="mb-1.5 block text-sm text-white/70">
@@ -146,6 +148,7 @@ export default function Contact() {
               </p>
             )}
           </form>
+          </Reveal>
         </div>
       </div>
     </section>
