@@ -1,5 +1,7 @@
+import Link from "next/link";
 import { IconShield, IconClock, IconDocument, IconSupport } from "./icons";
 import { siteConfig } from "@/lib/site-config";
+import { aboutPages } from "@/lib/about-data";
 import Reveal from "./Reveal";
 import SplitReveal from "./SplitReveal";
 import ExpandableCard from "./ExpandableCard";
@@ -75,6 +77,20 @@ export default function About() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal delay={200}>
+          <div className="mt-14 flex flex-wrap gap-2 border-t border-white/10 pt-8">
+            {aboutPages.map((page) => (
+              <Link
+                key={page.slug}
+                href={`/about/${page.slug}`}
+                className="rounded-full bg-white/5 px-5 py-2.5 text-sm font-medium text-white/70 transition-colors hover:bg-white/10 hover:text-white"
+              >
+                {page.label}
+              </Link>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );
