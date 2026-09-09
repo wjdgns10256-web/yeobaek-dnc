@@ -1,15 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
 import { projectCategories } from "@/lib/projects-data";
 
 const navItems = [
-  { href: "#about", label: "회사소개" },
-  { href: "#services", label: "사업분야" },
-  { href: "#projects", label: "시공사례" },
-  { href: "#contact", label: "문의" },
+  { href: "/#about", label: "회사소개" },
+  { href: "/#services", label: "사업분야" },
+  { href: "/#projects", label: "시공사례" },
+  { href: "/faq", label: "FAQ" },
+  { href: "/#contact", label: "문의" },
 ];
+
+const categoryLinks = projectCategories.filter((cat) => cat.key !== "all");
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -36,7 +40,7 @@ export default function Header() {
       }`}
     >
       <div className="section-pad mx-auto flex max-w-content items-center justify-between py-4">
-        <a href="#top" className="flex items-center gap-2.5">
+        <Link href="/" className="flex items-center gap-2.5">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo/mark-white.png" alt="" aria-hidden="true" className="h-7 w-auto" />
           <span className="text-lg font-bold tracking-tight text-white">
@@ -45,17 +49,17 @@ export default function Header() {
               YEOBAEK D&amp;C
             </span>
           </span>
-        </a>
+        </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.href}
               href={item.href}
               className="text-sm font-medium text-white/80 transition-colors hover:text-accent"
             >
               {item.label}
-            </a>
+            </Link>
           ))}
           <a
             href={siteConfig.phoneHref}
@@ -93,14 +97,14 @@ export default function Header() {
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/35">Menu</p>
           <nav className="mt-4 flex flex-col">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 className="border-b border-white/10 py-4 text-xl font-bold text-white transition-colors hover:text-accent-200"
                 onClick={() => setMenuOpen(false)}
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -108,15 +112,15 @@ export default function Header() {
             시공사례 카테고리
           </p>
           <nav className="mt-4 flex flex-col">
-            {projectCategories.map((cat) => (
-              <a
+            {categoryLinks.map((cat) => (
+              <Link
                 key={cat.key}
-                href="#projects"
+                href={`/projects/${cat.key}`}
                 className="border-b border-white/10 py-3 text-sm font-medium text-white/70 transition-colors hover:text-accent-200"
                 onClick={() => setMenuOpen(false)}
               >
                 {cat.label}
-              </a>
+              </Link>
             ))}
           </nav>
 

@@ -1,32 +1,13 @@
-"use client";
-
-import { useMemo, useState } from "react";
+import Link from "next/link";
 import { projects, projectCategories } from "@/lib/projects-data";
 import Reveal from "./Reveal";
 import SplitReveal from "./SplitReveal";
-import FullScreenDetail from "./FullScreenDetail";
+
+const categories = projectCategories.filter((cat) => cat.key !== "all");
 
 export default function Projects() {
-  const [active, setActive] = useState("all");
-  const [selected, setSelected] = useState(null);
-
-  const countByCategory = useMemo(() => {
-    const counts = { all: projects.length };
-    for (const p of projects) counts[p.category] = (counts[p.category] || 0) + 1;
-    return counts;
-  }, []);
-
-  const filtered = useMemo(
-    () => (active === "all" ? projects : projects.filter((p) => p.category === active)),
-    [active]
-  );
-
-  const categorySiblings = useMemo(() => {
-    if (!selected) return [];
-    return projects
-      .filter((p) => p.category === selected.category)
-      .map((p) => ({ key: p.id, label: p.title }));
-  }, [selected]);
+  const countByCategory = {};
+  for (const p of projects) countByCategory[p.category] = (countByCategory[p.category] || 0) + 1;
 
   return (
     <section id="projects" className="bg-ink-950 py-20 sm:py-28">
@@ -40,71 +21,47 @@ export default function Projects() {
             as="h2"
             className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl"
           />
+          <Reveal delay={100}>
+            <p className="mt-5 leading-loose text-white/65">
+              1998년부터 이어온 현장 이력 {projects.length}건을 카테고리별로 정리했습니다.
+            </p>
+          </Reveal>
         </div>
 
-        <Reveal delay={100} className="mt-10 flex flex-wrap gap-2">
-          {projectCategories.map((cat) => (
-            <button
-              key={cat.key}
-              type="button"
-              onClick={() => setActive(cat.key)}
-              className={`flex items-center gap-2 rounded-full px-5 py-2 text-sm font-semibold transition-colors ${
-                active === cat.key
-                  ? "bg-accent-700 text-white"
-                  : "bg-white/5 text-white/60 hover:bg-white/10 hover:text-white"
-              }`}
-            >
-              {cat.label}
-              <span
-                className={`text-xs ${active === cat.key ? "text-white/70" : "text-white/35"}`}
-              >
-                {countByCategory[cat.key] ?? 0}
-              </span>
-            </button>
-          ))}
-        </Reveal>
-
-        {/* 이미지는 더미 placeholder입니다. public/images/projects 폴더의 파일을 실제 시공사진으로 교체하세요. */}
-        <div className="mt-10 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3 lg:grid-cols-4">
-          {filtered.map((project, i) => (
-            <Reveal key={project.id} delay={(i % 4) * 80}>
-              <button
-                type="button"
-                onClick={() => setSelected(project)}
-                className="group relative block w-full overflow-hidden rounded-xl border border-white/10 bg-ink-900 text-left"
-              >
-                <div className="aspect-square w-full overflow-hidden">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    loading="lazy"
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                </div>
-                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-3">
-                  <span className="inline-block rounded-full bg-accent-700/90 px-2.5 py-0.5 text-[11px] font-semibold text-white">
-                    {project.categoryLabel}
-                  </span>
-                </figcaption>
-              </button>
-            </Reveal>
-          ))}
+        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2">
+          {categories.map((cat, i) => {
+            const first = projects.find((p) => p.category === cat.key);
+            return (
+              <Reveal key={cat.key} delay={i * 100}>
+                <Link
+                  href={`/projects/${cat.key}`}
+                  className="group relative block aspect-[16/10] w-full overflow-hidden rounded-2xl border border-white/10 bg-ink-900"
+                >
+                  {first && (
+                    <img
+                      src={first.image}
+                      alt={cat.label}
+                      className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    />
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6">
+                    <div>
+                      <p className="text-xl font-bold text-white">{cat.label}</p>
+                      <p className="mt-1 text-sm text-white/60">{countByCategory[cat.key] ?? 0}건</p>
+                    </div>
+                    <span className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-white/10 text-white transition-colors group-hover:bg-accent-700">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                  </div>
+                </Link>
+              </Reveal>
+            );
+          })}
         </div>
       </div>
-
-      <FullScreenDetail
-        item={
-          selected && {
-            ...selected,
-            badge: selected.categoryLabel,
-            description: `발주처 ${selected.client} · 참여기간 ${selected.period} · 시공사진은 준비되는 대로 업데이트됩니다.`,
-          }
-        }
-        onClose={() => setSelected(null)}
-        siblings={categorySiblings}
-        activeKey={selected?.id}
-        onSelectSibling={(sib) => setSelected(projects.find((p) => p.id === sib.key))}
-      />
     </section>
   );
 }

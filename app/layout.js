@@ -2,6 +2,8 @@ import "./globals.css";
 import { siteConfig } from "@/lib/site-config";
 import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: `${siteConfig.companyName} | ${siteConfig.slogan}`,
@@ -65,7 +67,9 @@ export default function RootLayout({ children }) {
       <body className="font-sans antialiased">
         <SmoothScroll />
         <CustomCursor />
+        <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );
