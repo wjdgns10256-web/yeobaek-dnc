@@ -5,7 +5,7 @@ import SplitReveal from "./SplitReveal";
 
 export default function Services() {
   return (
-    <section id="services" className="bg-ink-900 py-20 sm:py-28">
+    <section id="services" className="bg-ink-900 pt-28 pb-20 sm:pt-32 sm:pb-28">
       <div className="section-pad mx-auto max-w-content">
         <div className="max-w-xl">
           <Reveal>

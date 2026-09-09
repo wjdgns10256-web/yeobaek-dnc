@@ -3,17 +3,14 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
-import { projectCategories } from "@/lib/projects-data";
 
 const navItems = [
-  { href: "/#about", label: "회사소개" },
-  { href: "/#services", label: "사업분야" },
-  { href: "/#projects", label: "시공사례" },
+  { href: "/about", label: "회사소개" },
+  { href: "/services", label: "사업분야" },
+  { href: "/projects", label: "시공사례" },
   { href: "/faq", label: "FAQ" },
   { href: "/#contact", label: "문의" },
 ];
-
-const categoryLinks = projectCategories.filter((cat) => cat.key !== "all");
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -104,22 +101,6 @@ export default function Header() {
                 onClick={() => setMenuOpen(false)}
               >
                 {item.label}
-              </Link>
-            ))}
-          </nav>
-
-          <p className="mt-10 text-xs font-semibold uppercase tracking-[0.2em] text-white/35">
-            시공사례 카테고리
-          </p>
-          <nav className="mt-4 flex flex-col">
-            {categoryLinks.map((cat) => (
-              <Link
-                key={cat.key}
-                href={`/projects/${cat.key}`}
-                className="border-b border-white/10 py-3 text-sm font-medium text-white/70 transition-colors hover:text-accent-200"
-                onClick={() => setMenuOpen(false)}
-              >
-                {cat.label}
               </Link>
             ))}
           </nav>

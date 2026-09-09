@@ -36,7 +36,7 @@ export default async function ServiceDetailPage({ params }) {
       <div className="section-pad mx-auto max-w-content py-14 sm:py-20">
         <Reveal>
           <Link
-            href="/#services"
+            href="/services"
             className="inline-flex items-center gap-2 text-sm font-medium text-white/50 transition-colors hover:text-accent-200"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

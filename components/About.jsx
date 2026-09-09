@@ -32,7 +32,7 @@ const values = [
 
 export default function About() {
   return (
-    <section id="about" className="bg-ink-950 py-20 sm:py-28">
+    <section id="about" className="bg-ink-950 pt-28 pb-20 sm:pt-32 sm:pb-28">
       <div className="section-pad mx-auto max-w-content">
         <div className="max-w-xl">
           <Reveal>

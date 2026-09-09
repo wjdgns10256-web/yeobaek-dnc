@@ -116,7 +116,7 @@ export default function Hero() {
         </div>
 
         <a
-          href="#about"
+          href="#story"
           aria-label="아래로 스크롤"
           className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-white/70 transition-colors hover:text-white"
           style={{ opacity: 1 - progress }}

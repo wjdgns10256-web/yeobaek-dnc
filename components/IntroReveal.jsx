@@ -1,0 +1,89 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+
+const lines = ["누군가에게는 철거지만,", "우리에게는 다음을 위한 준비입니다.", "1998년부터, 안전과 원칙으로 그 자리를 지켜왔습니다."];
+
+export default function IntroReveal() {
+  const sectionRef = useRef(null);
+  const [progress, setProgress] = useState(0);
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mq.matches);
+    if (mq.matches) {
+      setProgress(1);
+      return;
+    }
+
+    const el = sectionRef.current;
+    if (!el) return;
+
+    function onScroll() {
+      const rect = el.getBoundingClientRect();
+      const scrollable = el.offsetHeight - window.innerHeight;
+      if (scrollable <= 0) {
+        setProgress(1);
+        return;
+      }
+      const scrolled = Math.min(Math.max(-rect.top, 0), scrollable);
+      setProgress(scrolled / scrollable);
+    }
+
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
+  // 문장이 한 줄씩 순서대로 나타나도록 구간을 배분하고, 마지막에 링크가 이어서 나타납니다.
+  const lineWindow = 0.4;
+  const lineStep = (1 - lineWindow) / lines.length;
+  const lineProgress = (i) => {
+    const start = i * lineStep;
+    return Math.min(Math.max((progress - start) / lineWindow, 0), 1);
+  };
+  const ctaProgress = Math.min(Math.max((progress - 0.75) / 0.25, 0), 1);
+
+  return (
+    <section
+      id="story"
+      ref={sectionRef}
+      className="relative bg-ink-950"
+      style={{ height: reduced ? "100vh" : "240vh" }}
+    >
+      <div className="sticky top-0 flex h-screen flex-col items-center justify-center overflow-hidden px-6">
+        <div className="mx-auto max-w-2xl space-y-4 text-center sm:space-y-5">
+          {lines.map((line, i) => {
+            const p = lineProgress(i);
+            return (
+              <p
+                key={line}
+                className="text-xl font-bold leading-snug tracking-tight text-white sm:text-3xl"
+                style={{ opacity: p, transform: `translateY(${(1 - p) * 20}px)` }}
+              >
+                {line}
+              </p>
+            );
+          })}
+        </div>
+
+        <Link
+          href="/about"
+          className="mt-12 inline-flex items-center gap-2 text-sm font-semibold text-white/60 transition-colors hover:text-accent-200"
+          style={{ opacity: ctaProgress, transform: `translateY(${(1 - ctaProgress) * 16}px)` }}
+        >
+          회사소개 더 보기
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </Link>
+      </div>
+    </section>
+  );
+}

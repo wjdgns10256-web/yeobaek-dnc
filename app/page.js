@@ -1,18 +1,14 @@
 import Hero from "@/components/Hero";
-import About from "@/components/About";
+import IntroReveal from "@/components/IntroReveal";
 import Partners from "@/components/Partners";
-import Services from "@/components/Services";
-import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
 
 export default function Home() {
   return (
     <main>
       <Hero />
-      <About />
+      <IntroReveal />
       <Partners />
-      <Services />
-      <Projects />
       <Contact />
     </main>
   );
