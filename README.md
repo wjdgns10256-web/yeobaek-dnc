@@ -10,7 +10,7 @@ Next.js(App Router) + Tailwind CSS로 제작한 기업 홈페이지입니다. �
 | --- | --- |
 | `/` | 히어로, 회사소개(요약), 사업분야(카드→링크), 시공사례(카테고리 타일→링크), 문의 |
 | `/services/[slug]` | 사업분야 상세 (건축물 해체공사 · 부분철거 · 개구부 확장) |
-| `/projects/[category]` | 시공사례 카테고리별 전체 목록 (주택 · 상가 · 공장 · 특수해체) |
+| `/projects/[category]` | 시공사례 카테고리별 전체 목록 (주택 · 상가 · 공장 · 리모델링 · 재개발·재건축 · 대수선) |
 | `/faq` | 자주 묻는 질문 |
 
 새 사업분야를 추가하려면 `lib/services-data.js`에 항목을 추가하면 `/services/[slug]` 페이지가
@@ -39,7 +39,9 @@ npm run dev
 | `public/images/projects/housing/01~04.svg` | 시공사례 – 주택 |
 | `public/images/projects/commercial/01~04.svg` | 시공사례 – 상가 |
 | `public/images/projects/factory/01~04.svg` | 시공사례 – 공장 |
-| `public/images/projects/special/01~04.svg` | 시공사례 – 특수해체 |
+| `public/images/projects/remodeling/01~04.svg` | 시공사례 – 리모델링 |
+| `public/images/projects/redevelopment/01~04.svg` | 시공사례 – 재개발·재건축 |
+| `public/images/projects/renovation/01~04.svg` | 시공사례 – 대수선 |
 
 - jpg/png 등 다른 확장자로 교체하고 싶다면 `lib/services-data.js`, `lib/projects-data.js` 안의
   `image` 경로만 새 파일명으로 바꿔주면 됩니다.
