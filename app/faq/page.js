@@ -3,6 +3,7 @@ import { faqs } from "@/lib/faq-data";
 import { siteConfig } from "@/lib/site-config";
 import Reveal from "@/components/Reveal";
 import SplitReveal from "@/components/SplitReveal";
+import FaqItem from "@/components/FaqItem";
 
 export const metadata = {
   title: `자주 묻는 질문 | ${siteConfig.companyName}`,
@@ -30,23 +31,7 @@ export default function FaqPage() {
         <div className="mt-12 divide-y divide-white/10 border-t border-white/10">
           {faqs.map((item, i) => (
             <Reveal key={item.q} delay={Math.min(i, 6) * 60}>
-              <details className="group py-6">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-base font-semibold text-white marker:content-none [&::-webkit-details-marker]:hidden">
-                  {item.q}
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    className="flex-none text-white/40 transition-transform group-open:rotate-45"
-                  >
-                    <path d="M12 5v14M5 12h14" strokeLinecap="round" />
-                  </svg>
-                </summary>
-                <p className="mt-4 max-w-2xl text-[15px] leading-loose text-white/60">{item.a}</p>
-              </details>
+              <FaqItem q={item.q} a={item.a} />
             </Reveal>
           ))}
         </div>

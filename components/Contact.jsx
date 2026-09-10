@@ -42,7 +42,7 @@ export default function Contact() {
           <Reveal className="space-y-6 lg:col-span-2" delay={100}>
             <a
               href={siteConfig.phoneHref}
-              className="flex items-start gap-4 rounded-2xl border border-white/10 p-5 transition-colors hover:border-accent"
+              className="flex items-start gap-4 rounded-2xl border border-white/10 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent"
             >
               <IconPhone className="mt-0.5 h-6 w-6 flex-none text-accent" />
               <div>
@@ -52,7 +52,7 @@ export default function Contact() {
             </a>
             <a
               href={`mailto:${siteConfig.email}`}
-              className="flex items-start gap-4 rounded-2xl border border-white/10 p-5 transition-colors hover:border-accent"
+              className="flex items-start gap-4 rounded-2xl border border-white/10 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent"
             >
               <IconMail className="mt-0.5 h-6 w-6 flex-none text-accent" />
               <div>
@@ -140,16 +140,22 @@ export default function Contact() {
 
             <button
               type="submit"
-              className="w-full rounded-lg bg-accent-700 px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-accent-600 sm:w-auto sm:px-10"
+              className="w-full rounded-lg bg-accent-700 px-6 py-3.5 text-sm font-semibold text-white transition-all hover:scale-[1.015] hover:bg-accent-600 sm:w-auto sm:px-10"
             >
               문의 보내기
             </button>
 
-            {status === "sent" && (
-              <p className="text-sm text-accent-200">
-                문의가 접수되었습니다. 빠른 시일 내에 연락드리겠습니다.
-              </p>
-            )}
+            <p
+              className="text-sm text-accent-200"
+              style={{
+                maxHeight: status === "sent" ? "40px" : "0px",
+                opacity: status === "sent" ? 1 : 0,
+                overflow: "hidden",
+                transition: "max-height 400ms cubic-bezier(0.16,1,0.3,1), opacity 300ms ease",
+              }}
+            >
+              문의가 접수되었습니다. 빠른 시일 내에 연락드리겠습니다.
+            </p>
           </form>
           </Reveal>
         </div>

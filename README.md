@@ -52,11 +52,30 @@ npm run dev
 | `public/images/projects/remodeling/01~04.svg` | 시공사례 – 리모델링 |
 | `public/images/projects/redevelopment/01~04.svg` | 시공사례 – 재개발·재건축 |
 | `public/images/projects/renovation/01~04.svg` | 시공사례 – 대수선 |
+| `public/images/about/hero-about.svg` | 회사소개 허브(`/about`) 상단 배너 |
+| `public/images/about/message.svg` | 대표자 말씀 페이지 배너 |
+| `public/images/about/talent.svg` | 인재상 페이지 배너 |
+| `public/images/about/vision.svg` | 비전 페이지 배너 |
+| `public/images/about/method.svg` | 해체공법 페이지 배너 |
+| `public/images/about/organization.svg` | 조직도 페이지 배너 |
 
-- jpg/png 등 다른 확장자로 교체하고 싶다면 `lib/services-data.js`, `lib/projects-data.js` 안의
-  `image` 경로만 새 파일명으로 바꿔주면 됩니다.
+- jpg/png 등 다른 확장자로 교체하고 싶다면 `lib/services-data.js`, `lib/projects-data.js`,
+  `lib/about-data.js` 안의 `image` 경로만 새 파일명으로 바꿔주면 됩니다.
 - 시공사례 개수를 늘리거나 줄이려면 `lib/projects-data.js`의 `buildProjects(...)` 호출 인자(개수)를
   조정하고 해당 폴더에 이미지를 추가/삭제하세요.
+- 사업분야 상세 페이지의 체크리스트(`highlights`)는 `lib/services-data.js`에서, 시공사례
+  카테고리 소개 문구(`description`)는 `lib/projects-data.js`의 `projectCategories`에서
+  수정할 수 있습니다.
+
+## 모션
+
+- `app/template.js` — 라우트가 바뀔 때마다 페이지 전체가 살짝 떠오르며 나타나는 전환 모션.
+- `components/ParallaxBanner.jsx` — 사업분야/시공사례/회사소개 상세 페이지 상단 배너에
+  적용된 스크롤 연동 패럴랙스.
+- `components/CountUp.jsx` — 회사소개 허브의 참여 현장 수(예: "38건+")가 화면에 들어올 때
+  0부터 세어 올라가는 숫자 애니메이션.
+- `components/FaqItem.jsx` — 클릭 시 실제 내용 높이만큼 부드럽게 펼쳐지는 FAQ 아코디언.
+- 모든 모션은 `prefers-reduced-motion`(모션 최소화) 설정을 존중해 자동으로 꺼집니다.
 
 ## 로고
 

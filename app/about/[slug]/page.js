@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { aboutPages } from "@/lib/about-data";
 import { siteConfig } from "@/lib/site-config";
 import Reveal from "@/components/Reveal";
+import ParallaxBanner from "@/components/ParallaxBanner";
 
 export function generateStaticParams() {
   return aboutPages.map((p) => ({ slug: p.slug }));
@@ -26,8 +27,15 @@ export default async function AboutSubPage({ params }) {
   const others = aboutPages.filter((p) => p.slug !== page.slug);
 
   return (
-    <main className="bg-ink-950 pt-28 pb-24 sm:pt-32">
-      <div className="section-pad mx-auto max-w-content">
+    <main className="bg-ink-950 pb-24">
+      {page.image && (
+        <ParallaxBanner
+          src={page.image}
+          alt={page.label}
+          className="h-[32vh] min-h-[200px] w-full sm:h-[40vh]"
+        />
+      )}
+      <div className={`section-pad mx-auto max-w-content ${page.image ? "pt-14 sm:pt-16" : "pt-28 sm:pt-32"}`}>
         <Reveal>
           <Link
             href="/about"
@@ -78,7 +86,7 @@ export default async function AboutSubPage({ params }) {
             <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {page.items.map((item, i) => (
                 <Reveal key={item.title} delay={200 + i * 80}>
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6">
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40">
                     <h3 className="text-base font-semibold text-white">{item.title}</h3>
                     <p className="mt-3 text-sm leading-relaxed text-white/60">{item.desc}</p>
                   </div>
@@ -106,14 +114,13 @@ export default async function AboutSubPage({ params }) {
                 <div className="relative w-full max-w-2xl">
                   <div className="mx-auto h-px w-full max-w-xl bg-white/15" />
                   <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-                    {page.org.departments.map((dept) => (
-                      <div
-                        key={dept.name}
-                        className="rounded-xl border border-white/10 bg-white/[0.03] px-5 py-5 text-center"
-                      >
-                        <p className="text-sm font-semibold text-white">{dept.name}</p>
-                        <p className="mt-2 text-xs text-white/45">{dept.desc}</p>
-                      </div>
+                    {page.org.departments.map((dept, i) => (
+                      <Reveal key={dept.name} delay={250 + i * 80}>
+                        <div className="rounded-xl border border-white/10 bg-white/[0.03] px-5 py-5 text-center transition-all duration-300 hover:-translate-y-1 hover:border-accent/40">
+                          <p className="text-sm font-semibold text-white">{dept.name}</p>
+                          <p className="mt-2 text-xs text-white/45">{dept.desc}</p>
+                        </div>
+                      </Reveal>
                     ))}
                   </div>
                 </div>

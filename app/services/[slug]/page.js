@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { services } from "@/lib/services-data";
 import { siteConfig } from "@/lib/site-config";
 import Reveal from "@/components/Reveal";
+import ParallaxBanner from "@/components/ParallaxBanner";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.id }));
@@ -27,11 +28,11 @@ export default async function ServiceDetailPage({ params }) {
 
   return (
     <main className="bg-ink-950">
-      <div className="relative h-[42vh] min-h-[280px] w-full sm:h-[52vh]">
-        {/* image 경로 파일을 실제 시공사진으로 교체하면 됩니다 */}
-        <img src={service.image} alt={service.title} className="absolute inset-0 h-full w-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink-950 via-black/30 to-black/10" />
-      </div>
+      <ParallaxBanner
+        src={service.image}
+        alt={service.title}
+        className="h-[42vh] min-h-[280px] w-full sm:h-[52vh]"
+      />
 
       <div className="section-pad mx-auto max-w-content py-14 sm:py-20">
         <Reveal>
@@ -48,6 +49,27 @@ export default async function ServiceDetailPage({ params }) {
           <h1 className="mt-6 text-3xl font-bold tracking-tight text-white sm:text-4xl">{service.title}</h1>
           <p className="mt-5 max-w-2xl text-[15px] leading-loose text-white/65">{service.description}</p>
         </Reveal>
+
+        <div className="mt-10 grid grid-cols-1 gap-3 sm:max-w-xl">
+          {service.highlights.map((h, i) => (
+            <Reveal key={h} delay={80 + i * 80}>
+              <div className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  className="mt-0.5 flex-none text-accent"
+                >
+                  <path d="M20 6L9 17l-5-5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                <p className="text-sm leading-relaxed text-white/75">{h}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
 
         <Reveal delay={120}>
           <div className="mt-14 border-t border-white/10 pt-8">

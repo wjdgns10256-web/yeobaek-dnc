@@ -5,6 +5,8 @@ import { aboutPages } from "@/lib/about-data";
 import Reveal from "./Reveal";
 import SplitReveal from "./SplitReveal";
 import ExpandableCard from "./ExpandableCard";
+import ParallaxBanner from "./ParallaxBanner";
+import CountUp from "./CountUp";
 
 const values = [
   {
@@ -32,8 +34,13 @@ const values = [
 
 export default function About() {
   return (
-    <section id="about" className="bg-ink-950 pt-28 pb-20 sm:pt-32 sm:pb-28">
-      <div className="section-pad mx-auto max-w-content">
+    <section id="about" className="bg-ink-950 pb-20 sm:pb-28">
+      <ParallaxBanner
+        src="/images/about/hero-about.svg"
+        alt="여백디앤씨 회사소개"
+        className="h-[32vh] min-h-[200px] w-full sm:h-[38vh]"
+      />
+      <div className="section-pad mx-auto max-w-content pt-14 sm:pt-16">
         <div className="max-w-xl">
           <Reveal>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">About</p>
@@ -48,7 +55,7 @@ export default function About() {
             <div className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-white/10 pt-6">
               <div>
                 <p className="text-2xl font-extrabold tracking-tight text-white">
-                  {siteConfig.trackRecord.projects}
+                  <CountUp text={siteConfig.trackRecord.projects} />
                 </p>
                 <p className="mt-1 text-xs tracking-wide text-white/45">참여 현장</p>
               </div>

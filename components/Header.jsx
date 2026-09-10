@@ -53,14 +53,15 @@ export default function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="text-sm font-medium text-white/80 transition-colors hover:text-accent"
+              className="group relative text-sm font-medium text-white/80 transition-colors hover:text-accent"
             >
               {item.label}
+              <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
             </Link>
           ))}
           <a
             href={siteConfig.phoneHref}
-            className="rounded-full bg-accent-700 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-accent-600"
+            className="rounded-full bg-accent-700 px-4 py-2 text-sm font-semibold text-white transition-all hover:scale-[1.04] hover:bg-accent-600"
           >
             전화 문의
           </a>
