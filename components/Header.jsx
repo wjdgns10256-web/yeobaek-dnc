@@ -91,7 +91,7 @@ export default function Header() {
           menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
-        <div className="section-pad flex h-full flex-col overflow-y-auto pb-10 pt-24">
+        <div className="section-pad flex h-full flex-col overflow-y-auto pb-10 pt-24" data-lenis-prevent>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/35">Menu</p>
           <nav className="mt-4 flex flex-col">
             {navItems.map((item) => (
