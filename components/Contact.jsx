@@ -6,7 +6,7 @@ import { IconPhone, IconMail, IconPin } from "./icons";
 import Reveal from "./Reveal";
 import SplitReveal from "./SplitReveal";
 
-const inquiryTypes = ["건축물 해체공사", "부분철거", "개구부 확장", "견적 문의", "기타"];
+const inquiryTypes = ["구조물 해체공사", "마감재 해체공사", "구조체 절단공사", "견적 문의", "기타"];
 
 const initialForm = { name: "", phone: "", type: inquiryTypes[0], message: "", website: "" };
 
