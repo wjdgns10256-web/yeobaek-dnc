@@ -67,7 +67,7 @@ export default function About() {
               </div>
               <div>
                 <p className="text-2xl font-extrabold tracking-tight text-white">{siteConfig.founded}</p>
-                <p className="mt-1 text-xs tracking-wide text-white/45">법인 설립</p>
+                <p className="mt-1 text-xs tracking-wide text-white/45">회사창립</p>
               </div>
             </div>
           </Reveal>

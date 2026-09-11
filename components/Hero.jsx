@@ -102,13 +102,13 @@ export default function Hero() {
           >
             <a
               href={siteConfig.phoneHref}
-              className="w-full rounded-full bg-accent-700 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-accent-900/30 transition-transform hover:scale-[1.02] hover:bg-accent-600 sm:w-auto"
+              className="w-full rounded-full bg-accent-700 px-8 py-4 text-center text-base font-semibold text-white shadow-lg shadow-accent-900/30 transition-transform hover:scale-[1.02] hover:bg-accent-600 sm:w-auto sm:min-w-[180px]"
             >
               전화 상담
             </a>
             <a
               href="#contact"
-              className="w-full rounded-full border border-white/40 px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-white/10 sm:w-auto"
+              className="w-full rounded-full border border-white/40 px-8 py-4 text-center text-base font-semibold text-white transition-colors hover:bg-white/10 sm:w-auto sm:min-w-[180px]"
             >
               문의하기
             </a>
