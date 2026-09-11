@@ -8,20 +8,41 @@ import SplitReveal from "./SplitReveal";
 
 const inquiryTypes = ["건축물 해체공사", "부분철거", "개구부 확장", "견적 문의", "기타"];
 
+const initialForm = { name: "", phone: "", type: inquiryTypes[0], message: "", website: "" };
+
 export default function Contact() {
-  const [form, setForm] = useState({ name: "", phone: "", type: inquiryTypes[0], message: "" });
-  const [status, setStatus] = useState("idle"); // idle | sent
+  const [form, setForm] = useState(initialForm);
+  const [status, setStatus] = useState("idle"); // idle | sending | sent | error
+  const [errorMessage, setErrorMessage] = useState("");
 
   function handleChange(e) {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    // TODO: 실제 접수를 위해서는 API 라우트(app/api/contact/route.js) 또는
-    // Formspree 등 폼 백엔드 연동이 필요합니다. 현재는 UI 동작만 확인할 수 있습니다.
-    setStatus("sent");
+    setStatus("sending");
+    setErrorMessage("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+
+      if (!res.ok || !data.ok) {
+        throw new Error(data.error || "문의 접수에 실패했습니다.");
+      }
+
+      setStatus("sent");
+      setForm(initialForm);
+    } catch (err) {
+      setStatus("error");
+      setErrorMessage(err.message || "문의 접수에 실패했습니다. 전화로 문의해 주세요.");
+    }
   }
 
   return (
@@ -71,6 +92,18 @@ export default function Contact() {
 
           <Reveal delay={200} className="lg:col-span-3">
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* 허니팟: 사람 눈에는 보이지 않고 스팸 봇만 채우는 함정 필드 */}
+            <input
+              type="text"
+              name="website"
+              value={form.website}
+              onChange={handleChange}
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              className="absolute -left-[9999px] h-0 w-0 opacity-0"
+            />
+
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
                 <label htmlFor="name" className="mb-1.5 block text-sm text-white/70">
@@ -140,9 +173,10 @@ export default function Contact() {
 
             <button
               type="submit"
-              className="w-full rounded-lg bg-accent-700 px-6 py-3.5 text-sm font-semibold text-white transition-all hover:scale-[1.015] hover:bg-accent-600 sm:w-auto sm:px-10"
+              disabled={status === "sending"}
+              className="w-full rounded-lg bg-accent-700 px-6 py-3.5 text-sm font-semibold text-white transition-all hover:scale-[1.015] hover:bg-accent-600 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100 sm:w-auto sm:px-10"
             >
-              문의 보내기
+              {status === "sending" ? "전송 중..." : "문의 보내기"}
             </button>
 
             <p
@@ -155,6 +189,18 @@ export default function Contact() {
               }}
             >
               문의가 접수되었습니다. 빠른 시일 내에 연락드리겠습니다.
+            </p>
+
+            <p
+              className="text-sm text-red-400"
+              style={{
+                maxHeight: status === "error" ? "60px" : "0px",
+                opacity: status === "error" ? 1 : 0,
+                overflow: "hidden",
+                transition: "max-height 400ms cubic-bezier(0.16,1,0.3,1), opacity 300ms ease",
+              }}
+            >
+              {errorMessage || "문의 접수에 실패했습니다. 전화로 문의해 주세요."} · {siteConfig.phone}
             </p>
           </form>
           </Reveal>

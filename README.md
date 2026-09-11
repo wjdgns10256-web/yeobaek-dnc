@@ -95,12 +95,27 @@ npm run dev
 
 ## 문의 폼 연동
 
-현재 `components/Contact.jsx`의 문의 폼은 UI 동작(제출 후 완료 메시지)만 구현되어 있고,
-실제 이메일 발송이나 DB 저장은 연결되어 있지 않습니다. 운영 전 아래 중 한 가지 방식으로
-백엔드 연동이 필요합니다.
+`components/Contact.jsx`의 문의 폼은 `app/api/contact/route.js` API 라우트를 통해
+[Resend](https://resend.com)로 실제 이메일을 발송하도록 연결되어 있습니다. 운영 전에
+아래 설정만 채우면 바로 동작합니다.
 
-- `app/api/contact/route.js` API 라우트를 추가해 이메일 발송(Resend, Nodemailer 등) 연결
-- Formspree, Getform 같은 폼 백엔드 서비스에 연결
+1. [resend.com](https://resend.com) 가입 후 **API Keys** 메뉴에서 키를 발급받습니다.
+2. 프로젝트 루트의 `.env.example`을 복사해 `.env.local`을 만들고 아래 값을 채웁니다.
+   ```bash
+   cp .env.example .env.local
+   ```
+   - `RESEND_API_KEY` — 발급받은 키
+   - `CONTACT_TO_EMAIL` — 문의를 받을 실제 메일 주소 (기본값은 `lib/site-config.js`의 `email`)
+   - `CONTACT_FROM_EMAIL` — 보내는 사람 표시. **도메인을 인증하기 전에는
+     `onboarding@resend.dev` 발신 주소만 사용할 수 있습니다.** 여백디앤씨 도메인(예:
+     `yeobaek-dnc.com`)이 생기면 Resend에서 도메인을 인증한 뒤
+     `여백디앤씨 홈페이지 <noreply@yeobaek-dnc.com>` 같은 형식으로 바꿔주세요.
+3. Vercel 등에 배포할 때도 같은 환경 변수 3개를 프로젝트 설정의 Environment Variables에
+   등록해야 합니다.
+
+스팸 방지를 위해 폼에는 화면에 보이지 않는 허니팟 필드가 포함되어 있어, 별도 캡차 없이도
+기본적인 봇 제출은 걸러집니다. 환경 변수가 설정되지 않은 상태로 배포하면 문의 폼 제출 시
+"전화로 문의해 주세요" 안내와 함께 실패 처리되니, 배포 전 반드시 위 설정을 완료하세요.
 
 ## 폴더 구조
 
