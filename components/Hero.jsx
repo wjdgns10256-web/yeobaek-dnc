@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { siteConfig } from "@/lib/site-config";
 
 const words = siteConfig.slogan.split(" ");
@@ -12,6 +13,8 @@ export default function Hero() {
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    // window는 서버에 없어 마운트 후에만 확인할 수 있어 effect에서 동기적으로 설정합니다 (hydration mismatch 방지).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setReduced(mq.matches);
     if (mq.matches) {
       setProgress(1);
@@ -55,10 +58,13 @@ export default function Hero() {
     <section ref={sectionRef} className="relative bg-ink-950" style={{ height: reduced ? "100vh" : "160vh" }}>
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
         {/* 히어로 배경 이미지 — public/images/hero/hero-main.jpg 를 교체하면 반영됩니다 */}
-        <img
+        <Image
           src="/images/hero/hero-main.jpg"
           alt="여백디앤씨 해체·철거 현장"
-          className="absolute inset-0 h-full w-full scale-110 object-cover"
+          fill
+          priority
+          sizes="100vw"
+          className="scale-110 object-cover"
           style={{ transform: `scale(1.1) translateY(${progress * 40}px)` }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/80" />

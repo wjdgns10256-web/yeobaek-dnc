@@ -15,6 +15,8 @@ export default function CountUp({ text, duration = 1200 }) {
 
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     if (mq.matches) {
+      // window는 서버에 없어 마운트 후에만 확인할 수 있어 effect에서 동기적으로 설정합니다 (hydration mismatch 방지).
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setValue(target);
       return;
     }

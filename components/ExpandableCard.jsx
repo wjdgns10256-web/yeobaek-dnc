@@ -41,14 +41,12 @@ export default function ExpandableCard({ icon, image, title, description, classN
         </button>
 
         <div
-          style={{
-            maxHeight: open ? "220px" : "0px",
-            opacity: open ? 1 : 0,
-            overflow: "hidden",
-            transition: "max-height 400ms cubic-bezier(0.16,1,0.3,1), opacity 300ms ease",
-          }}
+          className="grid transition-[grid-template-rows] duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          style={{ gridTemplateRows: open ? "1fr" : "0fr", opacity: open ? 1 : 0 }}
         >
-          <p className="pt-3 text-sm leading-relaxed text-white/60">{description}</p>
+          <div className="overflow-hidden">
+            <p className="pt-3 text-sm leading-relaxed text-white/60">{description}</p>
+          </div>
         </div>
       </div>
     </div>

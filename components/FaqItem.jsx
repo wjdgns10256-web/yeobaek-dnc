@@ -1,10 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 export default function FaqItem({ q, a }) {
   const [open, setOpen] = useState(false);
-  const bodyRef = useRef(null);
 
   return (
     <div className="py-6">
@@ -29,16 +28,12 @@ export default function FaqItem({ q, a }) {
         </svg>
       </button>
       <div
-        style={{
-          maxHeight: open ? bodyRef.current?.scrollHeight ?? 1000 : 0,
-          opacity: open ? 1 : 0,
-          overflow: "hidden",
-          transition: "max-height 400ms cubic-bezier(0.16,1,0.3,1), opacity 300ms ease",
-        }}
+        className="grid transition-[grid-template-rows] duration-400 ease-[cubic-bezier(0.16,1,0.3,1)]"
+        style={{ gridTemplateRows: open ? "1fr" : "0fr", opacity: open ? 1 : 0 }}
       >
-        <p ref={bodyRef} className="mt-4 max-w-2xl text-[15px] leading-loose text-white/60">
-          {a}
-        </p>
+        <div className="overflow-hidden">
+          <p className="mt-4 max-w-2xl text-[15px] leading-loose text-white/60">{a}</p>
+        </div>
       </div>
     </div>
   );
