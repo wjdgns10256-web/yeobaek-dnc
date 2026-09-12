@@ -2,24 +2,21 @@ import Link from "next/link";
 import { services } from "@/lib/services-data";
 import Reveal from "./Reveal";
 import SplitReveal from "./SplitReveal";
+import BrandMark from "./BrandMark";
 
 export default function Services() {
   return (
     <section id="services" className="bg-ink-900 pt-28 pb-20 sm:pt-32 sm:pb-28">
-      {/* 페이지 상단에 브랜드 심볼을 크게 배치 — 텍스트와 겹치지 않는 독립된 배너 */}
-      <div className="flex h-28 items-center justify-center overflow-hidden sm:h-40">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo/mark-white.png" alt="" aria-hidden="true" className="h-[70%] w-auto opacity-75" />
-      </div>
       <div className="section-pad mx-auto max-w-content">
-        <div className="max-w-xl">
+        <div className="relative max-w-xl">
+          <BrandMark />
           <Reveal>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Services</p>
+            <p className="relative text-sm font-semibold uppercase tracking-[0.2em] text-accent">Services</p>
           </Reveal>
           <SplitReveal
             text="사업분야"
             as="h2"
-            className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl"
+            className="relative mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl"
           />
         </div>
 

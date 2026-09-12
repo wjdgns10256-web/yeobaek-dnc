@@ -5,6 +5,7 @@ import { siteConfig } from "@/lib/site-config";
 import { IconPhone, IconMail, IconPin } from "./icons";
 import Reveal from "./Reveal";
 import SplitReveal from "./SplitReveal";
+import BrandMark from "./BrandMark";
 
 const inquiryTypes = ["구조물 해체공사", "마감재 해체공사", "구조체 절단공사", "견적 문의", "기타"];
 
@@ -46,21 +47,17 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="border-t border-white/5 bg-ink-900 pb-20 text-white sm:pb-28">
-      {/* 페이지 상단에 브랜드 심볼을 크게 배치 — 텍스트와 겹치지 않는 독립된 배너 */}
-      <div className="flex h-28 items-center justify-center overflow-hidden sm:h-40">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo/mark-white.png" alt="" aria-hidden="true" className="h-[70%] w-auto opacity-75" />
-      </div>
-      <div className="section-pad mx-auto max-w-content pt-8 sm:pt-10">
-        <div className="max-w-xl">
+    <section id="contact" className="border-t border-white/5 bg-ink-900 py-20 text-white sm:py-28">
+      <div className="section-pad mx-auto max-w-content">
+        <div className="relative max-w-xl">
+          <BrandMark />
           <Reveal>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent-300">Contact</p>
+            <p className="relative text-sm font-semibold uppercase tracking-[0.2em] text-accent-300">Contact</p>
           </Reveal>
           <SplitReveal
             text="문의하기"
             as="h2"
-            className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl"
+            className="relative mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl"
           />
         </div>
 

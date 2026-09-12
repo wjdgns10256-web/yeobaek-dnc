@@ -4,6 +4,7 @@ import { services } from "@/lib/services-data";
 import { siteConfig } from "@/lib/site-config";
 import Reveal from "@/components/Reveal";
 import ParallaxBanner from "@/components/ParallaxBanner";
+import BrandMark from "@/components/BrandMark";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.id }));
@@ -45,9 +46,14 @@ export default async function ServiceDetailPage({ params }) {
             </svg>
             사업분야 전체보기
           </Link>
+        </Reveal>
 
-          <h1 className="mt-6 text-3xl font-bold tracking-tight text-white sm:text-4xl">{service.title}</h1>
-          <p className="mt-5 max-w-2xl text-[15px] leading-loose text-white/65">{service.description}</p>
+        <Reveal>
+          <div className="relative mt-6 max-w-2xl">
+            <BrandMark />
+            <h1 className="relative text-3xl font-bold tracking-tight text-white sm:text-4xl">{service.title}</h1>
+            <p className="relative mt-5 text-[15px] leading-loose text-white/65">{service.description}</p>
+          </div>
         </Reveal>
 
         <div className="mt-10 grid grid-cols-1 gap-3 sm:max-w-xl">

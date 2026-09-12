@@ -4,6 +4,7 @@ import { aboutPages } from "@/lib/about-data";
 import { siteConfig } from "@/lib/site-config";
 import Reveal from "@/components/Reveal";
 import ParallaxBanner from "@/components/ParallaxBanner";
+import BrandMark from "@/components/BrandMark";
 
 export function generateStaticParams() {
   return aboutPages.map((p) => ({ slug: p.slug }));
@@ -46,9 +47,14 @@ export default async function AboutSubPage({ params }) {
             </svg>
             회사소개로 돌아가기
           </Link>
+        </Reveal>
 
-          <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-accent">{page.eyebrow}</p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">{page.label}</h1>
+        <Reveal>
+          <div className="relative mt-6 max-w-xl">
+            <BrandMark />
+            <p className="relative text-sm font-semibold uppercase tracking-[0.2em] text-accent">{page.eyebrow}</p>
+            <h1 className="relative mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">{page.label}</h1>
+          </div>
         </Reveal>
 
         <Reveal delay={100}>

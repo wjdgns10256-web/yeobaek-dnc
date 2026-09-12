@@ -4,6 +4,7 @@ import { projects, projectCategories } from "@/lib/projects-data";
 import { siteConfig } from "@/lib/site-config";
 import Reveal from "@/components/Reveal";
 import ParallaxBanner from "@/components/ParallaxBanner";
+import BrandMark from "@/components/BrandMark";
 
 const categories = projectCategories.filter((c) => c.key !== "all");
 
@@ -51,17 +52,20 @@ export default async function ProjectCategoryPage({ params }) {
             </svg>
             시공사례 전체보기
           </Link>
+        </Reveal>
 
-          <p className="mt-6 text-sm font-semibold uppercase tracking-[0.2em] text-accent">Projects</p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            {cat.label} 시공사례
-          </h1>
-          {cat.description && (
-            <p className="mt-4 max-w-xl text-[15px] leading-loose text-white/65">{cat.description}</p>
-          )}
-          <p className="mt-3 text-sm text-white/45">
-            총 {items.length}건 · 시공사진은 준비되는 대로 업데이트됩니다.
-          </p>
+        <Reveal>
+          <div className="relative mt-6 max-w-xl">
+            <BrandMark />
+            <p className="relative text-sm font-semibold uppercase tracking-[0.2em] text-accent">Projects</p>
+            <h1 className="relative mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+              {cat.label} 시공사례
+            </h1>
+            {cat.description && (
+              <p className="relative mt-4 text-[15px] leading-loose text-white/65">{cat.description}</p>
+            )}
+            <p className="relative mt-3 text-sm text-white/45">총 {items.length}건</p>
+          </div>
         </Reveal>
 
         <Reveal delay={100}>
