@@ -49,10 +49,12 @@ export default async function ServiceDetailPage({ params }) {
         </Reveal>
 
         <Reveal>
-          <div className="relative mt-6 max-w-2xl">
-            <BrandMark />
-            <h1 className="relative text-3xl font-bold tracking-tight text-white sm:text-4xl">{service.title}</h1>
-            <p className="relative mt-5 text-[15px] leading-loose text-white/65">{service.description}</p>
+          <div className="mt-6 max-w-2xl">
+            <div className="relative inline-block">
+              <BrandMark />
+              <h1 className="relative text-3xl font-bold tracking-tight text-white sm:text-4xl">{service.title}</h1>
+            </div>
+            <p className="mt-5 text-[15px] leading-loose text-white/65">{service.description}</p>
           </div>
         </Reveal>
 

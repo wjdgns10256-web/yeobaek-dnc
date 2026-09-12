@@ -42,16 +42,18 @@ export default function About() {
         className="h-[32vh] min-h-[200px] w-full sm:h-[38vh]"
       />
       <div className="section-pad mx-auto max-w-content pt-14 sm:pt-16">
-        <div className="relative max-w-xl">
-          <BrandMark />
+        <div className="max-w-xl">
           <Reveal>
-            <p className="relative text-sm font-semibold uppercase tracking-[0.2em] text-accent">About</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">About</p>
           </Reveal>
-          <SplitReveal
-            text="오랜 손, 새로운 이름"
-            as="h2"
-            className="relative mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl"
-          />
+          <div className="relative mt-3 inline-block">
+            <BrandMark />
+            <SplitReveal
+              text="오랜 손, 새로운 이름"
+              as="h2"
+              className="relative text-3xl font-bold tracking-tight text-white sm:text-4xl"
+            />
+          </div>
 
           <Reveal delay={150}>
             <div className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-white/10 pt-6">

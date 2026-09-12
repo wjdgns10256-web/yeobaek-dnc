@@ -50,10 +50,12 @@ export default async function AboutSubPage({ params }) {
         </Reveal>
 
         <Reveal>
-          <div className="relative mt-6 max-w-xl">
-            <BrandMark />
-            <p className="relative text-sm font-semibold uppercase tracking-[0.2em] text-accent">{page.eyebrow}</p>
-            <h1 className="relative mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">{page.label}</h1>
+          <div className="mt-6 max-w-xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">{page.eyebrow}</p>
+            <div className="relative mt-2 inline-block">
+              <BrandMark />
+              <h1 className="relative text-3xl font-bold tracking-tight text-white sm:text-4xl">{page.label}</h1>
+            </div>
           </div>
         </Reveal>
 

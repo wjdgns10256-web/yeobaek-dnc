@@ -13,16 +13,18 @@ export default function Projects() {
   return (
     <section id="projects" className="bg-ink-950 pt-28 pb-20 sm:pt-32 sm:pb-28">
       <div className="section-pad mx-auto max-w-content">
-        <div className="relative max-w-xl">
-          <BrandMark />
+        <div className="max-w-xl">
           <Reveal>
-            <p className="relative text-sm font-semibold uppercase tracking-[0.2em] text-accent">Projects</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Projects</p>
           </Reveal>
-          <SplitReveal
-            text="시공사례"
-            as="h2"
-            className="relative mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl"
-          />
+          <div className="relative mt-3 inline-block">
+            <BrandMark />
+            <SplitReveal
+              text="시공사례"
+              as="h2"
+              className="relative text-3xl font-bold tracking-tight text-white sm:text-4xl"
+            />
+          </div>
           <Reveal delay={100}>
             <p className="mt-5 leading-loose text-white/65">
               1998년부터 이어온 현장 이력 {projects.length}건을 카테고리별로 정리했습니다.

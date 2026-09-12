@@ -8,16 +8,18 @@ export default function Services() {
   return (
     <section id="services" className="bg-ink-900 pt-28 pb-20 sm:pt-32 sm:pb-28">
       <div className="section-pad mx-auto max-w-content">
-        <div className="relative max-w-xl">
-          <BrandMark />
+        <div className="max-w-xl">
           <Reveal>
-            <p className="relative text-sm font-semibold uppercase tracking-[0.2em] text-accent">Services</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Services</p>
           </Reveal>
-          <SplitReveal
-            text="사업분야"
-            as="h2"
-            className="relative mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl"
-          />
+          <div className="relative mt-3 inline-block">
+            <BrandMark />
+            <SplitReveal
+              text="사업분야"
+              as="h2"
+              className="relative text-3xl font-bold tracking-tight text-white sm:text-4xl"
+            />
+          </div>
         </div>
 
         <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-3">

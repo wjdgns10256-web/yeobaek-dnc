@@ -15,18 +15,20 @@ export default function FaqPage() {
   return (
     <main className="bg-ink-950 pt-28 pb-24 sm:pt-32">
       <div className="section-pad mx-auto max-w-content">
-        <div className="relative max-w-xl">
-          <BrandMark />
+        <div className="max-w-xl">
           <Reveal>
-            <p className="relative text-sm font-semibold uppercase tracking-[0.2em] text-accent">FAQ</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">FAQ</p>
           </Reveal>
-          <SplitReveal
-            text="자주 묻는 질문"
-            as="h1"
-            className="relative mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl"
-          />
+          <div className="relative mt-2 inline-block">
+            <BrandMark />
+            <SplitReveal
+              text="자주 묻는 질문"
+              as="h1"
+              className="relative text-3xl font-bold tracking-tight text-white sm:text-4xl"
+            />
+          </div>
           <Reveal delay={100}>
-            <p className="relative mt-5 text-[15px] leading-loose text-white/65">
+            <p className="mt-5 text-[15px] leading-loose text-white/65">
               더 궁금한 점이 있으시면 전화나 이메일로 편하게 문의해 주세요.
             </p>
           </Reveal>

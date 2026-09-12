@@ -55,16 +55,18 @@ export default async function ProjectCategoryPage({ params }) {
         </Reveal>
 
         <Reveal>
-          <div className="relative mt-6 max-w-xl">
-            <BrandMark />
-            <p className="relative text-sm font-semibold uppercase tracking-[0.2em] text-accent">Projects</p>
-            <h1 className="relative mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              {cat.label} 시공사례
-            </h1>
+          <div className="mt-6 max-w-xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Projects</p>
+            <div className="relative mt-2 inline-block">
+              <BrandMark />
+              <h1 className="relative text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                {cat.label} 시공사례
+              </h1>
+            </div>
             {cat.description && (
-              <p className="relative mt-4 text-[15px] leading-loose text-white/65">{cat.description}</p>
+              <p className="mt-4 text-[15px] leading-loose text-white/65">{cat.description}</p>
             )}
-            <p className="relative mt-3 text-sm text-white/45">총 {items.length}건</p>
+            <p className="mt-3 text-sm text-white/45">총 {items.length}건</p>
           </div>
         </Reveal>
 
