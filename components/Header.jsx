@@ -115,7 +115,7 @@ export default function Header() {
 
           <a
             href={siteConfig.phoneHref}
-            className="mt-10 rounded-full bg-accent-700 px-4 py-3.5 text-center text-sm font-semibold text-white"
+            className="mt-10 rounded-full bg-accent-700 px-4 py-3.5 text-center text-sm font-semibold text-white transition-all hover:scale-[1.02] hover:bg-accent-600"
             onClick={() => setMenuOpen(false)}
           >
             전화 문의 {siteConfig.phone}

@@ -24,7 +24,7 @@ export default function ExpandableCard({ icon, image, title, description, classN
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium tracking-wide text-white/45 transition-colors hover:text-accent"
+          className="group/more mt-3 inline-flex items-center gap-1.5 text-xs font-medium tracking-wide text-white/45 transition-colors hover:text-accent"
         >
           {open ? "접기" : "Show More"}
           <svg
@@ -34,7 +34,8 @@ export default function ExpandableCard({ icon, image, title, description, classN
             fill="none"
             stroke="currentColor"
             strokeWidth="2.5"
-            style={{ transform: open ? "rotate(90deg)" : "none", transition: "transform 250ms ease" }}
+            className="transition-transform duration-200 group-hover/more:translate-x-0.5"
+            style={{ transform: open ? "rotate(90deg)" : undefined, transition: "transform 250ms ease" }}
           >
             <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>

@@ -85,7 +85,7 @@ export default function About() {
                 <Link
                   key={page.slug}
                   href={`/about/${page.slug}`}
-                  className="group relative block aspect-[3/4] w-full overflow-hidden rounded-2xl border border-white/10 bg-ink-900"
+                  className="group relative block aspect-[3/4] w-full overflow-hidden rounded-2xl border border-white/10 bg-ink-900 transition-colors duration-300 hover:border-accent/40"
                 >
                   {/* image 경로 파일을 실제 사진으로 교체하면 됩니다 */}
                   <img
@@ -103,7 +103,7 @@ export default function About() {
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="2"
-                      className="flex-none text-white/60 transition-colors group-hover:text-accent-200"
+                      className="flex-none text-white/60 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent-200"
                     >
                       <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>

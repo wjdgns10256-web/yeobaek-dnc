@@ -46,13 +46,13 @@ export default function FaqPage() {
           <div className="mt-14 flex flex-col gap-3 sm:flex-row">
             <a
               href={siteConfig.phoneHref}
-              className="rounded-full bg-accent-700 px-8 py-4 text-center text-base font-semibold text-white transition-colors hover:bg-accent-600"
+              className="rounded-full bg-accent-700 px-8 py-4 text-center text-base font-semibold text-white transition-all hover:scale-[1.03] hover:bg-accent-600"
             >
               전화로 상담하기 · {siteConfig.phone}
             </a>
             <Link
               href="/#contact"
-              className="rounded-full border border-white/40 px-8 py-4 text-center text-base font-semibold text-white transition-colors hover:bg-white/10"
+              className="rounded-full border border-white/40 px-8 py-4 text-center text-base font-semibold text-white transition-all hover:scale-[1.03] hover:border-white/70 hover:bg-white/10"
             >
               온라인 문의
             </Link>

@@ -11,7 +11,7 @@ export default function FaqItem({ q, a }) {
         type="button"
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
-        className="flex w-full items-center justify-between gap-4 text-left text-base font-semibold text-white"
+        className="group flex w-full items-center justify-between gap-4 text-left text-base font-semibold text-white transition-colors hover:text-accent-200"
       >
         {q}
         <svg
@@ -21,8 +21,8 @@ export default function FaqItem({ q, a }) {
           fill="none"
           stroke="currentColor"
           strokeWidth="2"
-          className="flex-none text-white/40 transition-transform duration-300"
-          style={{ transform: open ? "rotate(45deg)" : "none" }}
+          className="flex-none text-white/40 transition-all duration-300 group-hover:scale-110 group-hover:text-accent-200"
+          style={{ transform: open ? "rotate(45deg)" : undefined }}
         >
           <path d="M12 5v14M5 12h14" strokeLinecap="round" />
         </svg>
