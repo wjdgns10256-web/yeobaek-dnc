@@ -16,7 +16,7 @@ export default function Footer() {
         src="/logo/mark-white.png"
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute -bottom-16 -right-16 h-56 w-56 opacity-[0.05] sm:h-72 sm:w-72"
+        className="pointer-events-none absolute -bottom-16 -right-16 h-56 w-56 max-w-none opacity-[0.05] sm:h-72 sm:w-72"
       />
       <div className="section-pad relative mx-auto max-w-content">
         <div className="flex flex-col gap-8 border-b border-white/10 pb-8 sm:flex-row sm:items-start sm:justify-between">

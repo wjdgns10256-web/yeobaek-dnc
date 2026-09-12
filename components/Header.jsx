@@ -96,7 +96,7 @@ export default function Header() {
           src="/logo/mark-white.png"
           alt=""
           aria-hidden="true"
-          className="pointer-events-none absolute -bottom-10 -right-10 h-64 w-64 opacity-[0.06]"
+          className="pointer-events-none absolute -bottom-10 -right-10 h-64 w-64 max-w-none opacity-[0.06]"
         />
         <div className="section-pad relative flex h-full flex-col overflow-y-auto pb-10 pt-24" data-lenis-prevent>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/35">Menu</p>

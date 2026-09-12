@@ -7,7 +7,7 @@ export default function BrandMark({ className = "" }) {
       src="/logo/mark-white.png"
       alt=""
       aria-hidden="true"
-      className={`pointer-events-none absolute left-1/2 top-1/2 h-40 w-auto -translate-x-1/2 -translate-y-1/2 opacity-[0.15] sm:h-56 ${className}`}
+      className={`pointer-events-none absolute left-1/2 top-1/2 h-40 w-auto max-w-none -translate-x-1/2 -translate-y-1/2 opacity-[0.15] sm:h-56 ${className}`}
     />
   );
 }

@@ -81,7 +81,7 @@ export default async function AboutSubPage({ params }) {
                 src="/logo/mark-white.png"
                 alt=""
                 aria-hidden="true"
-                className="pointer-events-none absolute -right-14 -top-14 h-52 w-52 opacity-[0.07] sm:-right-10 sm:-top-16 sm:h-72 sm:w-72"
+                className="pointer-events-none absolute -right-14 -top-14 h-52 w-52 max-w-none opacity-[0.07] sm:-right-10 sm:-top-16 sm:h-72 sm:w-72"
               />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src="/logo/mark-white.png" alt={siteConfig.companyName} className="relative mb-8 h-9 w-auto opacity-90" />
