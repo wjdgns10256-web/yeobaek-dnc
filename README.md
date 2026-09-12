@@ -49,33 +49,39 @@ npm run dev
 
 ## 실제 시공사진으로 교체하기
 
-모든 이미지는 `public/images` 아래 더미(placeholder) SVG로 채워져 있습니다.
+사업분야 3장, 회사소개 배너 3장(비전·조직도·인재상), 시공사례 카테고리별 대표 이미지 7장은
+실제 시공사진(.jpg)으로 교체되어 있습니다. 그 외 자리는 아직 더미(placeholder) SVG입니다.
 **같은 파일명으로 이미지 파일만 교체하면 코드 수정 없이 반영됩니다.**
 
 | 위치 | 용도 |
 | --- | --- |
 | `public/images/hero/hero-main.jpg` | 히어로 섹션 풀스크린 배경 (1920×1080 권장) |
-| `public/images/services/*.svg` | 사업분야 카드 3장 |
-| `public/images/projects/housing/01~04.svg` | 시공사례 – 주택 |
-| `public/images/projects/commercial/01~04.svg` | 시공사례 – 상가 |
-| `public/images/projects/factory/01~04.svg` | 시공사례 – 공장 |
-| `public/images/projects/remodeling/01~04.svg` | 시공사례 – 리모델링 |
-| `public/images/projects/redevelopment/01~04.svg` | 시공사례 – 재개발·재건축 |
-| `public/images/projects/renovation/01~04.svg` | 시공사례 – 대수선 |
+| `public/images/services/*.jpg` | 사업분야 카드 3장 (실사진 적용됨) |
+| `public/images/projects/housing/01~02.jpg`, `03~04.svg` | 시공사례 – 주택 |
+| `public/images/projects/commercial/01.jpg`, `02~04.svg` | 시공사례 – 상가 |
+| `public/images/projects/factory/01.jpg`, `02~04.svg` | 시공사례 – 공장 |
+| `public/images/projects/remodeling/01.jpg`, `02~04.svg` | 시공사례 – 리모델링 |
+| `public/images/projects/redevelopment/01.jpg`, `02~04.svg` | 시공사례 – 재개발·재건축 |
+| `public/images/projects/renovation/01.jpg`, `02~04.svg` | 시공사례 – 대수선 |
 | `public/images/about/hero-about.svg` | 회사소개 허브(`/about`) 상단 배너 |
 | `public/images/about/message.svg` | 대표자 말씀 페이지 배너 |
-| `public/images/about/talent.svg` | 인재상 페이지 배너 |
-| `public/images/about/vision.svg` | 비전 페이지 배너 |
+| `public/images/about/talent.jpg` | 인재상 페이지 배너 (실사진 적용됨) |
+| `public/images/about/vision.jpg` | 비전 페이지 배너 (실사진 적용됨) |
 | `public/images/about/method.svg` | 해체공법 페이지 배너 |
-| `public/images/about/organization.svg` | 조직도 페이지 배너 |
+| `public/images/about/organization.jpg` | 조직도 페이지 배너 (실사진 적용됨) |
 
 - jpg/png 등 다른 확장자로 교체하고 싶다면 `lib/services-data.js`, `lib/projects-data.js`,
   `lib/about-data.js` 안의 `image` 경로만 새 파일명으로 바꿔주면 됩니다.
+- 시공사례는 `lib/projects-data.js`의 `realPhotoIndexes`에 등록된 인덱스만 `.jpg`를 쓰고
+  나머지는 `.svg`를 씁니다. 추가로 실제 사진을 넣으려면 같은 번호로 파일을 넣고
+  `realPhotoIndexes`에 번호를 추가하세요.
 - 시공사례 개수를 늘리거나 줄이려면 `lib/projects-data.js`의 `buildProjects(...)` 호출 인자(개수)를
   조정하고 해당 폴더에 이미지를 추가/삭제하세요.
 - 사업분야 상세 페이지의 체크리스트(`highlights`)는 `lib/services-data.js`에서, 시공사례
   카테고리 소개 문구(`description`)는 `lib/projects-data.js`의 `projectCategories`에서
   수정할 수 있습니다.
+- 업로드한 원본 사진(2~3MB PNG)은 `sharp`로 최대 가로 1920px, JPEG 품질 82로 리사이즈·압축해
+  200~380KB 수준으로 최적화한 뒤 반영했습니다.
 
 ## 모션
 
