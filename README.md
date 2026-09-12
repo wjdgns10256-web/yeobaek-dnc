@@ -49,8 +49,8 @@ npm run dev
 
 ## 실제 시공사진으로 교체하기
 
-사업분야 3장, 회사소개 배너 3장(비전·조직도·인재상), 시공사례 카테고리별 대표 이미지 7장은
-실제 시공사진(.jpg)으로 교체되어 있습니다. 그 외 자리는 아직 더미(placeholder) SVG입니다.
+사업분야 3장, 회사소개 배너 4장(인사말·비전·조직도·인재상), 시공사례 카테고리별 대표
+이미지 7장은 실제 사진(.jpg)으로 교체되어 있습니다. 그 외 자리는 아직 더미(placeholder) SVG입니다.
 **같은 파일명으로 이미지 파일만 교체하면 코드 수정 없이 반영됩니다.**
 
 | 위치 | 용도 |
@@ -64,7 +64,7 @@ npm run dev
 | `public/images/projects/redevelopment/01.jpg`, `02~04.svg` | 시공사례 – 재개발·재건축 |
 | `public/images/projects/renovation/01.jpg`, `02~04.svg` | 시공사례 – 대수선 |
 | `public/images/about/hero-about.svg` | 회사소개 허브(`/about`) 상단 배너 |
-| `public/images/about/message.svg` | 인사말 페이지 배너 |
+| `public/images/about/message.jpg` | 인사말 페이지 배너 (실사진 적용됨) |
 | `public/images/about/talent.jpg` | 인재상 페이지 배너 (실사진 적용됨) |
 | `public/images/about/vision.jpg` | 비전 페이지 배너 (실사진 적용됨) |
 | `public/images/about/method.svg` | 해체공법 페이지 배너 |
