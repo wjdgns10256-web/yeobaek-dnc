@@ -10,7 +10,7 @@ Next.js(App Router) + Tailwind CSS로 제작한 기업 홈페이지입니다. �
 | --- | --- |
 | `/` | 히어로(헤드라인) → 스크롤 인트로(회사 소개 문구 한 줄씩) → 발주처 마퀴 → 문의 |
 | `/about` | 회사소개 허브 — 통계, 핵심 가치 카드, 하위 페이지 링크 |
-| `/about/[slug]` | 회사소개 하위 페이지 (대표자 말씀 · 인재상 · 비전 · 해체공법 · 조직도) |
+| `/about/[slug]` | 회사소개 하위 페이지 (인사말 · 인재상 · 비전 · 해체공법 · 조직도) |
 | `/services` | 사업분야 허브 — 카드 3개 |
 | `/services/[slug]` | 사업분야 상세 (구조물 해체공사 · 마감재 해체공사 · 구조체 절단공사) |
 | `/projects` | 시공사례 허브 — 카테고리 타일 6개 |
@@ -23,7 +23,7 @@ Next.js(App Router) + Tailwind CSS로 제작한 기업 홈페이지입니다. �
 
 새 사업분야를 추가하려면 `lib/services-data.js`에 항목을 추가하면 `/services/[slug]` 페이지가
 자동 생성됩니다. 시공사례도 `lib/projects-data.js`의 `rawHistory` 배열에 행을 추가하면 됩니다.
-회사소개 하위 페이지는 `lib/about-data.js`에서 문구를 수정하면 되고, 대표자 말씀은 초안이니
+회사소개 하위 페이지는 `lib/about-data.js`에서 문구를 수정하면 되고, 인사말은 초안이니
 실제 대표님 말씀으로 교체하는 것을 권장합니다.
 
 ## 시작하기
@@ -64,7 +64,7 @@ npm run dev
 | `public/images/projects/redevelopment/01.jpg`, `02~04.svg` | 시공사례 – 재개발·재건축 |
 | `public/images/projects/renovation/01.jpg`, `02~04.svg` | 시공사례 – 대수선 |
 | `public/images/about/hero-about.svg` | 회사소개 허브(`/about`) 상단 배너 |
-| `public/images/about/message.svg` | 대표자 말씀 페이지 배너 |
+| `public/images/about/message.svg` | 인사말 페이지 배너 |
 | `public/images/about/talent.jpg` | 인재상 페이지 배너 (실사진 적용됨) |
 | `public/images/about/vision.jpg` | 비전 페이지 배너 (실사진 적용됨) |
 | `public/images/about/method.svg` | 해체공법 페이지 배너 |
