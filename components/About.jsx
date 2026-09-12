@@ -73,7 +73,44 @@ export default function About() {
           </Reveal>
         </div>
 
-        <div className="mt-14 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+        <Reveal delay={180}>
+          <div className="mt-14">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">회사소개 더 보기</p>
+            <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-5">
+              {aboutPages.map((page) => (
+                <Link
+                  key={page.slug}
+                  href={`/about/${page.slug}`}
+                  className="group relative block aspect-[3/4] w-full overflow-hidden rounded-2xl border border-white/10 bg-ink-900"
+                >
+                  {/* image 경로 파일을 실제 사진으로 교체하면 됩니다 */}
+                  <img
+                    src={page.image}
+                    alt={page.label}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+                  <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 p-4">
+                    <span className="text-sm font-bold text-white sm:text-base">{page.label}</span>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      className="flex-none text-white/60 transition-colors group-hover:text-accent-200"
+                    >
+                      <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </Reveal>
+
+        <div className="mt-14 grid grid-cols-2 gap-4 border-t border-white/10 pt-14 sm:gap-6 lg:grid-cols-4">
           {values.map((value, i) => (
             <Reveal key={value.title} delay={i * 100}>
               <ExpandableCard
@@ -84,20 +121,6 @@ export default function About() {
             </Reveal>
           ))}
         </div>
-
-        <Reveal delay={200}>
-          <div className="mt-14 flex flex-wrap gap-2 border-t border-white/10 pt-8">
-            {aboutPages.map((page) => (
-              <Link
-                key={page.slug}
-                href={`/about/${page.slug}`}
-                className="rounded-full bg-white/5 px-5 py-2.5 text-sm font-medium text-white/70 transition-colors hover:bg-white/10 hover:text-white"
-              >
-                {page.label}
-              </Link>
-            ))}
-          </div>
-        </Reveal>
       </div>
     </section>
   );
