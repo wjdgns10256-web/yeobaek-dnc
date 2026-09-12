@@ -35,7 +35,17 @@ npm run dev
 
 `http://localhost:3000` 에서 확인할 수 있습니다.
 
-배포용 빌드는 `npm run build && npm run start` 입니다.
+배포용 빌드는 `npm run build && npm run start` 입니다. `npm run lint`로 ESLint 검사도
+가능합니다 (`eslint.config.js` — Next.js 16부터 `next lint` 명령이 사라져 ESLint를
+직접 실행하는 방식으로 구성했습니다).
+
+## SEO
+
+- `app/sitemap.js`, `app/robots.js` — 모든 페이지를 자동으로 나열하는 sitemap.xml과
+  robots.txt를 제공합니다. 실제 도메인이 생기면 `lib/site-config.js`의 `siteUrl` 값만
+  바꾸면 전부 반영됩니다.
+- `public/og.png` — 카카오톡·문자 등으로 링크를 공유했을 때 보이는 미리보기 이미지입니다.
+  현재 브랜드 톤에 맞춰 제작했으며, 필요하면 같은 파일명으로 교체하면 됩니다.
 
 ## 실제 시공사진으로 교체하기
 

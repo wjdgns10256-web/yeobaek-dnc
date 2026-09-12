@@ -8,12 +8,18 @@ import Footer from "@/components/Footer";
 export const metadata = {
   title: `${siteConfig.companyName} | ${siteConfig.slogan}`,
   description: siteConfig.subSlogan,
-  metadataBase: new URL("https://yeobaek-dnc.vercel.app"),
+  metadataBase: new URL(siteConfig.siteUrl),
   openGraph: {
     title: `${siteConfig.companyName} | ${siteConfig.slogan}`,
     description: siteConfig.subSlogan,
     locale: "ko_KR",
     type: "website",
+    images: ["/og.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.companyName} | ${siteConfig.slogan}`,
+    description: siteConfig.subSlogan,
     images: ["/og.png"],
   },
 };
@@ -31,7 +37,7 @@ const jsonLd = {
   description: siteConfig.subSlogan,
   telephone: siteConfig.phoneHref.replace("tel:", "+82-").replace(/^\+82-0/, "+82-"),
   email: siteConfig.email,
-  url: "https://yeobaek-dnc.vercel.app/",
+  url: `${siteConfig.siteUrl}/`,
   address: {
     "@type": "PostalAddress",
     streetAddress: "인주대로 5",
