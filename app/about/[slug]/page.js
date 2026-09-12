@@ -67,13 +67,24 @@ export default async function AboutSubPage({ params }) {
 
         {page.type === "message" && (
           <Reveal delay={150}>
-            <div className="mt-12 max-w-2xl space-y-5">
-              {page.paragraphs.map((para, i) => (
-                <p key={i} className="text-[15px] leading-loose text-white/70">
-                  {para}
-                </p>
-              ))}
-              <p className="pt-4 text-base font-semibold text-white">대표 {siteConfig.ceo}</p>
+            <div className="relative mt-12 max-w-2xl overflow-hidden rounded-3xl border border-white/10 bg-white/[0.02] p-8 sm:p-12">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/logo/mark-white.png"
+                alt=""
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-14 -top-14 h-52 w-52 opacity-[0.07] sm:-right-10 sm:-top-16 sm:h-72 sm:w-72"
+              />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo/mark-white.png" alt={siteConfig.companyName} className="relative mb-8 h-9 w-auto opacity-90" />
+              <div className="relative space-y-5">
+                {page.paragraphs.map((para, i) => (
+                  <p key={i} className="text-[15px] leading-loose text-white/70">
+                    {para}
+                  </p>
+                ))}
+                <p className="pt-4 text-base font-semibold text-white">대표 {siteConfig.ceo}</p>
+              </div>
             </div>
           </Reveal>
         )}

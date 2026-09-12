@@ -13,9 +13,16 @@ export const metadata = {
 export default function FaqPage() {
   return (
     <main className="bg-ink-950 pt-28 pb-24 sm:pt-32">
-      <div className="section-pad mx-auto max-w-content">
+      <div className="section-pad relative mx-auto max-w-content overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo/mark-white.png"
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 opacity-[0.05] sm:-right-6 sm:-top-14 sm:h-60 sm:w-60"
+        />
         <Reveal>
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">FAQ</p>
+          <p className="relative text-sm font-semibold uppercase tracking-[0.2em] text-accent">FAQ</p>
         </Reveal>
         <SplitReveal
           text="자주 묻는 질문"

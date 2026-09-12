@@ -46,8 +46,15 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="border-t border-white/5 bg-ink-900 py-20 text-white sm:py-28">
-      <div className="section-pad mx-auto max-w-content">
+    <section id="contact" className="relative overflow-hidden border-t border-white/5 bg-ink-900 py-20 text-white sm:py-28">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/logo/mark-white.png"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-14 -top-14 h-56 w-56 opacity-[0.05] sm:h-72 sm:w-72"
+      />
+      <div className="section-pad relative mx-auto max-w-content">
         <div className="max-w-xl">
           <Reveal>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent-300">Contact</p>

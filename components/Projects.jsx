@@ -11,8 +11,15 @@ export default function Projects() {
 
   return (
     <section id="projects" className="bg-ink-950 pt-28 pb-20 sm:pt-32 sm:pb-28">
-      <div className="section-pad mx-auto max-w-content">
-        <div className="max-w-xl">
+      <div className="section-pad relative mx-auto max-w-content overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo/mark-white.png"
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 opacity-[0.05] sm:-right-6 sm:-top-14 sm:h-60 sm:w-60"
+        />
+        <div className="relative max-w-xl">
           <Reveal>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Projects</p>
           </Reveal>

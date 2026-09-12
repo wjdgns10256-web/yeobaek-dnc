@@ -10,8 +10,15 @@ export default function Footer() {
   const activeSns = snsLinks.filter((sns) => siteConfig.sns[sns.key]);
 
   return (
-    <footer className="bg-ink-950 py-12 text-white/60">
-      <div className="section-pad mx-auto max-w-content">
+    <footer className="relative overflow-hidden bg-ink-950 py-12 text-white/60">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/logo/mark-white.png"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-16 -right-16 h-56 w-56 opacity-[0.05] sm:h-72 sm:w-72"
+      />
+      <div className="section-pad relative mx-auto max-w-content">
         <div className="flex flex-col gap-8 border-b border-white/10 pb-8 sm:flex-row sm:items-start sm:justify-between">
           <div className="flex items-center gap-2.5">
             {/* eslint-disable-next-line @next/next/no-img-element */}

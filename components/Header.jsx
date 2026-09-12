@@ -87,11 +87,18 @@ export default function Header() {
 
       {/* 국보디자인 참고 — 전체화면 오버레이 + 배경 블러 모바일 메뉴 */}
       <div
-        className={`fixed inset-0 z-[60] bg-ink-950/95 backdrop-blur-xl transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 z-[60] overflow-hidden bg-ink-950/95 backdrop-blur-xl transition-opacity duration-300 md:hidden ${
           menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
-        <div className="section-pad flex h-full flex-col overflow-y-auto pb-10 pt-24" data-lenis-prevent>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo/mark-white.png"
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-10 -right-10 h-64 w-64 opacity-[0.06]"
+        />
+        <div className="section-pad relative flex h-full flex-col overflow-y-auto pb-10 pt-24" data-lenis-prevent>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/35">Menu</p>
           <nav className="mt-4 flex flex-col">
             {navItems.map((item) => (
