@@ -77,11 +77,19 @@ export default function IntroReveal() {
 
         <Link
           href="/about"
-          className="mt-12 inline-flex items-center gap-2 text-sm font-semibold text-white/60 transition-colors hover:text-accent-200"
+          className="group mt-12 inline-flex items-center gap-2 rounded-full border-2 border-white/40 bg-white/5 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-black/20 transition-all duration-300 hover:border-accent hover:bg-accent-700 hover:text-white"
           style={{ opacity: ctaProgress, transform: `translateY(${(1 - ctaProgress) * 16}px)` }}
         >
           회사소개 더 보기
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="transition-transform duration-300 group-hover:translate-x-1"
+          >
             <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </Link>
