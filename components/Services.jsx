@@ -6,15 +6,13 @@ import SplitReveal from "./SplitReveal";
 export default function Services() {
   return (
     <section id="services" className="bg-ink-900 pt-28 pb-20 sm:pt-32 sm:pb-28">
-      <div className="section-pad relative mx-auto max-w-content overflow-hidden">
+      {/* 페이지 상단에 브랜드 심볼을 크게 배치 — 텍스트와 겹치지 않는 독립된 배너 */}
+      <div className="flex h-28 items-center justify-center overflow-hidden sm:h-40">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/logo/mark-white.png"
-          alt=""
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 opacity-[0.05] sm:-right-6 sm:-top-14 sm:h-60 sm:w-60"
-        />
-        <div className="relative max-w-xl">
+        <img src="/logo/mark-white.png" alt="" aria-hidden="true" className="h-[70%] w-auto opacity-75" />
+      </div>
+      <div className="section-pad mx-auto max-w-content">
+        <div className="max-w-xl">
           <Reveal>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Services</p>
           </Reveal>

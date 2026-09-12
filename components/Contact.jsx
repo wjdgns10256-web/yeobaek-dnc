@@ -46,15 +46,13 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="relative overflow-hidden border-t border-white/5 bg-ink-900 py-20 text-white sm:py-28">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src="/logo/mark-white.png"
-        alt=""
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-14 -top-14 h-56 w-56 opacity-[0.05] sm:h-72 sm:w-72"
-      />
-      <div className="section-pad relative mx-auto max-w-content">
+    <section id="contact" className="border-t border-white/5 bg-ink-900 pb-20 text-white sm:pb-28">
+      {/* 페이지 상단에 브랜드 심볼을 크게 배치 — 텍스트와 겹치지 않는 독립된 배너 */}
+      <div className="flex h-28 items-center justify-center overflow-hidden sm:h-40">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo/mark-white.png" alt="" aria-hidden="true" className="h-[70%] w-auto opacity-75" />
+      </div>
+      <div className="section-pad mx-auto max-w-content pt-8 sm:pt-10">
         <div className="max-w-xl">
           <Reveal>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent-300">Contact</p>

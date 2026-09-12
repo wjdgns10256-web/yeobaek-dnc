@@ -40,15 +40,8 @@ export default function About() {
         alt="여백디앤씨 회사소개"
         className="h-[32vh] min-h-[200px] w-full sm:h-[38vh]"
       />
-      <div className="section-pad relative mx-auto max-w-content overflow-hidden pt-14 sm:pt-16">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/logo/mark-white.png"
-          alt=""
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 opacity-[0.05] sm:-right-6 sm:-top-14 sm:h-60 sm:w-60"
-        />
-        <div className="relative max-w-xl">
+      <div className="section-pad mx-auto max-w-content pt-14 sm:pt-16">
+        <div className="max-w-xl">
           <Reveal>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">About</p>
           </Reveal>
