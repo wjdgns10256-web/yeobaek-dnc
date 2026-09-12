@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="750" viewBox="0 0 1000 750">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#303030" />
+      <stop offset="100%" stop-color="#151515" />
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#ffffff" stroke-opacity="0.04" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1000" height="750" fill="url(#g)" />
+  <rect width="1000" height="750" fill="url(#grid)" />
+  
+    <g opacity="0.08" fill="#ffffff">
+      <rect x="6%" y="55%" width="10%" height="30%" />
+      <rect x="18%" y="40%" width="10%" height="45%" />
+      <rect x="30%" y="60%" width="10%" height="25%" />
+      <rect x="60%" y="35%" width="1.2%" height="50%" />
+      <rect x="60%" y="35%" width="20%" height="1.6%" />
+      <rect x="76%" y="35%" width="1.2%" height="22%" />
+    </g>
+  <g font-family="'Pretendard Variable', 'Apple SD Gothic Neo', sans-serif" text-anchor="middle">
+    <text x="50%" y="50%" font-size="40" font-weight="700" fill="#F5F3EF">시공사진 준비중</text>
+    <text x="50%" y="407" font-size="20" fill="#D7D2C8">상가 · 실제 사진으로 교체 예정</text>
+  </g>
+</svg>
