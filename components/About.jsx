@@ -40,7 +40,7 @@ export default function About() {
           <div className="mx-auto max-w-2xl border-b border-white/10 pb-14 text-center">
             <span className="text-lg font-bold tracking-tight text-white">{siteConfig.companyName}</span>
             <p className="mt-6 text-xl font-bold leading-snug tracking-tight text-white sm:text-2xl">
-              &lsquo;여백&rsquo;은 단순히 비워냄이 아닌 새로움을 위한 준비를 의미합니다.
+              &lsquo;여백&rsquo;은 단순히 비워냄이 아닌 새로움을 위한 준비입니다.
             </p>
           </div>
         </Reveal>

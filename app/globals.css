@@ -119,7 +119,8 @@ body.has-custom-cursor button {
   }
 }
 
-/* 회사소개(/about) 상단 배너 — 그리드 가이드가 나타났다 사라지며 심볼이 자리잡는 리빌 모션 */
+/* 회사소개(/about) 상단 배너 — 로딩 모션 → 디자인 그리드 → 심볼이 브라켓부터
+   세로 바 순서로 완성되는 브랜드 리빌 모션 */
 .brand-intro {
   position: absolute;
   inset: 0;
@@ -128,6 +129,57 @@ body.has-custom-cursor button {
   justify-content: center;
 }
 
+/* 1단계: 로딩 모션 */
+.brand-intro-loading {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  opacity: 0;
+  animation: brand-loading-in 300ms ease-out forwards, brand-loading-out 250ms ease-in 500ms forwards;
+}
+
+.brand-intro-loading-brackets {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 44px;
+}
+
+.brand-intro-loading-brackets span {
+  display: block;
+  width: 9px;
+  height: 100%;
+  border: 2px solid #ffffff;
+}
+
+.brand-intro-loading-brackets span:first-child {
+  border-right: none;
+  border-radius: 3px 0 0 3px;
+}
+
+.brand-intro-loading-brackets span:last-child {
+  border-left: none;
+  border-radius: 0 3px 3px 0;
+}
+
+.brand-intro-loading-bar {
+  width: 120px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+.brand-intro-loading-bar span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: #ffffff;
+  animation: brand-loading-bar 500ms ease-out forwards;
+}
+
+/* 2단계: 디자인 그리드 가이드 */
 .brand-intro-grid {
   position: absolute;
   height: 72%;
@@ -135,18 +187,45 @@ body.has-custom-cursor button {
   aspect-ratio: 1;
   max-width: 480px;
   opacity: 0;
-  animation: brand-grid-in 600ms ease-out 200ms forwards, brand-grid-out 500ms ease-in 1600ms forwards;
+  animation: brand-grid-in 500ms ease-out 700ms forwards, brand-grid-out 500ms ease-in 2300ms forwards;
 }
 
+/* 3단계: 심볼 — 왼쪽(브라켓)부터 오른쪽(세로 바)까지 순서대로 그려지듯 완성됩니다 */
 .brand-intro-mark {
   position: relative;
   height: 36%;
   width: auto;
   max-height: 210px;
-  opacity: 0;
-  transform: scale(0.9);
-  animation: brand-mark-in 700ms cubic-bezier(0.16, 1, 0.3, 1) 900ms forwards,
-    brand-mark-settle 500ms ease-out 2100ms forwards;
+  clip-path: inset(0 100% 0 0);
+  animation: brand-mark-draw 900ms cubic-bezier(0.65, 0, 0.35, 1) 1300ms forwards,
+    brand-mark-settle 500ms ease-out 2500ms forwards;
+}
+
+@keyframes brand-loading-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes brand-loading-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes brand-loading-bar {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
 }
 
 @keyframes brand-grid-in {
@@ -167,14 +246,12 @@ body.has-custom-cursor button {
   }
 }
 
-@keyframes brand-mark-in {
+@keyframes brand-mark-draw {
   from {
-    opacity: 0;
-    transform: scale(0.9);
+    clip-path: inset(0 100% 0 0);
   }
   to {
-    opacity: 1;
-    transform: scale(1);
+    clip-path: inset(0 0 0 0);
   }
 }
 
@@ -188,11 +265,12 @@ body.has-custom-cursor button {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .brand-intro-loading,
   .brand-intro-grid {
     display: none;
   }
   .brand-intro-mark {
-    opacity: 1;
+    clip-path: inset(0 0 0 0);
     transform: scale(1.15);
     animation: none;
   }
