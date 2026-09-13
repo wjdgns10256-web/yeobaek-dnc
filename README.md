@@ -63,7 +63,6 @@ npm run dev
 | `public/images/projects/remodeling/01.jpg`, `02~04.svg` | 시공사례 – 리모델링 |
 | `public/images/projects/redevelopment/01.jpg`, `02~04.svg` | 시공사례 – 재개발·재건축 |
 | `public/images/projects/renovation/01.jpg`, `02~04.svg` | 시공사례 – 대수선 |
-| `public/images/about/hero-about.svg` | 회사소개 허브(`/about`) 상단 배너 |
 | `public/images/about/message.jpg` | 인사말 페이지 배너 (실사진 적용됨) |
 | `public/images/about/talent.jpg` | 인재상 페이지 배너 (실사진 적용됨) |
 | `public/images/about/vision.jpg` | 비전 페이지 배너 (실사진 적용됨) |
@@ -86,6 +85,9 @@ npm run dev
 ## 모션
 
 - `app/template.js` — 라우트가 바뀔 때마다 페이지 전체가 살짝 떠오르며 나타나는 전환 모션.
+- `components/AboutBrandIntro.jsx` — 회사소개(`/about`) 상단 배너. 심볼이 설계된 디자인
+  그리드가 나타났다가, 심볼이 자리를 잡으면 그리드가 사라지는 브랜드 리빌 모션으로,
+  방문할 때마다 재생됩니다.
 - `components/ParallaxBanner.jsx` — 사업분야/시공사례/회사소개 상세 페이지 상단 배너에
   적용된 스크롤 연동 패럴랙스.
 - `components/CountUp.jsx` — 회사소개 허브의 참여 현장 수(예: "38건+")가 화면에 들어올 때

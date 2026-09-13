@@ -118,3 +118,80 @@ body.has-custom-cursor button {
     animation: none;
   }
 }
+
+/* 회사소개(/about) 상단 배너 — 그리드 가이드가 나타났다 사라지며 심볼이 자리잡는 리빌 모션 */
+.brand-intro {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-intro-grid {
+  position: absolute;
+  width: min(62vw, 340px);
+  height: min(62vw, 340px);
+  opacity: 0;
+  animation: brand-grid-in 600ms ease-out 200ms forwards, brand-grid-out 500ms ease-in 1600ms forwards;
+}
+
+.brand-intro-mark {
+  position: relative;
+  width: 22%;
+  max-width: 120px;
+  height: auto;
+  opacity: 0;
+  transform: scale(0.9);
+  animation: brand-mark-in 700ms cubic-bezier(0.16, 1, 0.3, 1) 900ms forwards,
+    brand-mark-settle 500ms ease-out 2100ms forwards;
+}
+
+@keyframes brand-grid-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes brand-grid-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes brand-mark-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes brand-mark-settle {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-intro-grid {
+    display: none;
+  }
+  .brand-intro-mark {
+    opacity: 1;
+    transform: scale(1.15);
+    animation: none;
+  }
+}

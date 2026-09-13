@@ -5,7 +5,7 @@ import { aboutPages } from "@/lib/about-data";
 import Reveal from "./Reveal";
 import SplitReveal from "./SplitReveal";
 import ExpandableCard from "./ExpandableCard";
-import ParallaxBanner from "./ParallaxBanner";
+import AboutBrandIntro from "./AboutBrandIntro";
 import CountUp from "./CountUp";
 import BrandMark from "./BrandMark";
 
@@ -36,11 +36,7 @@ const values = [
 export default function About() {
   return (
     <section id="about" className="bg-ink-950 pb-20 sm:pb-28">
-      <ParallaxBanner
-        src="/images/about/hero-about.svg"
-        alt="여백디앤씨 회사소개"
-        className="h-[32vh] min-h-[200px] w-full sm:h-[38vh]"
-      />
+      <AboutBrandIntro />
       <div className="section-pad mx-auto max-w-content pt-14 sm:pt-16">
         <div className="max-w-xl">
           <Reveal>
