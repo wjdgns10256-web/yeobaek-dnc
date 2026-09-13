@@ -7,7 +7,6 @@ import SplitReveal from "./SplitReveal";
 import ExpandableCard from "./ExpandableCard";
 import AboutBrandIntro from "./AboutBrandIntro";
 import CountUp from "./CountUp";
-import BrandMark from "./BrandMark";
 
 const values = [
   {
@@ -40,11 +39,7 @@ export default function About() {
       <div className="section-pad mx-auto max-w-content pt-14 sm:pt-16">
         <Reveal>
           <div className="mx-auto max-w-2xl border-b border-white/10 pb-14 text-center">
-            <div className="inline-flex items-center gap-3">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo/mark-white.png" alt="" aria-hidden="true" className="h-7 w-auto opacity-90" />
-              <span className="text-base font-bold tracking-tight text-white">{siteConfig.companyName}</span>
-            </div>
+            <span className="text-lg font-bold tracking-tight text-white">{siteConfig.companyName}</span>
             <p className="mt-6 text-xl font-bold leading-snug tracking-tight text-white sm:text-2xl">
               &lsquo;여백&rsquo;은 단순히 비워냄이 아닌 새로움을 위한 준비를 의미합니다.
             </p>
@@ -55,14 +50,11 @@ export default function About() {
           <Reveal>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">About</p>
           </Reveal>
-          <div className="relative mt-3 inline-block">
-            <BrandMark />
-            <SplitReveal
-              text="오랜 손, 새로운 이름"
-              as="h2"
-              className="relative text-3xl font-bold tracking-tight text-white sm:text-4xl"
-            />
-          </div>
+          <SplitReveal
+            text="오랜 손, 새로운 이름"
+            as="h2"
+            className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl"
+          />
 
           <Reveal delay={150}>
             <div className="mt-8 flex flex-wrap gap-x-10 gap-y-4 border-t border-white/10 pt-6">

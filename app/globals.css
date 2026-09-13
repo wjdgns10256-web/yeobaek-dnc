@@ -130,17 +130,19 @@ body.has-custom-cursor button {
 
 .brand-intro-grid {
   position: absolute;
-  width: min(62vw, 340px);
-  height: min(62vw, 340px);
+  height: 72%;
+  width: auto;
+  aspect-ratio: 1;
+  max-width: 480px;
   opacity: 0;
   animation: brand-grid-in 600ms ease-out 200ms forwards, brand-grid-out 500ms ease-in 1600ms forwards;
 }
 
 .brand-intro-mark {
   position: relative;
-  width: 22%;
-  max-width: 120px;
-  height: auto;
+  height: 36%;
+  width: auto;
+  max-height: 210px;
   opacity: 0;
   transform: scale(0.9);
   animation: brand-mark-in 700ms cubic-bezier(0.16, 1, 0.3, 1) 900ms forwards,
