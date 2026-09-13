@@ -107,6 +107,34 @@ export default async function AboutSubPage({ params }) {
           </>
         )}
 
+        {page.type === "facility" && (
+          <>
+            <Reveal delay={150}>
+              <p className="mt-12 max-w-xl text-[15px] leading-loose text-white/65">{page.intro}</p>
+            </Reveal>
+            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {page.items.map((item, i) => (
+                <Reveal key={item.title} delay={200 + i * 80}>
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40">
+                    <h3 className="text-base font-semibold text-white">{item.title}</h3>
+                    <p className="mt-3 text-sm leading-relaxed text-white/60">{item.desc}</p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {item.tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-white/50"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </>
+        )}
+
         {page.type === "cards" && page.slug !== "vision" && (
           <>
             <Reveal delay={150}>
