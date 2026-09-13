@@ -119,8 +119,33 @@ body.has-custom-cursor button {
   }
 }
 
-/* 회사소개(/about) 상단 배너 — 로딩 모션 → 디자인 그리드 → 심볼이 브라켓부터
-   세로 바 순서로 완성되는 브랜드 리빌 모션 */
+/* 회사소개(/about) 상단 배너 — 밋밋한 단색 배경 대신 은은한 글로우 + 그리드
+   텍스처 + 비네트를 겹쳐 깊이감을 줍니다 */
+.brand-intro-bg-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 55% at 50% 42%, rgba(138, 129, 114, 0.22), transparent 70%);
+}
+
+.brand-intro-bg-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.8) 1px, transparent 1px);
+  background-size: 44px 44px;
+  background-position: center;
+  mask-image: radial-gradient(ellipse 75% 75% at 50% 45%, black 40%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 45%, black 40%, transparent 85%);
+}
+
+.brand-intro-bg-vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(19, 19, 19, 0.55), transparent 30%, transparent 70%, rgba(19, 19, 19, 0.75)),
+    radial-gradient(ellipse 80% 80% at 50% 50%, transparent 55%, rgba(19, 19, 19, 0.5));
+}
+
 .brand-intro {
   position: absolute;
   inset: 0;

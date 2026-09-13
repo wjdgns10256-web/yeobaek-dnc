@@ -5,6 +5,9 @@
 export default function AboutBrandIntro() {
   return (
     <div className="relative h-[42vh] min-h-[320px] w-full overflow-hidden bg-ink-950 sm:h-[52vh]">
+      <div className="brand-intro-bg-glow" />
+      <div className="brand-intro-bg-grid" />
+      <div className="brand-intro-bg-vignette" />
       <div className="brand-intro">
         <div className="brand-intro-loading">
           <div className="brand-intro-loading-brackets">
