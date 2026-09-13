@@ -5,6 +5,7 @@ import { siteConfig } from "@/lib/site-config";
 import Reveal from "@/components/Reveal";
 import ParallaxBanner from "@/components/ParallaxBanner";
 import BrandMark from "@/components/BrandMark";
+import VisionReveal from "@/components/VisionReveal";
 
 export function generateStaticParams() {
   return aboutPages.map((p) => ({ slug: p.slug }));
@@ -97,7 +98,16 @@ export default async function AboutSubPage({ params }) {
           </Reveal>
         )}
 
-        {page.type === "cards" && (
+        {page.type === "cards" && page.slug === "vision" && (
+          <>
+            <Reveal delay={150}>
+              <p className="mt-12 max-w-xl text-[15px] leading-loose text-white/65">{page.intro}</p>
+            </Reveal>
+            <VisionReveal items={page.items} />
+          </>
+        )}
+
+        {page.type === "cards" && page.slug !== "vision" && (
           <>
             <Reveal delay={150}>
               <p className="mt-12 max-w-xl text-[15px] leading-loose text-white/65">{page.intro}</p>
