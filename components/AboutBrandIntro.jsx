@@ -1,14 +1,32 @@
-// 회사소개(/about) 상단 배너 — 로딩 모션 → 디자인 그리드 → 심볼이 왼쪽(브라켓)부터
-// 오른쪽(세로 바)까지 순서대로 그려지며 완성되는 브랜드 리빌 모션입니다. 사진 없이
-// 심볼 + 디자인 그리드만으로 구성했고, 방문할 때마다(페이지 진입 시) 재생됩니다.
+"use client";
+
+import { useEffect, useState } from "react";
+
+// 회사소개(/about) 상단 배너 — 로고 이미지가 실제로 로드된 뒤에만 모션을 시작합니다
+// (이미지가 늦게 뜨면서 애니메이션이 끊겨 보이는 문제 방지). 로딩 모션 → 점 하나가
+// 나타나 좌우로 선이 되어 뻗는 스캔 모션 → 디자인 그리드 → 심볼이 페이드인되며
+// 완성되는 순서로 재생되고, 방문할 때마다(페이지 진입 시) 다시 재생됩니다.
 // 모션 최소화(prefers-reduced-motion) 환경에서는 애니메이션 없이 완성된 상태만 보여줍니다.
 export default function AboutBrandIntro() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const img = new window.Image();
+    img.src = "/logo/mark-white.png";
+    if (img.complete) {
+      setReady(true);
+    } else {
+      img.onload = () => setReady(true);
+      img.onerror = () => setReady(true);
+    }
+  }, []);
+
   return (
     <div className="relative h-[42vh] min-h-[320px] w-full overflow-hidden bg-ink-950 sm:h-[52vh]">
       <div className="brand-intro-bg-glow" />
       <div className="brand-intro-bg-grid" />
       <div className="brand-intro-bg-vignette" />
-      <div className="brand-intro">
+      <div className={`brand-intro ${ready ? "brand-intro-ready" : ""}`}>
         <div className="brand-intro-loading">
           <div className="brand-intro-loading-brackets">
             <span />
@@ -17,6 +35,11 @@ export default function AboutBrandIntro() {
           <div className="brand-intro-loading-bar">
             <span />
           </div>
+        </div>
+
+        <div className="brand-intro-scan" aria-hidden="true">
+          <span className="brand-intro-scan-line" />
+          <span className="brand-intro-scan-dot" />
         </div>
 
         <svg
