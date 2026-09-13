@@ -2,9 +2,20 @@
 
 import { useEffect, useRef, useState } from "react";
 
-// 비전(/about/vision) 전용 모션 — 중앙에 로고가 먼저 나타나고, 4개의 비전 카드가
-// 왼쪽부터 순서대로 하나씩 나타나며 각각 중앙 로고와 점선으로 이어집니다.
+// 비전(/about/vision) 전용 모션 — 화면 중앙에 로고가 먼저 나타나고, 4개의 비전 카드가
+// 사방(2x2)에서 하나씩 나타나며 각각 중앙 로고에서 뻗어나가는 점선으로 이어집니다.
 // "여백의 비전은 이렇게 하나씩 생겨난다"는 느낌을 표현하기 위한 허브-스포크 다이어그램입니다.
+
+// 사각형 중심에서 (dirX, dirY) 방향으로 뻗은 선이 사각형 테두리와 만나는 점을 구합니다.
+function edgePoint(rect, dirX, dirY, wrapRect) {
+  const cx = rect.left + rect.width / 2 - wrapRect.left;
+  const cy = rect.top + rect.height / 2 - wrapRect.top;
+  const halfW = rect.width / 2 || 1;
+  const halfH = rect.height / 2 || 1;
+  const scale = Math.min(Math.abs(halfW / (dirX || 1e-6)), Math.abs(halfH / (dirY || 1e-6)));
+  return { x: cx + dirX * scale, y: cy + dirY * scale };
+}
+
 export default function VisionReveal({ items }) {
   const wrapRef = useRef(null);
   const hubRef = useRef(null);
@@ -29,9 +40,9 @@ export default function VisionReveal({ items }) {
       ([entry]) => {
         if (!entry.isIntersecting) return;
         io.unobserve(el);
-        timers.push(setTimeout(() => setStep(0), 150));
+        timers.push(setTimeout(() => setStep(0), 200));
         items.forEach((_, i) => {
-          timers.push(setTimeout(() => setStep(i + 1), 750 + i * 380));
+          timers.push(setTimeout(() => setStep(i + 1), 850 + i * 420));
         });
       },
       { threshold: 0.2 }
@@ -50,36 +61,37 @@ export default function VisionReveal({ items }) {
       if (!wrap || !hub) return;
       const wrapRect = wrap.getBoundingClientRect();
       const hubRect = hub.getBoundingClientRect();
-      const hx = hubRect.left + hubRect.width / 2 - wrapRect.left;
-      const hy = hubRect.top + hubRect.height / 2 - wrapRect.top;
+      const hcx = hubRect.left + hubRect.width / 2 - wrapRect.left;
+      const hcy = hubRect.top + hubRect.height / 2 - wrapRect.top;
 
       const next = cardRefs.current.map((cardEl) => {
         if (!cardEl) return null;
         const r = cardEl.getBoundingClientRect();
-        const cx = r.left + r.width / 2 - wrapRect.left;
-        const cy = r.top - wrapRect.top;
-        const dx = cx - hx;
-        const dy = cy - hy;
-        const dist = Math.hypot(dx, dy) || 1;
-        const hubEdge = hubRect.width / 2 + 4;
-        const x1 = hx + (dx / dist) * hubEdge;
-        const y1 = hy + (dy / dist) * hubEdge;
-        return { x1, y1, x2: cx, y2: cy - 6 };
+        const ccx = r.left + r.width / 2 - wrapRect.left;
+        const ccy = r.top + r.height / 2 - wrapRect.top;
+        const dx = ccx - hcx;
+        const dy = ccy - hcy;
+        const p1 = edgePoint(hubRect, dx, dy, wrapRect);
+        const p2 = edgePoint(r, -dx, -dy, wrapRect);
+        return { x1: p1.x, y1: p1.y, x2: p2.x, y2: p2.y };
       });
       setLines(next);
     }
 
     measure();
     const raf = requestAnimationFrame(measure);
+    // 카드의 등장 트랜지션(700ms)이 끝난 뒤 한 번 더 측정해 최종 위치 기준으로 선을 맞춥니다.
+    const settle = setTimeout(measure, 760);
     window.addEventListener("resize", measure);
     return () => {
       window.removeEventListener("resize", measure);
       cancelAnimationFrame(raf);
+      clearTimeout(settle);
     };
   }, [step]);
 
   return (
-    <div ref={wrapRef} className="relative mt-14">
+    <div ref={wrapRef} className="relative mt-16 py-6 sm:mt-20 sm:py-10">
       <svg className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden="true">
         {lines.map((line, i) =>
           line && (reduced || step > i) ? (
@@ -89,45 +101,43 @@ export default function VisionReveal({ items }) {
               y1={line.y1}
               x2={line.x2}
               y2={line.y2}
-              stroke="#7dd3fc"
-              strokeOpacity="0.55"
-              strokeWidth="1.5"
-              strokeDasharray="4 6"
+              stroke="#8fb8e8"
+              strokeOpacity="0.65"
+              strokeWidth="2"
+              strokeDasharray="5 7"
               strokeLinecap="round"
               className={reduced ? "" : "vision-line-in"}
-              style={reduced ? undefined : { opacity: 0 }}
+              style={reduced ? undefined : { transformOrigin: `${line.x1}px ${line.y1}px` }}
             />
           ) : null
         )}
       </svg>
 
-      <div className="relative z-10 flex justify-center">
-        <div
-          ref={hubRef}
-          className={`flex h-20 w-20 flex-none items-center justify-center rounded-2xl border border-white/15 bg-ink-900 sm:h-24 sm:w-24 ${
-            reduced ? "" : step >= 0 ? "vision-hub-in" : "opacity-0"
-          }`}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo/mark-white.png" alt="여백디앤씨" className="h-8 w-auto sm:h-9" />
-        </div>
-      </div>
-
-      <div className="relative z-10 mt-12 grid grid-cols-2 gap-x-4 gap-y-6 sm:gap-x-6 sm:gap-y-8 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-6 sm:gap-16 lg:gap-40">
         {items.map((item, i) => (
           <div
             key={item.title}
             ref={(el) => {
               cardRefs.current[i] = el;
             }}
-            className={`rounded-2xl border border-sky-300/30 bg-sky-400/10 p-5 transition-all duration-500 sm:p-6 ${
-              reduced ? "" : step > i ? "vision-card-in" : "translate-y-4 opacity-0"
+            className={`vision-card flex min-h-[128px] flex-col justify-center rounded-2xl p-5 sm:min-h-[180px] sm:rounded-3xl sm:p-8 lg:min-h-[220px] lg:p-10 ${
+              reduced ? "" : step > i ? "vision-card-in" : "translate-y-6 opacity-0"
             }`}
           >
-            <h3 className="text-base font-semibold text-white">{item.title}</h3>
-            <p className="mt-3 text-sm leading-relaxed text-white/60">{item.desc}</p>
+            <h3 className="text-base font-bold text-white sm:text-xl">{item.title}</h3>
+            <p className="mt-2 text-xs leading-relaxed text-white/70 sm:mt-4 sm:text-base">{item.desc}</p>
           </div>
         ))}
+      </div>
+
+      <div
+        ref={hubRef}
+        className={`absolute left-1/2 top-1/2 z-10 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-2xl border border-white/15 bg-ink-900 shadow-xl shadow-black/40 sm:h-16 sm:w-16 lg:h-20 lg:w-20 ${
+          reduced ? "" : step >= 0 ? "vision-hub-in" : "opacity-0"
+        }`}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo/mark-white.png" alt="여백디앤씨" className="h-5 w-auto sm:h-7 lg:h-9" />
       </div>
     </div>
   );

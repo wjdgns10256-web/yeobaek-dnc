@@ -3,13 +3,42 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
+import { aboutPages } from "@/lib/about-data";
+import { services } from "@/lib/services-data";
+import { projectCategories } from "@/lib/projects-data";
+import { faqs } from "@/lib/faq-data";
 
 const navItems = [
-  { href: "/about", label: "회사소개" },
-  { href: "/services", label: "사업분야" },
-  { href: "/projects", label: "시공사례" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/#contact", label: "문의" },
+  {
+    href: "/about",
+    label: "회사소개",
+    children: aboutPages.map((p) => ({ href: `/about/${p.slug}`, label: p.label })),
+  },
+  {
+    href: "/services",
+    label: "사업분야",
+    children: services.map((s) => ({ href: `/services/${s.id}`, label: s.title })),
+  },
+  {
+    href: "/projects",
+    label: "시공사례",
+    children: projectCategories
+      .filter((c) => c.key !== "all")
+      .map((c) => ({ href: `/projects/${c.key}`, label: c.label })),
+  },
+  {
+    href: "/faq",
+    label: "FAQ",
+    children: faqs.slice(0, 5).map((f) => ({ href: "/faq", label: f.q })),
+  },
+  {
+    href: "/#contact",
+    label: "문의",
+    children: [
+      { href: siteConfig.phoneHref, label: `전화 상담 · ${siteConfig.phone}` },
+      { href: "/#contact", label: "온라인 문의" },
+    ],
+  },
 ];
 
 export default function Header() {
@@ -50,14 +79,34 @@ export default function Header() {
 
         <nav className="hidden items-center gap-8 md:flex">
           {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="group relative text-sm font-medium text-white/80 transition-colors hover:text-accent"
-            >
-              {item.label}
-              <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
-            </Link>
+            <div key={item.href} className="group relative py-2">
+              <Link
+                href={item.href}
+                className="relative text-sm font-medium text-white/80 transition-colors hover:text-accent"
+              >
+                {item.label}
+                <span className="absolute -bottom-1 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
+              </Link>
+
+              {item.children && item.children.length > 0 && (
+                <div className="pointer-events-none absolute left-1/2 top-full w-64 -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-all duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100">
+                  <div className="overflow-hidden rounded-2xl border border-white/10 bg-ink-900/95 shadow-xl shadow-black/40 backdrop-blur-xl">
+                    <ul className="py-2">
+                      {item.children.map((child) => (
+                        <li key={child.href + child.label}>
+                          <Link
+                            href={child.href}
+                            className="block px-4 py-2.5 text-sm leading-snug text-white/65 transition-colors hover:bg-white/5 hover:text-white"
+                          >
+                            {child.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
+            </div>
           ))}
           <a
             href={siteConfig.phoneHref}

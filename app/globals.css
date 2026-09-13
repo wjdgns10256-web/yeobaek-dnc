@@ -276,48 +276,57 @@ body.has-custom-cursor button {
   }
 }
 
-/* 비전(/about/vision) 허브-스포크 모션 — 로고가 먼저 나타나고 카드가 하나씩,
-   점선으로 로고와 이어지며 등장합니다 */
+/* 비전(/about/vision) 허브-스포크 모션 — 로고가 중앙에 먼저 나타나고 카드가 사방에서
+   하나씩, 로고로부터 뻗어나가는 점선과 함께 등장합니다 */
+.vision-card {
+  border: 1px solid rgba(148, 197, 255, 0.28);
+  background: linear-gradient(155deg, rgba(70, 122, 179, 0.32), rgba(29, 48, 71, 0.55));
+  box-shadow: 0 24px 48px -28px rgba(37, 99, 235, 0.45);
+  transition: opacity 700ms cubic-bezier(0.16, 1, 0.3, 1), transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 .vision-hub-in {
-  animation: vision-hub-in 550ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: vision-hub-in 650ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .vision-card-in {
-  animation: vision-card-in 550ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: vision-card-in 700ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .vision-line-in {
-  animation: vision-line-in 450ms ease-out 120ms forwards;
+  animation: vision-line-in 650ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @keyframes vision-hub-in {
   from {
     opacity: 0;
-    transform: scale(0.8);
+    transform: translate(-50%, -50%) scale(0.85);
   }
   to {
     opacity: 1;
-    transform: scale(1);
+    transform: translate(-50%, -50%) scale(1);
   }
 }
 
 @keyframes vision-card-in {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(24px) scale(0.96);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
 @keyframes vision-line-in {
   from {
     opacity: 0;
+    transform: scale(0);
   }
   to {
     opacity: 1;
+    transform: scale(1);
   }
 }
 
