@@ -38,7 +38,20 @@ export default function About() {
     <section id="about" className="bg-ink-950 pb-20 sm:pb-28">
       <AboutBrandIntro />
       <div className="section-pad mx-auto max-w-content pt-14 sm:pt-16">
-        <div className="max-w-xl">
+        <Reveal>
+          <div className="mx-auto max-w-2xl border-b border-white/10 pb-14 text-center">
+            <div className="inline-flex items-center gap-3">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo/mark-white.png" alt="" aria-hidden="true" className="h-7 w-auto opacity-90" />
+              <span className="text-base font-bold tracking-tight text-white">{siteConfig.companyName}</span>
+            </div>
+            <p className="mt-6 text-xl font-bold leading-snug tracking-tight text-white sm:text-2xl">
+              &lsquo;여백&rsquo;은 단순히 비워냄이 아닌 새로움을 위한 준비를 의미합니다.
+            </p>
+          </div>
+        </Reveal>
+
+        <div className="mt-14 max-w-xl">
           <Reveal>
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">About</p>
           </Reveal>
