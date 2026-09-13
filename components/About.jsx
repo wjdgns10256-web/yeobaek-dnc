@@ -1,32 +1,31 @@
 import Link from "next/link";
-import { IconShield, IconClock, IconDocument, IconSupport } from "./icons";
 import { siteConfig } from "@/lib/site-config";
 import { aboutPages } from "@/lib/about-data";
 import Reveal from "./Reveal";
 import SplitReveal from "./SplitReveal";
-import ExpandableCard from "./ExpandableCard";
+import ValueCard from "./ValueCard";
 import AboutBrandIntro from "./AboutBrandIntro";
 import CountUp from "./CountUp";
 
 const values = [
   {
-    icon: IconShield,
+    index: "01",
     title: "안전관리",
     description:
       "안전관리계획 수립부터 현장 통제, 분진·소음 저감까지 — 작업자와 인근 주민 모두의 안전을 최우선으로 합니다.",
   },
   {
-    icon: IconClock,
+    index: "02",
     title: "신속한 견적",
     description: "현장 실측 후 항목별 견적을 빠르게 제공해, 일정에 쫓기는 공사도 지체 없이 진행합니다.",
   },
   {
-    icon: IconDocument,
+    index: "03",
     title: "정확한 서류처리",
     description: "멸실신고, 해체계획서, 폐기물 처리내역 등 인허가 서류를 꼼꼼히 준비해 드립니다.",
   },
   {
-    icon: IconSupport,
+    index: "04",
     title: "사후관리",
     description: "공사 완료 후에도 현장 정리 상태와 인접 시설 피해 여부를 확인하며 끝까지 책임집니다.",
   },
@@ -115,14 +114,10 @@ export default function About() {
           </div>
         </Reveal>
 
-        <div className="mt-14 grid grid-cols-2 gap-4 border-t border-white/10 pt-14 sm:gap-6 lg:grid-cols-4">
+        <div className="mt-14 grid grid-cols-1 gap-4 border-t border-white/10 pt-14 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
           {values.map((value, i) => (
             <Reveal key={value.title} delay={i * 100}>
-              <ExpandableCard
-                icon={<value.icon className="h-9 w-9 text-accent" />}
-                title={value.title}
-                description={value.description}
-              />
+              <ValueCard index={value.index} title={value.title} description={value.description} />
             </Reveal>
           ))}
         </div>
