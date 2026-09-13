@@ -3,31 +3,26 @@ import { siteConfig } from "@/lib/site-config";
 import { aboutPages } from "@/lib/about-data";
 import Reveal from "./Reveal";
 import SplitReveal from "./SplitReveal";
-import ValueCard from "./ValueCard";
+import NumberCardGrid from "./NumberCardGrid";
 import AboutBrandIntro from "./AboutBrandIntro";
 import CountUp from "./CountUp";
 
 const values = [
   {
-    index: "01",
     title: "안전관리",
-    description:
-      "안전관리계획 수립부터 현장 통제, 분진·소음 저감까지 — 작업자와 인근 주민 모두의 안전을 최우선으로 합니다.",
+    desc: "안전관리계획 수립부터 현장 통제, 분진·소음 저감까지 — 작업자와 인근 주민 모두의 안전을 최우선으로 합니다.",
   },
   {
-    index: "02",
     title: "신속한 견적",
-    description: "현장 실측 후 항목별 견적을 빠르게 제공해, 일정에 쫓기는 공사도 지체 없이 진행합니다.",
+    desc: "현장 실측 후 항목별 견적을 빠르게 제공해, 일정에 쫓기는 공사도 지체 없이 진행합니다.",
   },
   {
-    index: "03",
     title: "정확한 서류처리",
-    description: "멸실신고, 해체계획서, 폐기물 처리내역 등 인허가 서류를 꼼꼼히 준비해 드립니다.",
+    desc: "멸실신고, 해체계획서, 폐기물 처리내역 등 인허가 서류를 꼼꼼히 준비해 드립니다.",
   },
   {
-    index: "04",
     title: "사후관리",
-    description: "공사 완료 후에도 현장 정리 상태와 인접 시설 피해 여부를 확인하며 끝까지 책임집니다.",
+    desc: "공사 완료 후에도 현장 정리 상태와 인접 시설 피해 여부를 확인하며 끝까지 책임집니다.",
   },
 ];
 
@@ -78,48 +73,43 @@ export default function About() {
         </div>
 
         <Reveal delay={180}>
-          <div className="mt-14">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">회사소개 더 보기</p>
-            <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-5">
-              {aboutPages.map((page) => (
-                <Link
-                  key={page.slug}
-                  href={`/about/${page.slug}`}
-                  className="group relative block aspect-[3/4] w-full overflow-hidden rounded-2xl border border-white/10 bg-ink-900 transition-colors duration-300 hover:border-accent/40"
-                >
-                  {/* image 경로 파일을 실제 사진으로 교체하면 됩니다 */}
-                  <img
-                    src={page.image}
-                    alt={page.label}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 p-4">
-                    <span className="text-sm font-bold text-white sm:text-base">{page.label}</span>
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      className="flex-none text-white/60 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent-200"
-                    >
-                      <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
+          <p className="mt-14 text-sm font-semibold uppercase tracking-[0.2em] text-accent">회사소개 더 보기</p>
         </Reveal>
-
-        <div className="mt-14 grid grid-cols-1 gap-4 border-t border-white/10 pt-14 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
-          {values.map((value, i) => (
-            <Reveal key={value.title} delay={i * 100}>
-              <ValueCard index={value.index} title={value.title} description={value.description} />
+        <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-5 lg:grid-cols-5">
+          {aboutPages.map((page, i) => (
+            <Reveal key={page.slug} delay={200 + i * 80}>
+              <Link
+                href={`/about/${page.slug}`}
+                className="group relative block aspect-[3/4] w-full overflow-hidden rounded-2xl border border-white/10 bg-ink-900 transition-colors duration-300 hover:border-accent/40"
+              >
+                {/* image 경로 파일을 실제 사진으로 교체하면 됩니다 */}
+                <img
+                  src={page.image}
+                  alt={page.label}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-2 p-4">
+                  <span className="text-sm font-bold text-white sm:text-base">{page.label}</span>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className="flex-none text-white/60 transition-all duration-300 group-hover:translate-x-1 group-hover:text-accent-200"
+                  >
+                    <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+              </Link>
             </Reveal>
           ))}
+        </div>
+
+        <div className="mt-14 border-t border-white/10 pt-14">
+          <NumberCardGrid items={values} columns="sm:grid-cols-2 lg:grid-cols-4" />
         </div>
       </div>
     </section>

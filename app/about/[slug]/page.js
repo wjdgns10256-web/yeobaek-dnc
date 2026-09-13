@@ -6,6 +6,8 @@ import Reveal from "@/components/Reveal";
 import ParallaxBanner from "@/components/ParallaxBanner";
 import BrandMark from "@/components/BrandMark";
 import VisionReveal from "@/components/VisionReveal";
+import NumberCardGrid from "@/components/NumberCardGrid";
+import OrgChartReveal from "@/components/OrgChartReveal";
 
 export function generateStaticParams() {
   return aboutPages.map((p) => ({ slug: p.slug }));
@@ -112,26 +114,7 @@ export default async function AboutSubPage({ params }) {
             <Reveal delay={150}>
               <p className="mt-12 max-w-xl text-[15px] leading-loose text-white/65">{page.intro}</p>
             </Reveal>
-            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {page.items.map((item, i) => (
-                <Reveal key={item.title} delay={200 + i * 80}>
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40">
-                    <h3 className="text-base font-semibold text-white">{item.title}</h3>
-                    <p className="mt-3 text-sm leading-relaxed text-white/60">{item.desc}</p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {item.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className="rounded-full bg-white/5 px-3 py-1 text-xs font-medium text-white/50"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
+            <NumberCardGrid items={page.items} columns="sm:grid-cols-2 lg:grid-cols-3" />
           </>
         )}
 
@@ -140,16 +123,7 @@ export default async function AboutSubPage({ params }) {
             <Reveal delay={150}>
               <p className="mt-12 max-w-xl text-[15px] leading-loose text-white/65">{page.intro}</p>
             </Reveal>
-            <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {page.items.map((item, i) => (
-                <Reveal key={item.title} delay={200 + i * 80}>
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40">
-                    <h3 className="text-base font-semibold text-white">{item.title}</h3>
-                    <p className="mt-3 text-sm leading-relaxed text-white/60">{item.desc}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
+            <NumberCardGrid items={page.items} columns="sm:grid-cols-2" />
           </>
         )}
 
@@ -158,31 +132,7 @@ export default async function AboutSubPage({ params }) {
             <Reveal delay={150}>
               <p className="mt-12 max-w-xl text-[15px] leading-loose text-white/65">{page.intro}</p>
             </Reveal>
-            <Reveal delay={200}>
-              <div className="mt-12 flex flex-col items-center">
-                <div className="rounded-xl border border-accent/40 bg-accent-700/10 px-8 py-3 text-sm font-semibold text-white">
-                  {page.org.ceo}
-                </div>
-                <div className="h-8 w-px bg-white/15" />
-                <div className="rounded-xl border border-white/15 bg-white/[0.04] px-8 py-3 text-sm font-semibold text-white">
-                  {page.org.executive}
-                </div>
-                <div className="h-8 w-px bg-white/15" />
-                <div className="relative w-full max-w-2xl">
-                  <div className="mx-auto h-px w-full max-w-xl bg-white/15" />
-                  <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-                    {page.org.departments.map((dept, i) => (
-                      <Reveal key={dept.name} delay={250 + i * 80}>
-                        <div className="rounded-xl border border-white/10 bg-white/[0.03] px-5 py-5 text-center transition-all duration-300 hover:-translate-y-1 hover:border-accent/40">
-                          <p className="text-sm font-semibold text-white">{dept.name}</p>
-                          <p className="mt-2 text-xs text-white/45">{dept.desc}</p>
-                        </div>
-                      </Reveal>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </Reveal>
+            <OrgChartReveal org={page.org} />
           </>
         )}
 
