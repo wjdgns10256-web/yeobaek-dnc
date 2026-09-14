@@ -1,10 +1,18 @@
-import Link from "next/link";
 import { faqs } from "@/lib/faq-data";
 import { siteConfig } from "@/lib/site-config";
 import Reveal from "@/components/Reveal";
 import SplitReveal from "@/components/SplitReveal";
 import FaqItem from "@/components/FaqItem";
 import BrandMark from "@/components/BrandMark";
+import Contact from "@/components/Contact";
+import NumberCardGrid from "@/components/NumberCardGrid";
+
+const quoteChecklist = [
+  { title: "현장 위치", desc: "정확한 주소나 지번을 알려주세요." },
+  { title: "건물 규모", desc: "평수, 층수, 구조(철근콘크리트·조적·철골 등)를 알려주세요." },
+  { title: "철거 범위", desc: "전체 철거인지, 부분(내부·마감재) 철거인지 알려주세요." },
+  { title: "희망 일정", desc: "착공 희망 시기와 완료 기한을 알려주세요." },
+];
 
 export const metadata = {
   title: `자주 묻는 질문 | ${siteConfig.companyName}`,
@@ -42,22 +50,33 @@ export default function FaqPage() {
           ))}
         </div>
 
-        <Reveal delay={100}>
-          <div className="mt-14 flex flex-col gap-3 sm:flex-row">
-            <a
-              href={siteConfig.phoneHref}
-              className="rounded-full bg-accent-700 px-8 py-4 text-center text-base font-semibold text-white transition-all hover:scale-[1.03] hover:bg-accent-600"
-            >
-              전화로 상담하기 · {siteConfig.phone}
-            </a>
-            <Link
-              href="/#contact"
-              className="rounded-full border border-white/40 px-8 py-4 text-center text-base font-semibold text-white transition-all hover:scale-[1.03] hover:border-white/70 hover:bg-white/10"
-            >
-              온라인 문의
-            </Link>
-          </div>
-        </Reveal>
+        <div className="mt-20 border-t border-white/10 pt-14">
+          <Reveal>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent-300">Contact</p>
+            <h2 className="relative mt-2 text-2xl font-bold tracking-tight text-white sm:text-3xl">
+              더 궁금한 점이 있으신가요?
+            </h2>
+            <p className="mt-4 max-w-xl text-[15px] leading-loose text-white/65">
+              찾으시는 답을 못 찾으셨다면, 아래에서 바로 문의해 주세요.
+            </p>
+          </Reveal>
+
+          <Reveal delay={80}>
+            <p className="mt-10 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
+              정확한 견적을 받으려면
+            </p>
+            <p className="mt-2 max-w-xl text-sm leading-relaxed text-white/50">
+              아래 네 가지를 문의 내용에 함께 남겨주시면 더 빠르고 정확한 견적을 받아보실 수 있습니다.
+            </p>
+          </Reveal>
+          <NumberCardGrid items={quoteChecklist} columns="sm:grid-cols-2 lg:grid-cols-4" />
+
+          <Reveal delay={100}>
+            <div className="mt-14">
+              <Contact />
+            </div>
+          </Reveal>
+        </div>
       </div>
     </main>
   );

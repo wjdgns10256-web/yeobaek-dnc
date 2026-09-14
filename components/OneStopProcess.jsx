@@ -1,6 +1,7 @@
 import Reveal from "./Reveal";
 import SplitReveal from "./SplitReveal";
 import BrandMark from "./BrandMark";
+import ScrollFadeImage from "./ScrollFadeImage";
 
 const phases = [
   {
@@ -97,9 +98,9 @@ export default function OneStopProcess() {
                   <h3 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">{phase.title}</h3>
                   <p className="mt-4 text-[15px] leading-loose text-white/60">{phase.desc}</p>
                 </Reveal>
-                <Reveal delay={100} className={imageFirst ? "lg:order-1" : ""}>
+                <ScrollFadeImage className={imageFirst ? "lg:order-1" : ""}>
                   <ImageSlot label={`${phase.eyebrow} 현장 사진`} />
-                </Reveal>
+                </ScrollFadeImage>
               </div>
             );
           })}
