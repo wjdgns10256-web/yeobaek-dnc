@@ -1,29 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-// 회사소개(/about) 상단 배너 — 로고 이미지가 실제로 로드된 뒤에만 모션을 시작합니다
-// (이미지가 늦게 뜨면서 애니메이션이 끊겨 보이는 문제 방지). 로딩 모션 → 점 하나가
-// 나타나 좌우로 선이 되어 뻗는 스캔 모션 → 디자인 그리드 → 심볼이 페이드인되며
-// 완성되는 순서로 재생되고, 방문할 때마다(페이지 진입 시) 다시 재생됩니다.
+// 회사소개(/about) 상단 배너 — 로고 이미지가 실제로 로드되고, 이 배너가 스크롤로
+// 화면에 들어왔을 때(사이트 전반의 Reveal 컴포넌트와 동일한 스크롤 리빌 방식)
+// 모션을 시작합니다. 로딩 모션 → 점 하나가 같은 자리에서 커지며 심볼로
+// 크로스페이드되는(점이 심볼이 되는) 모션 순서로 재생됩니다.
 // 모션 최소화(prefers-reduced-motion) 환경에서는 애니메이션 없이 완성된 상태만 보여줍니다.
 export default function AboutBrandIntro() {
-  const [ready, setReady] = useState(false);
+  const ref = useRef(null);
+  const [imgLoaded, setImgLoaded] = useState(false);
+  const [inView, setInView] = useState(false);
+  const ready = imgLoaded && inView;
 
   useEffect(() => {
     let cancelled = false;
     let rafId;
-    const markReady = () => {
-      if (!cancelled) setReady(true);
+    const markLoaded = () => {
+      if (!cancelled) setImgLoaded(true);
     };
 
     const img = new window.Image();
-    img.onload = markReady;
-    img.onerror = markReady;
+    img.onload = markLoaded;
+    img.onerror = markLoaded;
     img.src = "/logo/mark-white.png";
     // 캐시로 인해 src 설정과 동시에 이미 로드가 끝난 경우, effect 안에서 곧바로
     // setState하지 않도록 다음 프레임으로 미룹니다.
-    if (img.complete) rafId = requestAnimationFrame(markReady);
+    if (img.complete) rafId = requestAnimationFrame(markLoaded);
 
     return () => {
       cancelled = true;
@@ -31,8 +34,31 @@ export default function AboutBrandIntro() {
     };
   }, []);
 
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setInView(true);
+      return undefined;
+    }
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          io.unobserve(el);
+        }
+      },
+      { threshold: 0.15 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
-    <div className="relative h-[42vh] min-h-[320px] w-full overflow-hidden bg-ink-950 sm:h-[52vh]">
+    <div ref={ref} className="relative h-[42vh] min-h-[320px] w-full overflow-hidden bg-ink-950 sm:h-[52vh]">
       <div className="brand-intro-bg-glow" />
       <div className="brand-intro-bg-grid" />
       <div className="brand-intro-bg-vignette" />
@@ -47,21 +73,7 @@ export default function AboutBrandIntro() {
           </div>
         </div>
 
-        <div className="brand-intro-scan" aria-hidden="true">
-          <span className="brand-intro-scan-line" />
-          <span className="brand-intro-scan-dot" />
-        </div>
-
-        <svg
-          className="brand-intro-grid"
-          viewBox="0 0 400 400"
-          fill="none"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect x="60" y="60" width="280" height="280" rx="64" stroke="#ffffff" strokeOpacity="0.5" strokeWidth="1.5" />
-          <circle cx="200" cy="200" r="140" stroke="#ffffff" strokeOpacity="0.28" strokeWidth="1.5" />
-        </svg>
+        <span className="brand-intro-dot" aria-hidden="true" />
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/logo/mark-white.png" alt="여백디앤씨" className="brand-intro-mark" />
