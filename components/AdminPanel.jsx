@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { projectCategories } from "@/lib/projects-data";
 
 const EMPTY_FORM = {
   id: null,
@@ -14,8 +15,32 @@ const EMPTY_FORM = {
   endDate: "",
 };
 
+const caseCategories = projectCategories.filter((c) => c.key !== "all");
+const categoryLabelMap = Object.fromEntries(caseCategories.map((c) => [c.key, c.label]));
+
+const EMPTY_CASE_FORM = {
+  inquiryId: null,
+  category: caseCategories[0]?.key || "",
+  title: "",
+  client: "",
+  period: "",
+  description: "",
+};
+
+const MAX_CASE_PHOTOS = 4;
+const MAX_CASE_PHOTO_SIZE = 8 * 1024 * 1024;
+
 function toDateInput(value) {
   return value ? value.slice(0, 10) : "";
+}
+
+function formatDateTime(value) {
+  if (!value) return "";
+  try {
+    return new Date(value).toLocaleString("ko-KR");
+  } catch {
+    return value;
+  }
 }
 
 export default function AdminPanel() {
@@ -23,6 +48,8 @@ export default function AdminPanel() {
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
   const [loginLoading, setLoginLoading] = useState(false);
+
+  const [tab, setTab] = useState("popups"); // popups | inquiries
 
   const [popups, setPopups] = useState([]);
   const [listError, setListError] = useState("");
@@ -32,37 +59,53 @@ export default function AdminPanel() {
   const [saving, setSaving] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
 
-  async function loadPopups() {
-    const res = await fetch("/api/admin/popups");
-    if (res.status === 401) {
+  const [inquiries, setInquiries] = useState([]);
+  const [caseStudies, setCaseStudies] = useState([]);
+  const [inquiriesError, setInquiriesError] = useState("");
+  const [deletingInquiryId, setDeletingInquiryId] = useState(null);
+  const [deletingCaseId, setDeletingCaseId] = useState(null);
+
+  const [caseForm, setCaseForm] = useState(null); // null = 폼 닫힘
+  const [caseFormError, setCaseFormError] = useState("");
+  const [caseSaving, setCaseSaving] = useState(false);
+  const [casePhotos, setCasePhotos] = useState([]);
+  const [casePhotoError, setCasePhotoError] = useState("");
+
+  const casePreviews = useMemo(() => casePhotos.map((file) => URL.createObjectURL(file)), [casePhotos]);
+  useEffect(() => {
+    return () => casePreviews.forEach((url) => URL.revokeObjectURL(url));
+  }, [casePreviews]);
+
+  async function loadAdminData() {
+    const [popupsRes, inquiriesRes, caseStudiesRes] = await Promise.all([
+      fetch("/api/admin/popups"),
+      fetch("/api/admin/inquiries"),
+      fetch("/api/admin/case-studies"),
+    ]);
+    if (popupsRes.status === 401 || inquiriesRes.status === 401 || caseStudiesRes.status === 401) {
       setStatus("login");
       return;
     }
-    const data = await res.json();
-    setPopups(data.popups || []);
+    const [popupsData, inquiriesData, caseStudiesData] = await Promise.all([
+      popupsRes.json(),
+      inquiriesRes.json(),
+      caseStudiesRes.json(),
+    ]);
+    setPopups(popupsData.popups || []);
+    setInquiries(inquiriesData.inquiries || []);
+    setCaseStudies(caseStudiesData.caseStudies || []);
     setListError("");
+    setInquiriesError("");
     setStatus("ready");
   }
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/admin/popups")
-      .then((res) => {
-        if (res.status === 401) {
-          if (!cancelled) setStatus("login");
-          return null;
-        }
-        return res.json();
-      })
-      .then((data) => {
-        if (cancelled || !data) return;
-        setPopups(data.popups || []);
-        setListError("");
-        setStatus("ready");
-      })
+    Promise.resolve()
+      .then(() => loadAdminData())
       .catch(() => {
         if (cancelled) return;
-        setListError("팝업 목록을 불러오지 못했습니다.");
+        setListError("데이터를 불러오지 못했습니다.");
         setStatus("login");
       });
     return () => {
@@ -86,7 +129,7 @@ export default function AdminPanel() {
         return;
       }
       setPassword("");
-      await loadPopups();
+      await loadAdminData();
     } catch {
       setLoginError("로그인 중 오류가 발생했습니다.");
     } finally {
@@ -97,6 +140,8 @@ export default function AdminPanel() {
   async function handleLogout() {
     await fetch("/api/admin/logout", { method: "POST" });
     setPopups([]);
+    setInquiries([]);
+    setCaseStudies([]);
     setStatus("login");
   }
 
@@ -145,7 +190,7 @@ export default function AdminPanel() {
         setFormError(data.error || "저장에 실패했습니다.");
         return;
       }
-      await loadPopups();
+      await loadAdminData();
       closeForm();
     } catch {
       setFormError("저장 중 오류가 발생했습니다.");
@@ -164,7 +209,7 @@ export default function AdminPanel() {
       setStatus("login");
       return;
     }
-    await loadPopups();
+    await loadAdminData();
   }
 
   async function handleDelete(popup) {
@@ -176,9 +221,127 @@ export default function AdminPanel() {
         setStatus("login");
         return;
       }
-      await loadPopups();
+      await loadAdminData();
     } finally {
       setDeletingId(null);
+    }
+  }
+
+  async function handleDeleteInquiry(inquiry) {
+    if (!window.confirm(`"${inquiry.name}"님의 문의 내역을 삭제할까요?`)) return;
+    setDeletingInquiryId(inquiry.id);
+    try {
+      const res = await fetch(`/api/admin/inquiries/${inquiry.id}`, { method: "DELETE" });
+      if (res.status === 401) {
+        setStatus("login");
+        return;
+      }
+      await loadAdminData();
+    } finally {
+      setDeletingInquiryId(null);
+    }
+  }
+
+  async function handleDeleteCaseStudy(caseStudy) {
+    if (!window.confirm(`"${caseStudy.title}" 시공사례를 삭제할까요?`)) return;
+    setDeletingCaseId(caseStudy.id);
+    try {
+      const res = await fetch(`/api/admin/case-studies/${caseStudy.id}`, { method: "DELETE" });
+      if (res.status === 401) {
+        setStatus("login");
+        return;
+      }
+      await loadAdminData();
+    } finally {
+      setDeletingCaseId(null);
+    }
+  }
+
+  function openCaseForm(inquiry) {
+    setCaseForm({
+      ...EMPTY_CASE_FORM,
+      inquiryId: inquiry.id,
+      client: inquiry.name,
+      description: inquiry.message,
+    });
+    setCasePhotos([]);
+    setCasePhotoError("");
+    setCaseFormError("");
+  }
+
+  function closeCaseForm() {
+    setCaseForm(null);
+    setCasePhotos([]);
+    setCasePhotoError("");
+    setCaseFormError("");
+  }
+
+  function handleCasePhotoChange(e) {
+    const selected = Array.from(e.target.files || []);
+    e.target.value = "";
+    if (selected.length === 0) return;
+
+    const combined = [...casePhotos, ...selected];
+    if (combined.some((file) => !file.type.startsWith("image/"))) {
+      setCasePhotoError("이미지 파일만 첨부할 수 있습니다.");
+      return;
+    }
+    if (combined.length > MAX_CASE_PHOTOS) {
+      setCasePhotoError(`사진은 최대 ${MAX_CASE_PHOTOS}장까지 첨부할 수 있습니다.`);
+      return;
+    }
+    if (combined.reduce((sum, file) => sum + file.size, 0) > MAX_CASE_PHOTO_SIZE) {
+      setCasePhotoError("첨부한 사진 용량이 너무 큽니다. 합쳐서 8MB 이하로 첨부해 주세요.");
+      return;
+    }
+
+    setCasePhotoError("");
+    setCasePhotos(combined);
+  }
+
+  function removeCasePhoto(index) {
+    setCasePhotos((prev) => prev.filter((_, i) => i !== index));
+    setCasePhotoError("");
+  }
+
+  async function handleCaseSubmit(e) {
+    e.preventDefault();
+    if (!caseForm.title.trim()) {
+      setCaseFormError("제목을 입력해 주세요.");
+      return;
+    }
+    if (!caseForm.category) {
+      setCaseFormError("카테고리를 선택해 주세요.");
+      return;
+    }
+    setCaseSaving(true);
+    setCaseFormError("");
+    try {
+      const body = new FormData();
+      body.append("category", caseForm.category);
+      body.append("title", caseForm.title);
+      body.append("client", caseForm.client);
+      body.append("period", caseForm.period);
+      body.append("description", caseForm.description);
+      if (caseForm.inquiryId) body.append("inquiryId", caseForm.inquiryId);
+      casePhotos.forEach((file) => body.append("photos", file));
+
+      const res = await fetch("/api/admin/case-studies", { method: "POST", body });
+      if (res.status === 401) {
+        setStatus("login");
+        return;
+      }
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setCaseFormError(data.error || "저장에 실패했습니다.");
+        return;
+      }
+      await loadAdminData();
+      closeCaseForm();
+    } catch {
+      setCaseFormError("저장 중 오류가 발생했습니다.");
+    } finally {
+      setCaseSaving(false);
     }
   }
 
@@ -225,8 +388,8 @@ export default function AdminPanel() {
       <div className="mx-auto max-w-4xl">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-xl font-bold text-white">팝업 관리</h1>
-            <p className="mt-1 text-sm text-white/45">방문자에게 노출할 팝업을 만들고 수정할 수 있습니다.</p>
+            <h1 className="text-xl font-bold text-white">관리자 페이지</h1>
+            <p className="mt-1 text-sm text-white/45">팝업, 문의 내역, 시공사례 등록을 관리할 수 있습니다.</p>
           </div>
           <button
             type="button"
@@ -237,8 +400,32 @@ export default function AdminPanel() {
           </button>
         </div>
 
-        {listError && <p className="mt-6 text-sm text-red-400">{listError}</p>}
+        <div className="mt-6 flex gap-1 border-b border-white/10">
+          <button
+            type="button"
+            onClick={() => setTab("popups")}
+            className={`px-4 py-2.5 text-sm font-semibold transition-colors ${
+              tab === "popups" ? "border-b-2 border-accent text-white" : "text-white/40 hover:text-white/70"
+            }`}
+          >
+            팝업 관리
+          </button>
+          <button
+            type="button"
+            onClick={() => setTab("inquiries")}
+            className={`px-4 py-2.5 text-sm font-semibold transition-colors ${
+              tab === "inquiries" ? "border-b-2 border-accent text-white" : "text-white/40 hover:text-white/70"
+            }`}
+          >
+            문의 내역 ({inquiries.length})
+          </button>
+        </div>
 
+        {listError && <p className="mt-6 text-sm text-red-400">{listError}</p>}
+        {inquiriesError && <p className="mt-6 text-sm text-red-400">{inquiriesError}</p>}
+
+        {tab === "popups" && (
+        <>
         <div className="mt-8 flex items-center justify-between">
           <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-white/40">
             팝업 목록 ({popups.length})
@@ -422,6 +609,244 @@ export default function AdminPanel() {
               </div>
             </form>
           </div>
+        )}
+        </>
+        )}
+
+        {tab === "inquiries" && (
+        <>
+        <div className="mt-8">
+          <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-white/40">
+            문의 내역 ({inquiries.length})
+          </h2>
+          <div className="mt-4 space-y-3">
+            {inquiries.length === 0 && (
+              <p className="rounded-xl border border-white/10 bg-white/[0.02] p-6 text-center text-sm text-white/40">
+                아직 접수된 문의가 없습니다.
+              </p>
+            )}
+            {inquiries.map((inquiry) => (
+              <div key={inquiry.id} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="font-semibold text-white">{inquiry.name}</p>
+                      <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-xs text-white/50">
+                        {inquiry.type || "문의"}
+                      </span>
+                      {inquiry.caseStudyId && (
+                        <span className="rounded-full bg-accent-700/30 px-2.5 py-0.5 text-xs text-accent-200">
+                          시공사례 등록됨
+                        </span>
+                      )}
+                    </div>
+                    <p className="mt-1 text-xs text-white/40">
+                      {inquiry.phone} · {formatDateTime(inquiry.createdAt)}
+                      {inquiry.photoCount > 0 && ` · 사진 ${inquiry.photoCount}장 (이메일로 발송됨)`}
+                    </p>
+                  </div>
+                  <div className="flex flex-none items-center gap-2">
+                    {!inquiry.caseStudyId && (
+                      <button
+                        type="button"
+                        onClick={() => openCaseForm(inquiry)}
+                        className="rounded-full bg-accent-700 px-3 py-1.5 text-xs font-semibold text-white transition-colors hover:bg-accent-600"
+                      >
+                        시공사례로 등록
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteInquiry(inquiry)}
+                      disabled={deletingInquiryId === inquiry.id}
+                      className="rounded-full border border-red-500/30 px-3 py-1.5 text-xs font-semibold text-red-400 transition-colors hover:border-red-500/60 disabled:opacity-50"
+                    >
+                      {deletingInquiryId === inquiry.id ? "삭제 중..." : "삭제"}
+                    </button>
+                  </div>
+                </div>
+                <p className="mt-3 whitespace-pre-wrap text-sm leading-relaxed text-white/65">{inquiry.message}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-10">
+          <h2 className="text-sm font-semibold uppercase tracking-[0.15em] text-white/40">
+            등록된 시공사례 ({caseStudies.length})
+          </h2>
+          <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {caseStudies.length === 0 && (
+              <p className="rounded-xl border border-white/10 bg-white/[0.02] p-6 text-center text-sm text-white/40 sm:col-span-2">
+                아직 등록된 시공사례가 없습니다.
+              </p>
+            )}
+            {caseStudies.map((cs) => (
+              <div
+                key={cs.id}
+                className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.03] p-3"
+              >
+                {cs.photos?.[0] ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={cs.photos[0]} alt="" className="h-14 w-14 flex-none rounded-lg object-cover" />
+                ) : (
+                  <div className="h-14 w-14 flex-none rounded-lg bg-white/5" />
+                )}
+                <div className="min-w-0 flex-1">
+                  <p className="truncate font-semibold text-white">{cs.title}</p>
+                  <p className="mt-0.5 truncate text-xs text-white/40">
+                    {categoryLabelMap[cs.category] || cs.category} · {cs.period}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleDeleteCaseStudy(cs)}
+                  disabled={deletingCaseId === cs.id}
+                  className="flex-none rounded-full border border-red-500/30 px-3 py-1.5 text-xs font-semibold text-red-400 transition-colors hover:border-red-500/60 disabled:opacity-50"
+                >
+                  {deletingCaseId === cs.id ? "삭제 중..." : "삭제"}
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {caseForm && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+            onClick={closeCaseForm}
+          >
+            <form
+              onSubmit={handleCaseSubmit}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-lg max-h-[85vh] overflow-y-auto rounded-2xl border border-white/10 bg-ink-900 p-6 sm:p-8"
+            >
+              <h3 className="text-base font-bold text-white">시공사례로 등록</h3>
+              <p className="mt-1 text-xs text-white/45">
+                공사가 끝난 뒤 현장 사진과 함께 등록하면 시공사례 페이지에 바로 노출됩니다.
+              </p>
+
+              <div className="mt-5 space-y-4">
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="mb-1.5 block text-xs text-white/60">카테고리</label>
+                    <select
+                      value={caseForm.category}
+                      onChange={(e) => setCaseForm({ ...caseForm, category: e.target.value })}
+                      className="w-full rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-sm text-white focus:border-accent/50 focus:outline-none"
+                    >
+                      {caseCategories.map((c) => (
+                        <option key={c.key} value={c.key} className="bg-ink-900">
+                          {c.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="mb-1.5 block text-xs text-white/60">공사 기간</label>
+                    <input
+                      type="text"
+                      value={caseForm.period}
+                      onChange={(e) => setCaseForm({ ...caseForm, period: e.target.value })}
+                      placeholder="2025.01 ~ 2025.02"
+                      className="w-full rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-accent/50 focus:outline-none"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="mb-1.5 block text-xs text-white/60">제목</label>
+                  <input
+                    type="text"
+                    value={caseForm.title}
+                    onChange={(e) => setCaseForm({ ...caseForm, title: e.target.value })}
+                    placeholder="예: 인천 미추홀구 주택 철거공사"
+                    className="w-full rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-sm text-white placeholder:text-white/30 focus:border-accent/50 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1.5 block text-xs text-white/60">발주처 / 고객명 (선택)</label>
+                  <input
+                    type="text"
+                    value={caseForm.client}
+                    onChange={(e) => setCaseForm({ ...caseForm, client: e.target.value })}
+                    className="w-full rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-sm text-white focus:border-accent/50 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="mb-1.5 block text-xs text-white/60">공사 내용 설명 (선택)</label>
+                  <textarea
+                    value={caseForm.description}
+                    onChange={(e) => setCaseForm({ ...caseForm, description: e.target.value })}
+                    rows={3}
+                    className="w-full resize-none rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-sm text-white focus:border-accent/50 focus:outline-none"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-1.5 block text-xs text-white/60">
+                    현장 사진 (선택, 최대 {MAX_CASE_PHOTOS}장)
+                  </label>
+                  <label
+                    htmlFor="case-photos"
+                    className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-white/20 px-4 py-3 text-sm text-white/50 transition-colors hover:border-accent hover:text-white/80"
+                  >
+                    사진 선택하기
+                  </label>
+                  <input
+                    id="case-photos"
+                    type="file"
+                    accept="image/*"
+                    multiple
+                    onChange={handleCasePhotoChange}
+                    className="hidden"
+                  />
+                  {casePhotoError && <p className="mt-2 text-sm text-red-400">{casePhotoError}</p>}
+                  {casePhotos.length > 0 && (
+                    <div className="mt-3 flex flex-wrap gap-3">
+                      {casePhotos.map((file, i) => (
+                        <div
+                          key={file.name + file.size + i}
+                          className="relative h-20 w-20 flex-none overflow-hidden rounded-lg border border-white/10"
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img src={casePreviews[i]} alt="" className="h-full w-full object-cover" />
+                          <button
+                            type="button"
+                            onClick={() => removeCasePhoto(i)}
+                            aria-label="사진 삭제"
+                            className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/70 text-xs text-white transition-colors hover:bg-black"
+                          >
+                            ×
+                          </button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {caseFormError && <p className="mt-4 text-sm text-red-400">{caseFormError}</p>}
+
+              <div className="mt-6 flex gap-3">
+                <button
+                  type="submit"
+                  disabled={caseSaving}
+                  className="flex-1 rounded-full bg-accent-700 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-600 disabled:opacity-50"
+                >
+                  {caseSaving ? "저장 중..." : "시공사례로 등록"}
+                </button>
+                <button
+                  type="button"
+                  onClick={closeCaseForm}
+                  className="flex-1 rounded-full border border-white/15 py-2.5 text-sm font-semibold text-white/70 transition-colors hover:border-white/30 hover:text-white"
+                >
+                  취소
+                </button>
+              </div>
+            </form>
+          </div>
+        )}
+        </>
         )}
       </div>
     </main>

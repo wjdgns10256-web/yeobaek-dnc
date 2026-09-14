@@ -1,21 +1,62 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { siteConfig } from "@/lib/site-config";
-import { IconPhone, IconMail, IconPin } from "./icons";
+import { IconPhone, IconMail, IconPin, IconCamera } from "./icons";
 
 const inquiryTypes = ["구조물 해체공사", "마감재 해체공사", "구조체 절단공사", "견적 문의", "기타"];
 
 const initialForm = { name: "", phone: "", type: inquiryTypes[0], message: "", website: "" };
 
+const MAX_PHOTOS = 3;
+const MAX_TOTAL_PHOTO_SIZE = 4 * 1024 * 1024; // Vercel 서버리스 함수 요청 본문 한도(4.5MB)를 넘지 않도록 여유를 둔 합산 한도
+
 export default function Contact() {
   const [form, setForm] = useState(initialForm);
+  const [photos, setPhotos] = useState([]);
+  const [photoError, setPhotoError] = useState("");
   const [status, setStatus] = useState("idle"); // idle | sending | sent | error
   const [errorMessage, setErrorMessage] = useState("");
+
+  const previews = useMemo(() => photos.map((file) => URL.createObjectURL(file)), [photos]);
+
+  useEffect(() => {
+    return () => previews.forEach((url) => URL.revokeObjectURL(url));
+  }, [previews]);
 
   function handleChange(e) {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
+  }
+
+  function handlePhotoChange(e) {
+    const selected = Array.from(e.target.files || []);
+    e.target.value = ""; // 같은 파일을 다시 선택할 수 있도록 입력값 초기화
+
+    if (selected.length === 0) return;
+
+    const combined = [...photos, ...selected];
+
+    if (combined.some((file) => !file.type.startsWith("image/"))) {
+      setPhotoError("이미지 파일만 첨부할 수 있습니다.");
+      return;
+    }
+    if (combined.length > MAX_PHOTOS) {
+      setPhotoError(`사진은 최대 ${MAX_PHOTOS}장까지 첨부할 수 있습니다.`);
+      return;
+    }
+    if (combined.reduce((sum, file) => sum + file.size, 0) > MAX_TOTAL_PHOTO_SIZE) {
+      setPhotoError("첨부한 사진 용량이 너무 큽니다. 합쳐서 4MB 이하로 첨부해 주세요.");
+      return;
+    }
+
+    setPhotoError("");
+    setPhotos(combined);
+  }
+
+  function removePhoto(index) {
+    setPhotos((prev) => prev.filter((_, i) => i !== index));
+    setPhotoError("");
   }
 
   async function handleSubmit(e) {
@@ -24,11 +65,11 @@ export default function Contact() {
     setErrorMessage("");
 
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+      const body = new FormData();
+      Object.entries(form).forEach(([key, value]) => body.append(key, value));
+      photos.forEach((file) => body.append("photos", file));
+
+      const res = await fetch("/api/contact", { method: "POST", body });
       const data = await res.json();
 
       if (!res.ok || !data.ok) {
@@ -37,6 +78,7 @@ export default function Contact() {
 
       setStatus("sent");
       setForm(initialForm);
+      setPhotos([]);
     } catch (err) {
       setStatus("error");
       setErrorMessage(err.message || "문의 접수에 실패했습니다. 전화로 문의해 주세요.");
@@ -155,6 +197,51 @@ export default function Contact() {
                 className="w-full resize-none rounded-lg border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder-white/30 outline-none focus:border-accent"
                 placeholder="현장 위치, 면적, 희망 일정 등을 알려주시면 더 정확히 안내드릴 수 있습니다."
               />
+            </div>
+
+            <div>
+              <label className="mb-1.5 block text-sm text-white/70">
+                현장 사진 <span className="text-white/40">(선택, 최대 {MAX_PHOTOS}장)</span>
+              </label>
+              <label
+                htmlFor="photos"
+                className="flex cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-white/20 px-4 py-3 text-sm text-white/50 transition-colors hover:border-accent hover:text-white/80"
+              >
+                <IconCamera className="h-5 w-5" />
+                사진 선택하기
+              </label>
+              <input
+                id="photos"
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handlePhotoChange}
+                className="hidden"
+              />
+
+              {photoError && <p className="mt-2 text-sm text-red-400">{photoError}</p>}
+
+              {photos.length > 0 && (
+                <div className="mt-3 flex flex-wrap gap-3">
+                  {photos.map((file, i) => (
+                    <div
+                      key={file.name + file.size + i}
+                      className="group relative h-20 w-20 flex-none overflow-hidden rounded-lg border border-white/10"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={previews[i]} alt="" className="h-full w-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => removePhoto(i)}
+                        aria-label="사진 삭제"
+                        className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-black/70 text-xs text-white transition-colors hover:bg-black"
+                      >
+                        ×
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <button
