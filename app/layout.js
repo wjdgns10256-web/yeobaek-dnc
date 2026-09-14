@@ -5,6 +5,7 @@ import CustomCursor from "@/components/CustomCursor";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PopupManager from "@/components/PopupManager";
+import ContactModal from "@/components/ContactModal";
 
 export const metadata = {
   title: `${siteConfig.companyName} | ${siteConfig.slogan}`,
@@ -83,6 +84,7 @@ export default function RootLayout({ children }) {
         {children}
         <Footer />
         <PopupManager />
+        <ContactModal />
       </body>
     </html>
   );

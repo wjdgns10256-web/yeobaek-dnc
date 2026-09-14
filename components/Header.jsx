@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
 import { aboutPages } from "@/lib/about-data";
@@ -60,8 +60,9 @@ export default function Header() {
   }, [menuOpen]);
 
   return (
+    <Fragment>
     <header
-      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
+      className={`fixed inset-x-0 top-0 z-[65] transition-colors duration-300 ${
         scrolled ? "border-b border-white/10 bg-ink-950/90 backdrop-blur" : "bg-transparent"
       }`}
     >
@@ -133,8 +134,12 @@ export default function Header() {
           )}
         </button>
       </div>
+    </header>
 
-      {/* 국보디자인 참고 — 전체화면 오버레이 + 배경 블러 모바일 메뉴 */}
+      {/* 국보디자인 참고 — 전체화면 오버레이 + 배경 블러 모바일 메뉴.
+          header 밖(형제)으로 빼둔 이유: header가 스크롤 시 backdrop-blur를
+          갖게 되는데, backdrop-filter는 자손 fixed 요소의 containing block을
+          만들어버려 이 오버레이가 header 높이만큼만 덮이는 버그가 있었습니다. */}
       <div
         className={`fixed inset-0 z-[60] overflow-hidden bg-ink-950/95 backdrop-blur-xl transition-opacity duration-300 md:hidden ${
           menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
@@ -171,6 +176,6 @@ export default function Header() {
           </a>
         </div>
       </div>
-    </header>
+    </Fragment>
   );
 }

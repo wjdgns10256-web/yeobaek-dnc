@@ -3,9 +3,6 @@
 import { useState } from "react";
 import { siteConfig } from "@/lib/site-config";
 import { IconPhone, IconMail, IconPin } from "./icons";
-import Reveal from "./Reveal";
-import SplitReveal from "./SplitReveal";
-import BrandMark from "./BrandMark";
 
 const inquiryTypes = ["구조물 해체공사", "마감재 해체공사", "구조체 절단공사", "견적 문의", "기타"];
 
@@ -47,24 +44,9 @@ export default function Contact() {
   }
 
   return (
-    <section id="contact" className="border-t border-white/5 bg-ink-900 py-20 text-white sm:py-28">
-      <div className="section-pad mx-auto max-w-content">
-        <div className="max-w-xl">
-          <Reveal>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent-300">Contact</p>
-          </Reveal>
-          <div className="relative mt-3 inline-block">
-            <BrandMark />
-            <SplitReveal
-              text="문의하기"
-              as="h2"
-              className="relative text-3xl font-bold tracking-tight text-white sm:text-4xl"
-            />
-          </div>
-        </div>
-
-        <div className="mt-14 grid grid-cols-1 gap-12 lg:grid-cols-5">
-          <Reveal className="space-y-6 lg:col-span-2" delay={100}>
+    <div className="text-white">
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-5">
+        <div className="space-y-4 lg:col-span-2">
             <a
               href={siteConfig.phoneHref}
               className="flex items-start gap-4 rounded-2xl border border-white/10 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent"
@@ -92,9 +74,9 @@ export default function Contact() {
                 <p className="mt-1 text-lg font-semibold">{siteConfig.addressDetail}</p>
               </div>
             </div>
-          </Reveal>
+        </div>
 
-          <Reveal delay={200} className="lg:col-span-3">
+        <div className="lg:col-span-3">
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* 허니팟: 사람 눈에는 보이지 않고 스팸 봇만 채우는 함정 필드 */}
             <input
@@ -207,9 +189,8 @@ export default function Contact() {
               {errorMessage || "문의 접수에 실패했습니다. 전화로 문의해 주세요."} · {siteConfig.phone}
             </p>
           </form>
-          </Reveal>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
