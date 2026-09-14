@@ -7,7 +7,7 @@ export default function sitemap() {
   const now = new Date();
   const { siteUrl } = siteConfig;
 
-  const staticRoutes = ["", "/about", "/services", "/projects", "/faq"].map((path) => ({
+  const staticRoutes = ["", "/about", "/services", "/projects", "/portfolio", "/faq"].map((path) => ({
     url: `${siteUrl}${path}`,
     lastModified: now,
   }));

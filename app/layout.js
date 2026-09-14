@@ -23,6 +23,11 @@ export const metadata = {
     description: siteConfig.subSlogan,
     images: ["/og.png"],
   },
+  verification: {
+    other: {
+      "naver-site-verification": "aa344f74de23a98238d06e1d7730f6f3a319ced6",
+    },
+  },
 };
 
 export const viewport = {
