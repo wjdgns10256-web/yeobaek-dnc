@@ -53,9 +53,12 @@ export default function Hero() {
   };
   const subProgress = Math.min(Math.max((progress - 0.55) / 0.35, 0), 1);
   const ctaProgress = Math.min(Math.max((progress - 0.75) / 0.25, 0), 1);
+  // 빠르게 스크롤(플릭)해도 글자가 순간적으로 지나가지 않도록, 스크롤 진행도 변화에
+  // 짧은 CSS 전환을 붙여 값이 튀더라도 부드럽게 따라잡히도록 합니다.
+  const revealTransition = reduced ? undefined : "opacity 220ms ease-out, transform 220ms ease-out";
 
   return (
-    <section ref={sectionRef} className="relative bg-ink-950" style={{ height: reduced ? "100vh" : "160vh" }}>
+    <section ref={sectionRef} className="relative bg-ink-950" style={{ height: reduced ? "100vh" : "200vh" }}>
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
         {/* 히어로 배경 이미지 — public/images/hero/hero-main.jpg 를 교체하면 반영됩니다 */}
         <Image
@@ -74,7 +77,7 @@ export default function Hero() {
             src="/logo/mark-white.png"
             alt={siteConfig.companyName}
             className="mx-auto mb-8 h-10 w-auto opacity-90 sm:h-12"
-            style={{ opacity: 0.9 * (0.3 + 0.7 * wordProgress(0)) }}
+            style={{ opacity: 0.9 * (0.3 + 0.7 * wordProgress(0)), transition: revealTransition }}
           />
 
           <h1 className="flex flex-wrap justify-center gap-x-3 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
@@ -87,6 +90,7 @@ export default function Hero() {
                     display: "inline-block",
                     opacity: p,
                     transform: `translateY(${(1 - p) * 24}px)`,
+                    transition: revealTransition,
                   }}
                 >
                   {word}
@@ -97,14 +101,14 @@ export default function Hero() {
 
           <p
             className="mx-auto mt-5 text-sm tracking-[0.15em] text-white/60 sm:text-base"
-            style={{ opacity: subProgress, transform: `translateY(${(1 - subProgress) * 16}px)` }}
+            style={{ opacity: subProgress, transform: `translateY(${(1 - subProgress) * 16}px)`, transition: revealTransition }}
           >
             {siteConfig.heroTagline}
           </p>
 
           <div
             className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
-            style={{ opacity: ctaProgress, transform: `translateY(${(1 - ctaProgress) * 16}px)` }}
+            style={{ opacity: ctaProgress, transform: `translateY(${(1 - ctaProgress) * 16}px)`, transition: revealTransition }}
           >
             <a
               href={siteConfig.phoneHref}
@@ -125,7 +129,7 @@ export default function Hero() {
           href="#story"
           aria-label="아래로 스크롤"
           className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-white/70 transition-colors hover:text-white"
-          style={{ opacity: 1 - progress }}
+          style={{ opacity: 1 - progress, transition: revealTransition }}
         >
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M12 4v14m0 0l-6-6m6 6l6-6" strokeLinecap="round" strokeLinejoin="round" />

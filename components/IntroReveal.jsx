@@ -51,13 +51,16 @@ export default function IntroReveal() {
     return Math.min(Math.max((progress - start) / lineWindow, 0), 1);
   };
   const ctaProgress = Math.min(Math.max((progress - 0.75) / 0.25, 0), 1);
+  // 빠르게 스크롤(플릭)해도 문장이 순간적으로 지나가지 않도록, 스크롤 진행도 변화에
+  // 짧은 CSS 전환을 붙여 값이 튀더라도 부드럽게 따라잡히도록 합니다.
+  const revealTransition = reduced ? undefined : "opacity 220ms ease-out, transform 220ms ease-out";
 
   return (
     <section
       id="story"
       ref={sectionRef}
       className="relative bg-ink-950"
-      style={{ height: reduced ? "100vh" : "240vh" }}
+      style={{ height: reduced ? "100vh" : "280vh" }}
     >
       <div className="sticky top-0 flex h-screen flex-col items-center justify-center overflow-hidden px-6">
         <div className="mx-auto max-w-2xl space-y-4 text-center sm:space-y-5">
@@ -67,7 +70,7 @@ export default function IntroReveal() {
               <p
                 key={line}
                 className="text-xl font-bold leading-snug tracking-tight text-white sm:text-3xl"
-                style={{ opacity: p, transform: `translateY(${(1 - p) * 20}px)` }}
+                style={{ opacity: p, transform: `translateY(${(1 - p) * 20}px)`, transition: revealTransition }}
               >
                 {line}
               </p>
@@ -77,8 +80,8 @@ export default function IntroReveal() {
 
         <Link
           href="/about"
-          className="group mt-12 inline-flex items-center gap-2 rounded-full border-2 border-white/40 bg-white/5 px-7 py-3.5 text-sm font-bold text-white shadow-lg shadow-black/20 transition-all duration-300 hover:border-accent hover:bg-accent-700 hover:text-white"
-          style={{ opacity: ctaProgress, transform: `translateY(${(1 - ctaProgress) * 16}px)` }}
+          className="group mt-12 inline-flex items-center gap-2 rounded-full bg-accent-700 px-8 py-4 text-base font-bold text-white shadow-lg shadow-accent-900/30 transition-all duration-300 hover:scale-[1.03] hover:bg-accent-600"
+          style={{ opacity: ctaProgress, transform: `translateY(${(1 - ctaProgress) * 16}px)`, transition: revealTransition }}
         >
           회사소개 더 보기
           <svg
