@@ -24,23 +24,41 @@ export default function Hero() {
     const el = sectionRef.current;
     if (!el) return;
 
-    function onScroll() {
-      const rect = el.getBoundingClientRect();
-      const scrollable = el.offsetHeight - window.innerHeight;
-      if (scrollable <= 0) {
-        setProgress(1);
-        return;
+    // 목표값(target)은 실제 스크롤 위치를 그대로 따라가지만, 화면에 보이는
+    // progress는 매 프레임 목표값을 향해 서서히(lerp) 따라잡도록 해서 아무리
+    // 빠르게 스크롤(플릭)해도 문구가 최소한의 시간 동안은 눈에 보이게 합니다.
+    let target = 0;
+    let current = 0;
+    let rafId = null;
+
+    function tick() {
+      current += (target - current) * 0.12;
+      if (Math.abs(target - current) < 0.0015) {
+        current = target;
+        rafId = null;
+      } else {
+        rafId = requestAnimationFrame(tick);
       }
-      const scrolled = Math.min(Math.max(-rect.top, 0), scrollable);
-      setProgress(scrolled / scrollable);
+      setProgress(current);
     }
 
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    function computeTarget() {
+      const rect = el.getBoundingClientRect();
+      const scrollable = el.offsetHeight - window.innerHeight;
+      target = scrollable <= 0 ? 1 : Math.min(Math.max(-rect.top, 0), scrollable) / scrollable;
+      if (rafId === null) rafId = requestAnimationFrame(tick);
+    }
+
+    computeTarget();
+    current = target;
+    setProgress(current);
+
+    window.addEventListener("scroll", computeTarget, { passive: true });
+    window.addEventListener("resize", computeTarget);
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", computeTarget);
+      window.removeEventListener("resize", computeTarget);
     };
   }, []);
 
@@ -53,9 +71,6 @@ export default function Hero() {
   };
   const subProgress = Math.min(Math.max((progress - 0.55) / 0.35, 0), 1);
   const ctaProgress = Math.min(Math.max((progress - 0.75) / 0.25, 0), 1);
-  // 빠르게 스크롤(플릭)해도 글자가 순간적으로 지나가지 않도록, 스크롤 진행도 변화에
-  // 짧은 CSS 전환을 붙여 값이 튀더라도 부드럽게 따라잡히도록 합니다.
-  const revealTransition = reduced ? undefined : "opacity 220ms ease-out, transform 220ms ease-out";
 
   return (
     <section ref={sectionRef} className="relative bg-ink-950" style={{ height: reduced ? "100vh" : "200vh" }}>
@@ -77,7 +92,7 @@ export default function Hero() {
             src="/logo/mark-white.png"
             alt={siteConfig.companyName}
             className="mx-auto mb-8 h-10 w-auto opacity-90 sm:h-12"
-            style={{ opacity: 0.9 * (0.3 + 0.7 * wordProgress(0)), transition: revealTransition }}
+            style={{ opacity: 0.9 * (0.3 + 0.7 * wordProgress(0)) }}
           />
 
           <h1 className="flex flex-wrap justify-center gap-x-3 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
@@ -90,7 +105,6 @@ export default function Hero() {
                     display: "inline-block",
                     opacity: p,
                     transform: `translateY(${(1 - p) * 24}px)`,
-                    transition: revealTransition,
                   }}
                 >
                   {word}
@@ -101,14 +115,14 @@ export default function Hero() {
 
           <p
             className="mx-auto mt-5 text-sm tracking-[0.15em] text-white/60 sm:text-base"
-            style={{ opacity: subProgress, transform: `translateY(${(1 - subProgress) * 16}px)`, transition: revealTransition }}
+            style={{ opacity: subProgress, transform: `translateY(${(1 - subProgress) * 16}px)` }}
           >
             {siteConfig.heroTagline}
           </p>
 
           <div
             className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
-            style={{ opacity: ctaProgress, transform: `translateY(${(1 - ctaProgress) * 16}px)`, transition: revealTransition }}
+            style={{ opacity: ctaProgress, transform: `translateY(${(1 - ctaProgress) * 16}px)` }}
           >
             <a
               href={siteConfig.phoneHref}
@@ -129,7 +143,7 @@ export default function Hero() {
           href="#story"
           aria-label="아래로 스크롤"
           className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2 text-white/70 transition-colors hover:text-white"
-          style={{ opacity: 1 - progress, transition: revealTransition }}
+          style={{ opacity: 1 - progress }}
         >
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M12 4v14m0 0l-6-6m6 6l6-6" strokeLinecap="round" strokeLinejoin="round" />
