@@ -62,16 +62,6 @@ export default function Hero() {
     };
   }, []);
 
-  // 각 단어가 스크롤 진행도에 따라 순차적으로, 서로 겹치며 이어지듯 나타나도록 구간을 배분합니다.
-  const wordWindow = 0.42;
-  const wordStep = words.length > 1 ? (1 - wordWindow) / (words.length - 1) : 0;
-  const wordProgress = (i) => {
-    const start = i * wordStep;
-    return Math.min(Math.max((progress - start) / wordWindow, 0), 1);
-  };
-  const subProgress = Math.min(Math.max((progress - 0.55) / 0.35, 0), 1);
-  const ctaProgress = Math.min(Math.max((progress - 0.75) / 0.25, 0), 1);
-
   return (
     <section ref={sectionRef} className="relative bg-ink-950" style={{ height: reduced ? "100vh" : "200vh" }}>
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
@@ -92,38 +82,21 @@ export default function Hero() {
             src="/logo/mark-white.png"
             alt={siteConfig.companyName}
             className="mx-auto mb-8 h-10 w-auto opacity-90 sm:h-12"
-            style={{ opacity: 0.9 * (0.3 + 0.7 * wordProgress(0)) }}
           />
 
           <h1 className="flex flex-wrap justify-center gap-x-3 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
-            {words.map((word, i) => {
-              const p = wordProgress(i);
-              return (
-                <span
-                  key={word + i}
-                  style={{
-                    display: "inline-block",
-                    opacity: p,
-                    transform: `translateY(${(1 - p) * 24}px)`,
-                  }}
-                >
-                  {word}
-                </span>
-              );
-            })}
+            {words.map((word, i) => (
+              <span key={word + i} style={{ display: "inline-block" }}>
+                {word}
+              </span>
+            ))}
           </h1>
 
-          <p
-            className="mx-auto mt-5 text-sm tracking-[0.15em] text-white/60 sm:text-base"
-            style={{ opacity: subProgress, transform: `translateY(${(1 - subProgress) * 16}px)` }}
-          >
+          <p className="mx-auto mt-5 text-sm tracking-[0.15em] text-white/60 sm:text-base">
             {siteConfig.heroTagline}
           </p>
 
-          <div
-            className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
-            style={{ opacity: ctaProgress, transform: `translateY(${(1 - ctaProgress) * 16}px)` }}
-          >
+          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <a
               href={siteConfig.phoneHref}
               className="w-full rounded-full bg-accent-700 px-8 py-4 text-center text-base font-semibold text-white shadow-lg shadow-accent-900/30 transition-transform hover:scale-[1.02] hover:bg-accent-600 sm:w-auto sm:min-w-[180px]"
