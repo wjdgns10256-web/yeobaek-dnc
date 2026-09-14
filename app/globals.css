@@ -1,0 +1,730 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: #ffffff;
+  background-color: #131313;
+}
+
+@layer utilities {
+  .section-pad {
+    @apply px-6 sm:px-10 lg:px-16;
+  }
+}
+
+/* 국보디자인 참고 — 커스텀 커서 (포인터가 있는 데스크톱에서만 표시) */
+body.has-custom-cursor {
+  cursor: none;
+}
+body.has-custom-cursor a,
+body.has-custom-cursor button {
+  cursor: none;
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  pointer-events: none;
+  border-radius: 9999px;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: #ffffff;
+}
+
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  transition: opacity 200ms ease, width 200ms ease, height 200ms ease, margin 200ms ease,
+    border-color 200ms ease, background-color 200ms ease;
+}
+
+.cursor-ring--hover {
+  width: 56px;
+  height: 56px;
+  margin: -28px 0 0 -28px;
+  background: rgba(138, 129, 114, 0.15);
+  border-color: rgba(211, 205, 195, 0.8);
+}
+
+.cursor-ring--active {
+  width: 24px;
+  height: 24px;
+  margin: -12px 0 0 -12px;
+}
+
+/* 발주처 마퀴 — About과 Services 사이 신뢰감/볼륨을 채우는 스크롤 스트립 */
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.marquee-track {
+  animation: marquee-scroll 60s linear infinite;
+}
+
+.marquee-mask:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* 페이지 전환 모션 — app/template.js 가 라우트마다 다시 마운트하며 재생됩니다 */
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-transition {
+  animation: page-in 550ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-transition {
+    animation: none;
+  }
+}
+
+/* 회사소개(/about) 상단 배너 — 밋밋한 단색 배경 대신 은은한 글로우 + 그리드
+   텍스처 + 비네트를 겹쳐 깊이감을 줍니다 */
+.brand-intro-bg-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 55% at 50% 42%, rgba(138, 129, 114, 0.22), transparent 70%);
+}
+
+.brand-intro-bg-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.06;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.8) 1px, transparent 1px);
+  background-size: 44px 44px;
+  background-position: center;
+  mask-image: radial-gradient(ellipse 75% 75% at 50% 45%, black 40%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 45%, black 40%, transparent 85%);
+}
+
+.brand-intro-bg-vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(19, 19, 19, 0.55), transparent 30%, transparent 70%, rgba(19, 19, 19, 0.75)),
+    radial-gradient(ellipse 80% 80% at 50% 50%, transparent 55%, rgba(19, 19, 19, 0.5));
+}
+
+.brand-intro {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 로고 이미지가 실제로 로드되기 전에는(.brand-intro-ready가 붙기 전) 아무 것도
+   애니메이션하지 않습니다 — 이미지가 늦게 뜨면서 모션이 끊겨 보이는 문제 방지 */
+.brand-intro-loading,
+.brand-intro-scan-dot,
+.brand-intro-scan-line,
+.brand-intro-grid,
+.brand-intro-mark {
+  opacity: 0;
+}
+
+/* 1단계: 로딩 모션 */
+.brand-intro-loading {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.brand-intro-ready .brand-intro-loading {
+  animation: brand-loading-in 300ms ease-out forwards, brand-loading-out 250ms ease-in 600ms forwards;
+}
+
+.brand-intro-loading-brackets {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 44px;
+}
+
+.brand-intro-loading-brackets span {
+  display: block;
+  width: 9px;
+  height: 100%;
+  border: 2px solid #ffffff;
+}
+
+.brand-intro-loading-brackets span:first-child {
+  border-right: none;
+  border-radius: 3px 0 0 3px;
+}
+
+.brand-intro-loading-brackets span:last-child {
+  border-left: none;
+  border-radius: 0 3px 3px 0;
+}
+
+.brand-intro-loading-bar {
+  width: 120px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+}
+
+.brand-intro-loading-bar span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: #ffffff;
+}
+
+.brand-intro-ready .brand-intro-loading-bar span {
+  animation: brand-loading-bar 500ms ease-out 100ms forwards;
+}
+
+/* 2단계: 점 하나가 나타나 좌우로 선이 되어 뻗는 스캔 모션 */
+.brand-intro-scan {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 170px;
+  height: 2px;
+}
+
+.brand-intro-scan-dot {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #ffffff;
+  box-shadow: 0 0 16px 2px rgba(255, 255, 255, 0.6);
+  transform: scale(0.3);
+}
+
+.brand-intro-scan-line {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #ffffff, transparent);
+  transform: scaleX(0);
+}
+
+.brand-intro-ready .brand-intro-scan-dot {
+  animation: brand-scan-dot-in 300ms cubic-bezier(0.16, 1, 0.3, 1) 900ms forwards,
+    brand-scan-out 250ms ease-in 1550ms forwards;
+}
+
+.brand-intro-ready .brand-intro-scan-line {
+  animation: brand-scan-line-in 350ms cubic-bezier(0.16, 1, 0.3, 1) 1100ms forwards,
+    brand-scan-out 250ms ease-in 1550ms forwards;
+}
+
+/* 3단계: 디자인 그리드 가이드 */
+.brand-intro-grid {
+  position: absolute;
+  height: 72%;
+  width: auto;
+  aspect-ratio: 1;
+  max-width: 480px;
+}
+
+.brand-intro-ready .brand-intro-grid {
+  animation: brand-grid-in 500ms ease-out 1650ms forwards, brand-grid-out 500ms ease-in 2650ms forwards;
+}
+
+/* 4단계: 심볼이 페이드인되며 완성됩니다 */
+.brand-intro-mark {
+  position: relative;
+  height: 36%;
+  width: auto;
+  max-height: 210px;
+  transform: scale(0.85);
+}
+
+.brand-intro-ready .brand-intro-mark {
+  animation: brand-mark-in 500ms cubic-bezier(0.16, 1, 0.3, 1) 2150ms forwards,
+    brand-mark-settle 500ms ease-out 2850ms forwards;
+}
+
+@keyframes brand-loading-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes brand-loading-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes brand-loading-bar {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes brand-scan-dot-in {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes brand-scan-line-in {
+  from {
+    opacity: 1;
+    transform: scaleX(0);
+  }
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes brand-scan-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes brand-grid-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes brand-grid-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes brand-mark-in {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes brand-mark-settle {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.15);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-intro-loading,
+  .brand-intro-scan,
+  .brand-intro-grid {
+    display: none;
+  }
+  .brand-intro-mark {
+    opacity: 1;
+    transform: scale(1.15);
+    animation: none;
+  }
+}
+
+/* 비전(/about/vision) 모션 — 중앙의 큰 심볼과 맞닿은 모서리를 기준으로 카드가 하나씩
+   확대되며 나타나, 모든 내용이 심볼로부터 뻗어나오는(=심볼로 모이는) 느낌을 줍니다.
+   위치를 실시간으로 계산하지 않고 transform-origin + transition만 사용해 끊김이 없습니다. */
+.vision-card {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(155deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.02));
+  box-shadow: 0 24px 48px -28px rgba(0, 0, 0, 0.6);
+  transition: opacity 650ms cubic-bezier(0.16, 1, 0.3, 1), transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vision-card-hidden {
+  opacity: 0;
+  transform: scale(0.3);
+}
+
+.vision-card-in {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.vision-hub {
+  transition: opacity 650ms cubic-bezier(0.16, 1, 0.3, 1), transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vision-hub-hidden {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.7);
+}
+
+.vision-hub-in {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vision-card,
+  .vision-hub {
+    transition: none;
+  }
+}
+
+/* 번호 카드 그리드 모션(인재상 / 현장별 공법소개 / 회사소개 핵심가치) — 큰 번호가
+   살짝 회전하며 자리잡고 카드 본문이 뒤따라 올라오며, 태그는 이어서 하나씩 등장 */
+.number-card {
+  position: relative;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1.5rem;
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1), transform 600ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 200ms ease;
+  transition-delay: calc(var(--card-i, 0) * 100ms), calc(var(--card-i, 0) * 100ms), 0ms;
+}
+
+.number-card-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.number-card-badge {
+  display: inline-block;
+  opacity: 0;
+  transform: rotate(-18deg) scale(0.4);
+  transition: opacity 450ms cubic-bezier(0.16, 1, 0.3, 1), transform 450ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--card-i, 0) * 100ms);
+}
+
+.number-card-in .number-card-badge {
+  opacity: 1;
+  transform: rotate(0deg) scale(1);
+}
+
+.number-card-tag {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 350ms ease-out, transform 350ms ease-out;
+  transition-delay: calc(var(--card-i, 0) * 100ms + 480ms + var(--tag-i, 0) * 70ms);
+}
+
+.number-card-in .number-card-tag {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hub-card {
+  opacity: 0;
+  transform: translateY(28px) scale(0.96);
+  transition: opacity 650ms cubic-bezier(0.16, 1, 0.3, 1), transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--card-i, 0) * 110ms);
+}
+
+.hub-grid-in .hub-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.hub-card-num {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 450ms ease-out, transform 450ms ease-out;
+  transition-delay: calc(var(--card-i, 0) * 110ms + 220ms);
+}
+
+.hub-grid-in .hub-card-num {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hub-card,
+  .hub-card-num {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes loading-pulse {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.loading-mark {
+  animation: loading-pulse 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-mark {
+    animation: none;
+    opacity: 0.8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .number-card,
+  .number-card-badge,
+  .number-card-tag {
+    transition: none;
+  }
+}
+
+/* 조직도 모션 — 대표 → 임원 → 부서 순서로 순서도가 그려지듯 완성됩니다 */
+.org-node,
+.org-vline,
+.org-hline,
+.org-dept-card {
+  opacity: 0;
+}
+
+.org-node-ceo {
+  transform: scale(0.85);
+  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1), transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.org-reveal-in .org-node-ceo {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.org-vline {
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: opacity 1ms linear 450ms, transform 350ms cubic-bezier(0.16, 1, 0.3, 1) 450ms;
+}
+
+.org-vline-2 {
+  transition-delay: 1150ms;
+}
+
+.org-reveal-in .org-vline {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.org-node-exec {
+  transform: scale(0.85);
+  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1) 800ms, transform 500ms cubic-bezier(0.16, 1, 0.3, 1) 800ms;
+}
+
+.org-reveal-in .org-node-exec {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.org-hline {
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: opacity 1ms linear 1500ms, transform 450ms cubic-bezier(0.16, 1, 0.3, 1) 1500ms;
+}
+
+.org-reveal-in .org-hline {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.org-dept-card {
+  transform: translateY(20px);
+  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1), transform 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(1950ms + var(--dept-i, 0) * 150ms);
+}
+
+.org-reveal-in .org-dept-card {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .org-node,
+  .org-vline,
+  .org-hline,
+  .org-dept-card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* 관리자 페이지에서 등록한 공지/이벤트 팝업 */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.popup-overlay-in {
+  opacity: 1;
+}
+
+.popup-card {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #1b1b1b;
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.7);
+  transform: translateY(12px) scale(0.97);
+  transition: transform 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.popup-overlay-in .popup-card {
+  transform: translateY(0) scale(1);
+}
+
+.popup-close {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  z-index: 1;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: none;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-image {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.popup-body {
+  padding: 22px 22px 8px;
+}
+
+.popup-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.popup-text {
+  margin: 10px 0 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.65);
+  white-space: pre-line;
+}
+
+.popup-cta {
+  display: inline-block;
+  margin-top: 16px;
+  border-radius: 999px;
+  background: #5b5346;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 11px 22px;
+}
+
+.popup-hide-today {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 22px 20px;
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+}
+
+.popup-hide-today input {
+  accent-color: #5b5346;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .popup-overlay,
+  .popup-card {
+    transition: none;
+  }
+}
