@@ -3,6 +3,7 @@ import { projects, projectCategories } from "@/lib/projects-data";
 import Reveal from "./Reveal";
 import SplitReveal from "./SplitReveal";
 import BrandMark from "./BrandMark";
+import RevealGrid from "./RevealGrid";
 
 const categories = projectCategories.filter((cat) => cat.key !== "all");
 
@@ -32,11 +33,11 @@ export default function Projects() {
           </Reveal>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <RevealGrid className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((cat, i) => {
             const first = projects.find((p) => p.category === cat.key);
             return (
-              <Reveal key={cat.key} delay={i * 100}>
+              <div key={cat.key} className="hub-card" style={{ "--card-i": i }}>
                 <Link
                   href={`/projects/${cat.key}`}
                   className="group relative block aspect-[16/10] w-full overflow-hidden rounded-2xl border border-white/10 bg-ink-900"
@@ -49,6 +50,9 @@ export default function Projects() {
                     />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <span className="hub-card-num absolute left-4 top-4 rounded-full border border-white/20 bg-ink-950/70 px-3 py-1 text-xs font-bold tracking-wide text-white/70 backdrop-blur">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                   <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6">
                     <div>
                       <p className="text-xl font-bold text-white">{cat.label}</p>
@@ -61,10 +65,10 @@ export default function Projects() {
                     </span>
                   </div>
                 </Link>
-              </Reveal>
+              </div>
             );
           })}
-        </div>
+        </RevealGrid>
       </div>
     </section>
   );

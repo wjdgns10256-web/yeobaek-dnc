@@ -479,6 +479,62 @@ body.has-custom-cursor button {
   transform: translateY(0);
 }
 
+.hub-card {
+  opacity: 0;
+  transform: translateY(28px) scale(0.96);
+  transition: opacity 650ms cubic-bezier(0.16, 1, 0.3, 1), transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--card-i, 0) * 110ms);
+}
+
+.hub-grid-in .hub-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.hub-card-num {
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 450ms ease-out, transform 450ms ease-out;
+  transition-delay: calc(var(--card-i, 0) * 110ms + 220ms);
+}
+
+.hub-grid-in .hub-card-num {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hub-card,
+  .hub-card-num {
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes loading-pulse {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.loading-mark {
+  animation: loading-pulse 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-mark {
+    animation: none;
+    opacity: 0.8;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .number-card,
   .number-card-badge,

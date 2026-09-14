@@ -3,6 +3,7 @@ import { services } from "@/lib/services-data";
 import Reveal from "./Reveal";
 import SplitReveal from "./SplitReveal";
 import BrandMark from "./BrandMark";
+import RevealGrid from "./RevealGrid";
 
 export default function Services() {
   return (
@@ -22,12 +23,12 @@ export default function Services() {
           </div>
         </div>
 
-        <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-3">
+        <RevealGrid className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-3">
           {services.map((service, i) => (
-            <Reveal key={service.id} delay={i * 120}>
+            <div key={service.id} className="hub-card" style={{ "--card-i": i }}>
               <Link
                 href={`/services/${service.id}`}
-                className="group block w-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] text-left transition-all hover:-translate-y-1 hover:border-accent/40"
+                className="group relative block w-full overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] text-left transition-all hover:-translate-y-1 hover:border-accent/40"
               >
                 {/* image 경로 파일을 실제 시공사진으로 교체하면 됩니다 */}
                 <div className="aspect-[4/3] w-full overflow-hidden bg-ink-800">
@@ -37,6 +38,9 @@ export default function Services() {
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
+                <span className="hub-card-num absolute left-4 top-4 rounded-full border border-white/20 bg-ink-950/70 px-3 py-1 text-xs font-bold tracking-wide text-white/70 backdrop-blur">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
                 <div className="flex items-center justify-between p-6">
                   <h3 className="text-lg font-bold text-white">{service.title}</h3>
                   <span className="text-white/40 transition-colors group-hover:text-accent-200">
@@ -46,9 +50,9 @@ export default function Services() {
                   </span>
                 </div>
               </Link>
-            </Reveal>
+            </div>
           ))}
-        </div>
+        </RevealGrid>
       </div>
     </section>
   );

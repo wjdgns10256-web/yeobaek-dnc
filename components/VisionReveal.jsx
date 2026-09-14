@@ -41,7 +41,7 @@ export default function VisionReveal({ items }) {
       io.disconnect();
       timers.forEach(clearTimeout);
     };
-  }, [items.length]);
+  }, [items]);
 
   return (
     <div ref={wrapRef} className="relative mt-16 py-10 sm:mt-20 sm:py-16">

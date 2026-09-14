@@ -11,14 +11,24 @@ export default function AboutBrandIntro() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    let cancelled = false;
+    let rafId;
+    const markReady = () => {
+      if (!cancelled) setReady(true);
+    };
+
     const img = new window.Image();
+    img.onload = markReady;
+    img.onerror = markReady;
     img.src = "/logo/mark-white.png";
-    if (img.complete) {
-      setReady(true);
-    } else {
-      img.onload = () => setReady(true);
-      img.onerror = () => setReady(true);
-    }
+    // 캐시로 인해 src 설정과 동시에 이미 로드가 끝난 경우, effect 안에서 곧바로
+    // setState하지 않도록 다음 프레임으로 미룹니다.
+    if (img.complete) rafId = requestAnimationFrame(markReady);
+
+    return () => {
+      cancelled = true;
+      if (rafId) cancelAnimationFrame(rafId);
+    };
   }, []);
 
   return (
