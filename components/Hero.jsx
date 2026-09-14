@@ -32,7 +32,7 @@ export default function Hero() {
     let rafId = null;
 
     function tick() {
-      current += (target - current) * 0.12;
+      current += (target - current) * 0.045;
       if (Math.abs(target - current) < 0.0015) {
         current = target;
         rafId = null;
