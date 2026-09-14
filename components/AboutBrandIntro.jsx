@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 
 // 회사소개(/about) 상단 배너 — 로고 이미지가 실제로 로드되고, 이 배너가 스크롤로
 // 화면에 들어왔을 때(사이트 전반의 Reveal 컴포넌트와 동일한 스크롤 리빌 방식)
-// 모션을 시작합니다. 로딩 모션 → 점 하나가 같은 자리에서 커지며 심볼로
-// 크로스페이드되는(점이 심볼이 되는) 모션 순서로 재생됩니다.
+// 모션을 시작합니다. 로딩 모션 → 심볼이 좌측 상단부터 조금씩 채워지듯
+// 완성되는 모션(clip-path 원형 와이프) 순서로 재생됩니다.
 // 모션 최소화(prefers-reduced-motion) 환경에서는 애니메이션 없이 완성된 상태만 보여줍니다.
 export default function AboutBrandIntro() {
   const ref = useRef(null);
@@ -72,8 +72,6 @@ export default function AboutBrandIntro() {
             <span />
           </div>
         </div>
-
-        <span className="brand-intro-dot" aria-hidden="true" />
 
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/logo/mark-white.png" alt="여백디앤씨" className="brand-intro-mark" />
