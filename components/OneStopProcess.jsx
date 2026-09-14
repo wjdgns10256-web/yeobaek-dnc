@@ -1,33 +1,53 @@
 import Reveal from "./Reveal";
 import SplitReveal from "./SplitReveal";
 import BrandMark from "./BrandMark";
+import ScrollFadeImage from "./ScrollFadeImage";
 
 const phases = [
   {
     no: "01",
-    eyebrow: "Document",
-    title: "서류와 인허가부터 확실하게",
-    desc: "현장 실측을 바탕으로 항목별 견적을 산출하고, 해체계획서 작성·멸실신고·안전관리계획 수립까지 착공 전 필요한 인허가 서류를 빠짐없이 준비합니다. 계약 전 무엇에 얼마가 드는지 투명하게 안내해 드립니다.",
+    eyebrow: "Estimate",
+    title: "견적",
+    desc: "현장 실측을 바탕으로 항목별 견적을 산출합니다. 방문 견적은 무료이며, 폐기물량과 반출 동선까지 꼼꼼히 확인합니다.",
   },
   {
     no: "02",
-    eyebrow: "Execution",
-    title: "현장에 맞는 공법으로 안전하게",
-    desc: "구조물 해체, 마감재 철거, 구조체 절단 등 현장 특성에 맞는 공법과 장비를 투입합니다. 작업자와 인근 주민의 안전을 최우선으로 분진·소음을 관리하며, 진행 상황을 사진으로 공유해 드립니다.",
+    eyebrow: "Design",
+    title: "설계",
+    desc: "구조 안전성을 검토해 해체계획서를 작성합니다. 건물 구조와 주변 환경에 맞는 해체 순서와 공법을 설계합니다.",
   },
   {
     no: "03",
+    eyebrow: "Permit",
+    title: "대관",
+    desc: "멸실신고, 해체 허가 등 관공서 인허가 절차를 대행합니다. 서류 준비부터 접수까지 번거로운 행정 업무를 책임집니다.",
+  },
+  {
+    no: "04",
+    eyebrow: "Execution",
+    title: "실무",
+    desc: "현장에 맞는 공법과 장비를 투입해 안전하게 시공합니다. 작업자와 인근 주민의 안전을 최우선으로 분진·소음을 관리합니다.",
+  },
+  {
+    no: "05",
+    eyebrow: "Communication",
+    title: "응대",
+    desc: "진행 상황을 사진과 함께 수시로 공유합니다. 궁금한 점이나 현장에서 생기는 변경 사항은 즉시 소통하며 진행합니다.",
+  },
+  {
+    no: "06",
     eyebrow: "Settlement",
-    title: "정산까지 투명하게, 마무리까지 책임지고",
-    desc: "폐기물은 분리 배출을 원칙으로 하며, 허가받은 처리업체 위탁 내역을 정리해 드립니다. 현장 정리 상태를 함께 확인하고 항목별 정산 내역을 전달하며, 끝까지 책임지고 마무리합니다.",
+    title: "정산",
+    desc: "폐기물 처리 내역과 항목별 정산 내역을 투명하게 전달합니다. 현장 정리 상태를 함께 확인하고 책임지고 마무리합니다.",
   },
 ];
 
-// 홈 화면 하단 — 서류·인허가부터 실제 시공, 정산·마무리까지 여백디앤씨가
-// 처음부터 끝까지 책임지는 원스톱 진행 과정을 단계별로 소개합니다.
-// 각 단계 옆의 이미지 영역(ImageSlot)은 실제 현장 사진으로 교체하면 됩니다 —
-// public/images/home/process-01.jpg ~ process-03.jpg 경로에 파일을 넣고
-// 아래 ImageSlot의 placeholder 대신 <img src="..."> 로 바꿔주세요.
+// 홈 화면 하단 — 견적부터 정산까지 여백디앤씨가 처음부터 끝까지 책임지는
+// 원스톱 진행 과정을 6단계로, 텍스트와 이미지가 좌우로 번갈아 배치되는
+// 지그재그 레이아웃으로 소개합니다. 각 단계의 이미지 영역(ImageSlot)은
+// 실제 현장 사진으로 교체하면 됩니다 — public/images/home/process-01.jpg ~
+// process-06.jpg 경로에 파일을 넣고 아래 ImageSlot의 placeholder 대신
+// <img src="..."> 로 바꿔주세요.
 function ImageSlot({ label }) {
   return (
     <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.015]">
@@ -61,7 +81,7 @@ export default function OneStopProcess() {
           </div>
           <Reveal delay={100}>
             <p className="mt-5 leading-loose text-white/65">
-              서류와 인허가, 실제 시공, 정산과 마무리까지 — 처음부터 끝까지 여백디앤씨가 직접 책임집니다.
+              견적부터 정산까지, 여섯 단계 모두 여백디앤씨가 직접 책임집니다.
             </p>
           </Reveal>
         </div>
@@ -70,22 +90,17 @@ export default function OneStopProcess() {
           {phases.map((phase, i) => {
             const imageFirst = i % 2 === 1;
             return (
-              <div
-                key={phase.no}
-                className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16"
-              >
+              <div key={phase.no} className="grid grid-cols-1 items-center gap-8 lg:grid-cols-2 lg:gap-16">
                 <Reveal className={imageFirst ? "lg:order-2" : ""}>
                   <span className="text-sm font-bold tracking-[0.2em] text-accent">
                     STEP {phase.no} · {phase.eyebrow}
                   </span>
-                  <h3 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">
-                    {phase.title}
-                  </h3>
+                  <h3 className="mt-3 text-2xl font-bold tracking-tight text-white sm:text-3xl">{phase.title}</h3>
                   <p className="mt-4 text-[15px] leading-loose text-white/60">{phase.desc}</p>
                 </Reveal>
-                <Reveal delay={100} className={imageFirst ? "lg:order-1" : ""}>
+                <ScrollFadeImage className={imageFirst ? "lg:order-1" : ""}>
                   <ImageSlot label={`${phase.eyebrow} 현장 사진`} />
-                </Reveal>
+                </ScrollFadeImage>
               </div>
             );
           })}

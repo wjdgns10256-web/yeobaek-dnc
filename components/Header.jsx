@@ -28,15 +28,11 @@ const navItems = [
   },
   {
     href: "/faq",
-    label: "FAQ",
-    children: faqs.slice(0, 5).map((f) => ({ href: "/faq", label: f.q })),
-  },
-  {
-    href: "/#contact",
-    label: "문의",
+    label: "FAQ·문의",
     children: [
       { href: siteConfig.phoneHref, label: `전화 상담 · ${siteConfig.phone}` },
-      { href: "/#contact", label: "온라인 문의" },
+      { href: "/faq", label: "자주 묻는 질문 + 온라인 문의" },
+      ...faqs.slice(0, 4).map((f) => ({ href: "/faq", label: f.q })),
     ],
   },
 ];
