@@ -42,10 +42,20 @@ export default function Hero() {
       setProgress(current);
     }
 
+    // 첫 화면(Hero)에 머무는 동안은 스크롤 민감도를 낮게 유지하고(SmoothScroll에서
+    // 이미 낮게 시작함), 이 섹션을 벗어나면 원래 민감도로 복구합니다.
+    function setScrollSensitivity(insideHero) {
+      const lenis = window.__lenis;
+      if (!lenis) return;
+      lenis.options.wheelMultiplier = insideHero ? 0.2 : 1;
+      lenis.options.touchMultiplier = insideHero ? 0.2 : 1;
+    }
+
     function computeTarget() {
       const rect = el.getBoundingClientRect();
       const scrollable = el.offsetHeight - window.innerHeight;
       target = scrollable <= 0 ? 1 : Math.min(Math.max(-rect.top, 0), scrollable) / scrollable;
+      setScrollSensitivity(target < 0.999);
       if (rafId === null) rafId = requestAnimationFrame(tick);
     }
 
@@ -59,6 +69,7 @@ export default function Hero() {
       if (rafId !== null) cancelAnimationFrame(rafId);
       window.removeEventListener("scroll", computeTarget);
       window.removeEventListener("resize", computeTarget);
+      setScrollSensitivity(false);
     };
   }, []);
 

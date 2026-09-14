@@ -154,21 +154,16 @@ body.has-custom-cursor button {
   justify-content: center;
 }
 
-/* 로고 이미지가 실제로 로드되기 전에는(.brand-intro-ready가 붙기 전) 아무 것도
-   애니메이션하지 않습니다 — 이미지가 늦게 뜨면서 모션이 끊겨 보이는 문제 방지 */
-.brand-intro-loading,
-.brand-intro-dot,
-.brand-intro-mark {
-  opacity: 0;
-}
-
-/* 1단계: 로딩 모션 */
+/* 1단계: 로딩 모션 — 로고 이미지가 실제로 로드되기 전에는(.brand-intro-ready가
+   붙기 전) 아무 것도 애니메이션하지 않습니다 (이미지가 늦게 뜨면서 모션이
+   끊겨 보이는 문제 방지) */
 .brand-intro-loading {
   position: absolute;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 18px;
+  opacity: 0;
 }
 
 .brand-intro-ready .brand-intro-loading {
@@ -217,33 +212,19 @@ body.has-custom-cursor button {
   animation: brand-loading-bar 500ms ease-out 100ms forwards;
 }
 
-/* 2단계: 점 하나가 같은 자리에서 커지며 사라지고, 그 자리에서 심볼이 함께
-   커지며 나타나 — 점이 곧 심볼이 되는 것처럼 보이는 크로스페이드 모션 */
-.brand-intro-dot {
-  position: absolute;
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: #ffffff;
-  box-shadow: 0 0 20px 3px rgba(255, 255, 255, 0.65);
-  transform: scale(0.4);
-}
-
-.brand-intro-ready .brand-intro-dot {
-  animation: brand-dot-morph 650ms cubic-bezier(0.65, 0, 0.35, 1) 900ms forwards;
-}
-
-/* 3단계: 심볼이 점과 같은 지점·크기에서 시작해 함께 커지며 완성됩니다 */
+/* 2단계: 심볼 좌측 상단 모서리를 기준으로 원형 와이프가 퍼져나가며,
+   그 부분만큼씩 심볼이 채워지듯 조금씩 완성됩니다 */
 .brand-intro-mark {
   position: relative;
   height: 36%;
   width: auto;
   max-height: 210px;
-  transform: scale(0.85);
+  opacity: 1;
+  clip-path: circle(0% at 0% 0%);
 }
 
 .brand-intro-ready .brand-intro-mark {
-  animation: brand-mark-in 650ms cubic-bezier(0.16, 1, 0.3, 1) 900ms forwards;
+  animation: brand-mark-reveal 900ms cubic-bezier(0.65, 0, 0.35, 1) 900ms forwards;
 }
 
 @keyframes brand-loading-in {
@@ -273,52 +254,23 @@ body.has-custom-cursor button {
   }
 }
 
-@keyframes brand-dot-morph {
-  0% {
-    opacity: 0;
-    transform: scale(0.4);
+@keyframes brand-mark-reveal {
+  from {
+    clip-path: circle(0% at 0% 0%);
   }
-  20% {
-    opacity: 1;
-    transform: scale(1);
-  }
-  55% {
-    opacity: 1;
-    transform: scale(2.6);
-  }
-  100% {
-    opacity: 0;
-    transform: scale(4.2);
-  }
-}
-
-@keyframes brand-mark-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.15);
-  }
-  40% {
-    opacity: 0;
-    transform: scale(0.15);
-  }
-  70% {
-    opacity: 1;
-    transform: scale(1.08);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
+  to {
+    /* 대각선 반대편 모서리까지 확실히 덮도록 150%로 여유를 둡니다 */
+    clip-path: circle(150% at 0% 0%);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .brand-intro-loading,
-  .brand-intro-dot {
+  .brand-intro-loading {
     display: none;
   }
   .brand-intro-mark {
     opacity: 1;
-    transform: scale(1);
+    clip-path: none;
     animation: none;
   }
 }
