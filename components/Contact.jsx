@@ -46,7 +46,7 @@ export default function Contact() {
   return (
     <div className="text-white">
       <div className="grid grid-cols-1 gap-10 lg:grid-cols-5">
-        <div className="space-y-4 lg:col-span-2">
+        <div className="order-2 space-y-4 lg:order-1 lg:col-span-2">
             <a
               href={siteConfig.phoneHref}
               className="flex items-start gap-4 rounded-2xl border border-white/10 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent"
@@ -76,7 +76,7 @@ export default function Contact() {
             </div>
         </div>
 
-        <div className="lg:col-span-3">
+        <div className="order-1 lg:order-2 lg:col-span-3">
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* 허니팟: 사람 눈에는 보이지 않고 스팸 봇만 채우는 함정 필드 */}
             <input
