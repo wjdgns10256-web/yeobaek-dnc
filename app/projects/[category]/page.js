@@ -2,11 +2,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { projects, projectCategories } from "@/lib/projects-data";
 import { siteConfig } from "@/lib/site-config";
+import { getCaseStudies } from "@/lib/case-studies-store";
 import Reveal from "@/components/Reveal";
 import ParallaxBanner from "@/components/ParallaxBanner";
 import BrandMark from "@/components/BrandMark";
 
 const categories = projectCategories.filter((c) => c.key !== "all");
+
+// 관리자 페이지에서 새로 등록하는 시공사례를 재배포 없이 반영하기 위한 ISR 주기입니다.
+export const revalidate = 60;
 
 export function generateStaticParams() {
   return categories.map((c) => ({ category: c.key }));
@@ -30,7 +34,10 @@ export default async function ProjectCategoryPage({ params }) {
   const items = projects.filter((p) => p.category === cat.key);
   const others = categories.filter((c) => c.key !== cat.key);
 
-  const bannerImage = items[0]?.image;
+  const allCaseStudies = await getCaseStudies();
+  const caseStudies = allCaseStudies.filter((c) => c.category === cat.key);
+
+  const bannerImage = caseStudies[0]?.photos?.[0] || items[0]?.image;
 
   return (
     <main className="bg-ink-950 pb-24">
@@ -83,6 +90,38 @@ export default async function ProjectCategoryPage({ params }) {
             ))}
           </div>
         </Reveal>
+
+        {caseStudies.length > 0 && (
+          <div className="mt-14">
+            <Reveal>
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent-300">Recent</p>
+              <h2 className="mt-2 text-xl font-bold tracking-tight text-white sm:text-2xl">
+                최근 완료한 {cat.label} 현장
+              </h2>
+            </Reveal>
+            <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {caseStudies.map((cs, i) => (
+                <Reveal key={cs.id} delay={Math.min(i, 6) * 60}>
+                  <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02]">
+                    {cs.photos?.[0] && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={cs.photos[0]} alt={cs.title} className="h-48 w-full object-cover" />
+                    )}
+                    <div className="p-5">
+                      <p className="font-semibold text-white">{cs.title}</p>
+                      <p className="mt-1 text-sm text-white/45">
+                        {[cs.client, cs.period].filter(Boolean).join(" · ")}
+                      </p>
+                      {cs.description && (
+                        <p className="mt-3 text-sm leading-relaxed text-white/60">{cs.description}</p>
+                      )}
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="mt-12 divide-y divide-white/10 border-t border-white/10">
           {items.map((item, i) => (

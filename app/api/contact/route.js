@@ -1,5 +1,7 @@
+import { randomUUID } from "crypto";
 import { Resend } from "resend";
 import { siteConfig } from "@/lib/site-config";
+import { addInquiry } from "@/lib/inquiries-store";
 
 const MAX_PHOTOS = 3;
 const MAX_TOTAL_PHOTO_SIZE = 4 * 1024 * 1024; // Vercel 서버리스 함수 요청 본문 한도(4.5MB)를 넘지 않도록 여유를 둔 합산 한도
@@ -39,6 +41,24 @@ export async function POST(request) {
       { ok: false, error: "첨부한 사진 용량이 너무 큽니다. 합쳐서 4MB 이하로 첨부해 주세요." },
       { status: 400 }
     );
+  }
+
+  // 문의 내용은 이메일 발송 여부와 무관하게 관리자 페이지에서 확인할 수 있도록 저장해 둡니다.
+  // (사진 원본은 용량 문제로 저장하지 않고 이메일 첨부로만 전달하며, 개수만 기록합니다.)
+  const inquiryId = randomUUID();
+  try {
+    await addInquiry({
+      id: inquiryId,
+      name,
+      phone,
+      type: type || "",
+      message,
+      photoCount: photos.length,
+      caseStudyId: null,
+      createdAt: new Date().toISOString(),
+    });
+  } catch (err) {
+    console.error("문의 내역 저장 실패:", err);
   }
 
   const apiKey = process.env.RESEND_API_KEY;
