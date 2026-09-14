@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 
 const lines = ["누군가에게는 없어지고 버려지는 것이지만,", "우리는 또 다른 시작과 준비라고 생각합니다."];
 
@@ -23,23 +22,41 @@ export default function IntroReveal() {
     const el = sectionRef.current;
     if (!el) return;
 
-    function onScroll() {
-      const rect = el.getBoundingClientRect();
-      const scrollable = el.offsetHeight - window.innerHeight;
-      if (scrollable <= 0) {
-        setProgress(1);
-        return;
+    // 목표값(target)은 실제 스크롤 위치를 그대로 따라가지만, 화면에 보이는
+    // progress는 매 프레임 목표값을 향해 서서히(lerp) 따라잡도록 해서 아무리
+    // 빠르게 스크롤(플릭)해도 문장이 최소한의 시간 동안은 눈에 보이게 합니다.
+    let target = 0;
+    let current = 0;
+    let rafId = null;
+
+    function tick() {
+      current += (target - current) * 0.12;
+      if (Math.abs(target - current) < 0.0015) {
+        current = target;
+        rafId = null;
+      } else {
+        rafId = requestAnimationFrame(tick);
       }
-      const scrolled = Math.min(Math.max(-rect.top, 0), scrollable);
-      setProgress(scrolled / scrollable);
+      setProgress(current);
     }
 
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
+    function computeTarget() {
+      const rect = el.getBoundingClientRect();
+      const scrollable = el.offsetHeight - window.innerHeight;
+      target = scrollable <= 0 ? 1 : Math.min(Math.max(-rect.top, 0), scrollable) / scrollable;
+      if (rafId === null) rafId = requestAnimationFrame(tick);
+    }
+
+    computeTarget();
+    current = target;
+    setProgress(current);
+
+    window.addEventListener("scroll", computeTarget, { passive: true });
+    window.addEventListener("resize", computeTarget);
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", computeTarget);
+      window.removeEventListener("resize", computeTarget);
     };
   }, []);
 
@@ -50,11 +67,6 @@ export default function IntroReveal() {
     const start = i * lineStep;
     return Math.min(Math.max((progress - start) / lineWindow, 0), 1);
   };
-  const ctaProgress = Math.min(Math.max((progress - 0.75) / 0.25, 0), 1);
-  // 빠르게 스크롤(플릭)해도 문장이 순간적으로 지나가지 않도록, 스크롤 진행도 변화에
-  // 짧은 CSS 전환을 붙여 값이 튀더라도 부드럽게 따라잡히도록 합니다.
-  const revealTransition = reduced ? undefined : "opacity 220ms ease-out, transform 220ms ease-out";
-
   return (
     <section
       id="story"
@@ -70,32 +82,13 @@ export default function IntroReveal() {
               <p
                 key={line}
                 className="text-xl font-bold leading-snug tracking-tight text-white sm:text-3xl"
-                style={{ opacity: p, transform: `translateY(${(1 - p) * 20}px)`, transition: revealTransition }}
+                style={{ opacity: p, transform: `translateY(${(1 - p) * 20}px)` }}
               >
                 {line}
               </p>
             );
           })}
         </div>
-
-        <Link
-          href="/about"
-          className="group mt-12 inline-flex items-center gap-2 rounded-full bg-accent-700 px-8 py-4 text-base font-bold text-white shadow-lg shadow-accent-900/30 transition-all duration-300 hover:scale-[1.03] hover:bg-accent-600"
-          style={{ opacity: ctaProgress, transform: `translateY(${(1 - ctaProgress) * 16}px)`, transition: revealTransition }}
-        >
-          회사소개 더 보기
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            className="transition-transform duration-300 group-hover:translate-x-1"
-          >
-            <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </Link>
       </div>
     </section>
   );
