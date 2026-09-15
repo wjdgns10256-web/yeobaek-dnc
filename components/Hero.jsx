@@ -42,12 +42,13 @@ export default function Hero() {
       setProgress(current);
     }
 
-    // 첫 화면(Hero)에 머무는 동안은 스크롤 민감도를 낮게 유지하고(SmoothScroll에서
-    // 이미 낮게 시작함), 이 섹션을 벗어나면 원래 민감도로 복구합니다.
+    // 첫 화면(Hero)에 머무는 동안은 모바일 터치 스크롤 민감도만 낮게 유지하고
+    // (SmoothScroll에서 이미 낮게 시작함), 이 섹션을 벗어나면 원래대로 복구합니다.
+    // 데스크탑 마우스 휠(wheelMultiplier)은 너무 느리다는 피드백에 따라 항상
+    // 원래 속도(1)를 그대로 둡니다.
     function setScrollSensitivity(insideHero) {
       const lenis = window.__lenis;
       if (!lenis) return;
-      lenis.options.wheelMultiplier = insideHero ? 0.2 : 1;
       lenis.options.touchMultiplier = insideHero ? 0.2 : 1;
     }
 
