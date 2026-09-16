@@ -99,6 +99,17 @@ export function IconPin(props) {
   );
 }
 
+export function IconKakaoTalk(props) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" {...props}>
+      <path
+        d="M12 4.2c-5.2 0-9.4 3.3-9.4 7.4 0 2.6 1.7 4.9 4.3 6.2l-1.1 3.9a.5.5 0 00.76.55l4.6-3.05c.28.02.56.03.84.03 5.2 0 9.4-3.3 9.4-7.4s-4.2-7.4-9.4-7.4z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+}
+
 export function IconCamera(props) {
   return (
     <svg viewBox="0 0 24 24" fill="none" {...props}>
