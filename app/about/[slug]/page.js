@@ -8,6 +8,7 @@ import BrandMark from "@/components/BrandMark";
 import VisionReveal from "@/components/VisionReveal";
 import NumberCardGrid from "@/components/NumberCardGrid";
 import OrgChartReveal from "@/components/OrgChartReveal";
+import PhoneLink from "@/components/PhoneLink";
 
 export function generateStaticParams() {
   return aboutPages.map((p) => ({ slug: p.slug }));
@@ -138,12 +139,9 @@ export default async function AboutSubPage({ params }) {
 
         <Reveal delay={300}>
           <div className="mt-16 flex flex-col gap-3 border-t border-white/10 pt-10 sm:flex-row">
-            <a
-              href={siteConfig.phoneHref}
-              className="rounded-full bg-accent-700 px-8 py-4 text-center text-base font-semibold text-white transition-all hover:scale-[1.03] hover:bg-accent-600"
-            >
+            <PhoneLink className="rounded-full bg-accent-700 px-8 py-4 text-center text-base font-semibold text-white transition-all hover:scale-[1.03] hover:bg-accent-600">
               전화로 상담하기 · {siteConfig.phone}
-            </a>
+            </PhoneLink>
             <Link
               href="/#contact"
               className="rounded-full border border-white/40 px-8 py-4 text-center text-base font-semibold text-white transition-all hover:scale-[1.03] hover:border-white/70 hover:bg-white/10"

@@ -5,6 +5,7 @@ import { siteConfig } from "@/lib/site-config";
 import Reveal from "@/components/Reveal";
 import ParallaxBanner from "@/components/ParallaxBanner";
 import BrandMark from "@/components/BrandMark";
+import PhoneLink from "@/components/PhoneLink";
 
 export function generateStaticParams() {
   return services.map((s) => ({ slug: s.id }));
@@ -98,12 +99,9 @@ export default async function ServiceDetailPage({ params }) {
 
         <Reveal delay={200}>
           <div className="mt-14 flex flex-col gap-3 sm:flex-row">
-            <a
-              href={siteConfig.phoneHref}
-              className="rounded-full bg-accent-700 px-8 py-4 text-center text-base font-semibold text-white transition-all hover:scale-[1.03] hover:bg-accent-600"
-            >
+            <PhoneLink className="rounded-full bg-accent-700 px-8 py-4 text-center text-base font-semibold text-white transition-all hover:scale-[1.03] hover:bg-accent-600">
               전화로 상담하기 · {siteConfig.phone}
-            </a>
+            </PhoneLink>
             <Link
               href="/#contact"
               className="rounded-full border border-white/40 px-8 py-4 text-center text-base font-semibold text-white transition-all hover:scale-[1.03] hover:border-white/70 hover:bg-white/10"

@@ -7,6 +7,7 @@ import { aboutPages } from "@/lib/about-data";
 import { services } from "@/lib/services-data";
 import { projectCategories } from "@/lib/projects-data";
 import { faqs } from "@/lib/faq-data";
+import { notifyPhoneCopy } from "@/lib/phone";
 
 const navItems = [
   {
@@ -99,6 +100,9 @@ export default function Header() {
                         <li key={child.href + child.label}>
                           <Link
                             href={child.href}
+                            onClick={
+                              child.href.startsWith("tel:") ? () => notifyPhoneCopy(siteConfig.phone) : undefined
+                            }
                             className="block px-4 py-2.5 text-sm leading-snug text-white/65 transition-colors hover:bg-white/5 hover:text-white"
                           >
                             {child.label}
@@ -114,6 +118,7 @@ export default function Header() {
           })}
           <a
             href={siteConfig.phoneHref}
+            onClick={() => notifyPhoneCopy(siteConfig.phone)}
             className="rounded-full bg-accent-700 px-4 py-2 text-sm font-semibold text-white transition-all hover:scale-[1.04] hover:bg-accent-600"
           >
             전화 문의
@@ -173,7 +178,10 @@ export default function Header() {
           <a
             href={siteConfig.phoneHref}
             className="mt-10 rounded-full bg-accent-700 px-4 py-3.5 text-center text-sm font-semibold text-white transition-all hover:scale-[1.02] hover:bg-accent-600"
-            onClick={() => setMenuOpen(false)}
+            onClick={() => {
+              notifyPhoneCopy(siteConfig.phone);
+              setMenuOpen(false);
+            }}
           >
             전화 문의 {siteConfig.phone}
           </a>
