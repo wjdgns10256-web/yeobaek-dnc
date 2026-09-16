@@ -774,3 +774,24 @@ body.has-custom-cursor button {
     transition: none;
   }
 }
+
+/* 홈 화면 "철거공사 원스톱 시스템" 아이콘 — 은은하게 계속 위아래로 떠다니는 모션 */
+.process-icon-float {
+  animation: process-icon-float 4.5s ease-in-out infinite;
+}
+
+@keyframes process-icon-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .process-icon-float {
+    animation: none;
+  }
+}

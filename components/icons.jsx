@@ -112,3 +112,109 @@ export function IconCamera(props) {
     </svg>
   );
 }
+
+// 홈 화면 "철거공사 원스톱 시스템" 6단계 아이콘 — 견적/설계/대관/실무/응대/정산
+export function IconEstimate(props) {
+  return (
+    <svg viewBox="0 0 48 48" fill="none" {...props}>
+      <rect x="12" y="6" width="24" height="36" rx="4" stroke="currentColor" strokeWidth="2" />
+      <rect x="16" y="11" width="16" height="9" rx="1" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+      <line x1="34" y1="26" x2="34" y2="37" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <line x1="16" y1="26" x2="20" y2="26" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <line x1="24" y1="26" x2="28" y2="26" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <line x1="16" y1="31.5" x2="20" y2="31.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <line x1="24" y1="31.5" x2="28" y2="31.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <line x1="16" y1="37" x2="20" y2="37" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <line x1="24" y1="37" x2="28" y2="37" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function IconDesign(props) {
+  return (
+    <svg viewBox="0 0 48 48" fill="none" {...props}>
+      <path
+        d="M14 10v20a4 4 0 0 1 4-4h16"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path d="M14 10h20v8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M22 38l12-16 6 16z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+      <path d="M27 34l4.5-8 3 8z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function IconPermit(props) {
+  return (
+    <svg viewBox="0 0 48 48" fill="none" {...props}>
+      <path
+        d="M12 6h13l6 6v27a2 2 0 01-2 2H12a2 2 0 01-2-2V8a2 2 0 012-2z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <path d="M25 6v6h6" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+      <line x1="15" y1="24" x2="24" y2="24" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <line x1="15" y1="30" x2="21" y2="30" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <line x1="15" y1="36" x2="26" y2="36" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <path
+        d="M30 17a3 3 0 016 0v3c0 2 1.2 3 1.2 3h-8.4s1.2-1 1.2-3z"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+      />
+      <line x1="32" y1="24" x2="34" y2="24" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function IconExecution(props) {
+  return (
+    <svg viewBox="0 0 48 48" fill="none" {...props}>
+      <path d="M10 32a14 14 0 0128 0" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <line x1="24" y1="14" x2="24" y2="19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <rect x="8" y="32" width="32" height="5" rx="2.5" stroke="currentColor" strokeWidth="2" />
+      <line x1="16" y1="22" x2="14.3" y2="27" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <line x1="24" y1="20" x2="24" y2="26" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <line x1="32" y1="22" x2="33.7" y2="27" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function IconCommunication(props) {
+  return (
+    <svg viewBox="0 0 48 48" fill="none" {...props}>
+      <path
+        d="M24 8a16 16 0 100 32c1.5 0 3-.2 4.4-.5L36 42l-1.3-7.8A16 16 0 0024 8z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <line x1="16" y1="21" x2="32" y2="21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <line x1="16" y1="27" x2="26" y2="27" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function IconSettlement(props) {
+  return (
+    <svg viewBox="0 0 48 48" fill="none" {...props}>
+      <path
+        d="M13 6l3.5 3 3.5-3 3.5 3 3.5-3 3.5 3 3.5-3v36l-3.5-3-3.5 3-3.5-3-3.5 3-3.5-3-3.5 3z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+      <line x1="18" y1="17" x2="30" y2="17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <line x1="18" y1="23" x2="26" y2="23" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <line x1="29" y1="23" x2="31" y2="23" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <line x1="18" y1="29" x2="26" y2="29" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <line x1="29" y1="29" x2="31" y2="29" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+      <line x1="18" y1="35" x2="30" y2="35" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+    </svg>
+  );
+}
