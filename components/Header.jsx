@@ -75,7 +75,11 @@ export default function Header() {
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
-          {navItems.map((item) => (
+          {navItems.map((item, i) => {
+            const isFirst = i === 0;
+            const isLast = i === navItems.length - 1;
+            const alignClass = isFirst ? "left-0" : isLast ? "right-0" : "left-1/2 -translate-x-1/2";
+            return (
             <div key={item.href} className="group relative py-2">
               <Link
                 href={item.href}
@@ -86,7 +90,9 @@ export default function Header() {
               </Link>
 
               {item.children && item.children.length > 0 && (
-                <div className="pointer-events-none absolute left-1/2 top-full w-64 -translate-x-1/2 translate-y-1 pt-3 opacity-0 transition-all duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100">
+                <div
+                  className={`pointer-events-none absolute top-full w-64 translate-y-1 pt-3 opacity-0 transition-all duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 ${alignClass}`}
+                >
                   <div className="overflow-hidden rounded-2xl border border-white/10 bg-ink-900/95 shadow-xl shadow-black/40 backdrop-blur-xl">
                     <ul className="py-2">
                       {item.children.map((child) => (
@@ -104,7 +110,8 @@ export default function Header() {
                 </div>
               )}
             </div>
-          ))}
+            );
+          })}
           <a
             href={siteConfig.phoneHref}
             className="rounded-full bg-accent-700 px-4 py-2 text-sm font-semibold text-white transition-all hover:scale-[1.04] hover:bg-accent-600"
