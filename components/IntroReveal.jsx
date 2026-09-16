@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-const lines = ["누군가에게는 없어지고 버려지는 것이지만,", "우리는 또 다른 시작과 준비라고 생각합니다."];
+const lines = ["누군가에게는 없어지고 버려지는 것이지만,", "우리에게는 또 다른 시작과 준비입니다."];
 
 export default function IntroReveal() {
   const sectionRef = useRef(null);
