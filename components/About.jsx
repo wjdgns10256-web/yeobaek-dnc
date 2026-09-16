@@ -45,7 +45,7 @@ export default function About() {
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">About</p>
           </Reveal>
           <SplitReveal
-            text="오랜 손, 새로운 이름"
+            text="오랜 손길, 새로운 이름"
             as="h2"
             className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl"
           />
