@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { siteConfig } from "@/lib/site-config";
+import { notifyPhoneCopy } from "@/lib/phone";
 import { IconPhone, IconMail, IconPin, IconCamera } from "./icons";
 
 const inquiryTypes = ["구조물 해체공사", "마감재 해체공사", "구조체 절단공사", "견적 문의", "기타"];
@@ -91,6 +92,7 @@ export default function Contact() {
         <div className="order-2 space-y-4 lg:order-1 lg:col-span-2">
             <a
               href={siteConfig.phoneHref}
+              onClick={() => notifyPhoneCopy(siteConfig.phone)}
               className="flex items-start gap-4 rounded-2xl border border-white/10 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent"
             >
               <IconPhone className="mt-0.5 h-6 w-6 flex-none text-accent" />

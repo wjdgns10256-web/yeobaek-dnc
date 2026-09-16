@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { siteConfig } from "@/lib/site-config";
+import { notifyPhoneCopy } from "@/lib/phone";
 
 const words = siteConfig.slogan.split(" ");
 
@@ -111,6 +112,7 @@ export default function Hero() {
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <a
               href={siteConfig.phoneHref}
+              onClick={() => notifyPhoneCopy(siteConfig.phone)}
               className="w-full rounded-full bg-accent-700 px-8 py-4 text-center text-base font-semibold text-white shadow-lg shadow-accent-900/30 transition-transform hover:scale-[1.02] hover:bg-accent-600 sm:w-auto sm:min-w-[180px]"
             >
               전화 상담
