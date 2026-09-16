@@ -8,6 +8,7 @@ import { services } from "@/lib/services-data";
 import { projectCategories } from "@/lib/projects-data";
 import { faqs } from "@/lib/faq-data";
 import { notifyPhoneCopy } from "@/lib/phone";
+import { IconKakaoTalk } from "@/components/icons";
 
 const navItems = [
   {
@@ -123,6 +124,15 @@ export default function Header() {
           >
             전화 문의
           </a>
+          <a
+            href={siteConfig.kakaoChatHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="카카오톡 채널 상담"
+            className="flex h-9 w-9 flex-none items-center justify-center rounded-full bg-[#FEE500] text-ink-950 transition-transform hover:scale-[1.08]"
+          >
+            <IconKakaoTalk className="h-5 w-5" />
+          </a>
         </nav>
 
         <button
@@ -184,6 +194,16 @@ export default function Header() {
             }}
           >
             전화 문의 {siteConfig.phone}
+          </a>
+          <a
+            href={siteConfig.kakaoChatHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 flex items-center justify-center gap-2 rounded-full bg-[#FEE500] px-4 py-3.5 text-center text-sm font-semibold text-ink-950 transition-all hover:scale-[1.02]"
+            onClick={() => setMenuOpen(false)}
+          >
+            <IconKakaoTalk className="h-4 w-4" />
+            카카오톡 상담
           </a>
         </div>
       </div>
