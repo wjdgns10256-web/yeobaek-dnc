@@ -91,7 +91,7 @@ export default function Header() {
 
               {item.children && item.children.length > 0 && (
                 <div
-                  className={`pointer-events-none absolute top-full w-64 translate-y-1 pt-3 opacity-0 transition-all duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 ${alignClass}`}
+                  className={`pointer-events-none absolute top-full w-max min-w-[9.5rem] max-w-72 translate-y-1 pt-3 opacity-0 transition-all duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100 ${alignClass}`}
                 >
                   <div className="overflow-hidden rounded-2xl border border-white/10 bg-ink-900/95 shadow-xl shadow-black/40 backdrop-blur-xl">
                     <ul className="py-2">
