@@ -1,15 +1,8 @@
+import Image from "next/image";
 import Reveal from "./Reveal";
 import SplitReveal from "./SplitReveal";
 import BrandMark from "./BrandMark";
 import ScrollFadeImage from "./ScrollFadeImage";
-import {
-  IconEstimate,
-  IconDesign,
-  IconPermit,
-  IconExecution,
-  IconCommunication,
-  IconSettlement,
-} from "./icons";
 
 const phases = [
   {
@@ -17,57 +10,53 @@ const phases = [
     eyebrow: "Estimate",
     title: "견적",
     desc: "현장 실측을 바탕으로 항목별 견적을 산출합니다. 방문 견적은 무료이며, 폐기물량과 반출 동선까지 꼼꼼히 확인합니다.",
-    Icon: IconEstimate,
+    image: "/images/home/process-01.jpg",
   },
   {
     no: "02",
     eyebrow: "Design",
     title: "설계",
     desc: "구조 안전성을 검토해 해체계획서를 작성합니다. 건물 구조와 주변 환경에 맞는 해체 순서와 공법을 설계합니다.",
-    Icon: IconDesign,
+    image: "/images/home/process-02.jpg",
   },
   {
     no: "03",
     eyebrow: "Permit",
     title: "대관",
     desc: "멸실신고, 해체 허가 등 관공서 인허가 절차를 대행합니다. 서류 준비부터 접수까지 번거로운 행정 업무를 책임집니다.",
-    Icon: IconPermit,
+    image: "/images/home/process-03.jpg",
   },
   {
     no: "04",
     eyebrow: "Execution",
     title: "실무",
     desc: "현장에 맞는 공법과 장비를 투입해 안전하게 시공합니다. 작업자와 인근 주민의 안전을 최우선으로 분진·소음을 관리합니다.",
-    Icon: IconExecution,
+    image: "/images/home/process-04.jpg",
   },
   {
     no: "05",
     eyebrow: "Communication",
     title: "응대",
     desc: "진행 상황을 사진과 함께 수시로 공유합니다. 궁금한 점이나 현장에서 생기는 변경 사항은 즉시 소통하며 진행합니다.",
-    Icon: IconCommunication,
+    image: "/images/home/process-05.jpg",
   },
   {
     no: "06",
     eyebrow: "Settlement",
     title: "정산",
     desc: "폐기물 처리 내역과 항목별 정산 내역을 투명하게 전달합니다. 현장 정리 상태를 함께 확인하고 책임지고 마무리합니다.",
-    Icon: IconSettlement,
+    image: "/images/home/process-06.jpg",
   },
 ];
 
 // 홈 화면 하단 — 견적부터 정산까지 여백디앤씨가 처음부터 끝까지 책임지는
-// 원스톱 진행 과정을 6단계로, 텍스트와 아이콘이 좌우로 번갈아 배치되는
-// 지그재그 레이아웃으로 소개합니다. 각 단계 아이콘은 은은하게 계속 위아래로
-// 떠다니는 모션(process-icon-float)을 줘서 카드에 생동감을 더했습니다 —
-// 단계마다 딜레이를 다르게 줘서 전부 같은 박자로 움직이지 않도록 했습니다.
-function ImageSlot({ Icon, delay = 0 }) {
+// 원스톱 진행 과정을 6단계로, 텍스트와 컨셉 사진이 좌우로 번갈아 배치되는
+// 지그재그 레이아웃으로 소개합니다. 각 단계에 맞는 소품(계산기·도면·서류+도장
+// 등)을 어두운 배경에서 촬영한 컨셉샷을 사용합니다.
+function ImageSlot({ src, alt }) {
   return (
-    <div className="relative flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.06] to-white/[0.015]">
-      <Icon
-        className="process-icon-float h-24 w-24 text-white/80 sm:h-28 sm:w-28"
-        style={{ animationDelay: `${delay}ms` }}
-      />
+    <div className="relative aspect-[4/3] w-full overflow-hidden rounded-3xl border border-white/10">
+      <Image src={src} alt={alt} fill sizes="(min-width: 1024px) 560px, 100vw" className="object-cover" />
     </div>
   );
 }
@@ -108,7 +97,7 @@ export default function OneStopProcess() {
                   <p className="mt-4 text-[15px] leading-loose text-white/60">{phase.desc}</p>
                 </Reveal>
                 <ScrollFadeImage className={imageFirst ? "lg:order-1" : ""}>
-                  <ImageSlot Icon={phase.Icon} delay={i * 220} />
+                  <ImageSlot src={phase.image} alt={`${phase.title} 컨셉 이미지`} />
                 </ScrollFadeImage>
               </div>
             );
