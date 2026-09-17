@@ -6,7 +6,6 @@ import { siteConfig } from "@/lib/site-config";
 import { aboutPages } from "@/lib/about-data";
 import { services } from "@/lib/services-data";
 import { projectCategories } from "@/lib/projects-data";
-import { faqs } from "@/lib/faq-data";
 import { notifyPhoneCopy } from "@/lib/phone";
 import { IconKakaoTalk } from "@/components/icons";
 
@@ -31,11 +30,6 @@ const navItems = [
   {
     href: "/faq",
     label: "FAQ·문의",
-    children: [
-      { href: siteConfig.phoneHref, label: `전화 상담 · ${siteConfig.phone}` },
-      { href: "/faq", label: "자주 묻는 질문 + 온라인 문의" },
-      ...faqs.slice(0, 4).map((f) => ({ href: "/faq", label: f.q })),
-    ],
   },
 ];
 
